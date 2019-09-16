@@ -36,6 +36,7 @@ public class PurchaseRedirectServlet extends HttpServlet {
 	private final static Logger logger = Logger.getLogger(PurchaseRedirectServlet.class.getName());
 	
 	protected static final String MERCHANT_ID_PROP_KEY = "application.merchantId";
+	protected static final String CASHIER_URL_PROP_KEY = "application.cashierUrl";
 
 	protected final ApplicationConfig config;
 
@@ -55,8 +56,7 @@ public class PurchaseRedirectServlet extends HttpServlet {
 			
 			inputParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
 			inputParams.put("token", jsonObject.getString("token"));
-			
-			resp.sendRedirect("https://cashier-turnkeyuat.test.myriadpayments.com/ui/cashier?" + URLEncodedUtils.format(ApiCall.getForm(inputParams).build(), "UTF-8"));
+			resp.sendRedirect(config.getProperty(CASHIER_URL_PROP_KEY)+ "?" + URLEncodedUtils.format(ApiCall.getForm(inputParams).build(), "UTF-8"));
 			
 		} catch (RequiredParamException e) {
 			
