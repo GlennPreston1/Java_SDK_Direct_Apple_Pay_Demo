@@ -4,10 +4,15 @@ import com.myriadpayments.globalturnkey.apiclient.exception.RequiredParamExcepti
 import com.myriadpayments.globalturnkey.config.ApplicationConfig;
 
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashMap;
+
 
 /**
- * Base class for Auth/Purchase/Void
+ * Base class for Auth/Purchase/Verify
  * 
  * @author erbalazs
  *

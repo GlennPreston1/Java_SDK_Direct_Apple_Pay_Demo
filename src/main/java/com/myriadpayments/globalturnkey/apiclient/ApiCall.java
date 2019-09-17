@@ -3,11 +3,15 @@ package com.myriadpayments.globalturnkey.apiclient;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.*;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -147,10 +151,6 @@ public abstract class ApiCall {
 		}
 
 		try {
-			HttpHost proxyHost = new HttpHost("localhost", 8866);
-			System.out.println(paramList);
-			System.out.println(url);
-
 			final HttpResponse apiResponse = Request.Post(url).bodyForm(paramList).execute().returnResponse();
 			apiResponseStr = new BasicResponseHandler().handleResponse(apiResponse);
 		} catch (Exception e) {
