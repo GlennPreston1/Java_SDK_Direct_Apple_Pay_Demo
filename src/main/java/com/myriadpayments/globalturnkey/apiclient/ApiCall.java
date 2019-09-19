@@ -225,8 +225,6 @@ public abstract class ApiCall {
 
 				final JSONObject actionResponse = postToApi(config.getProperty(OPERATION_ACTION_URL_PROP_KEY), actionParams);
 
-				System.out.println(actionResponse);
-
 				if (((String) actionResponse.get("result")).equals("failure")) {
 
 					outputWriter.println("(error)");
