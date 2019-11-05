@@ -57,7 +57,7 @@ Every payment operation has its own Call Object. To successfully perform any req
 * __AuthCall__ requests authorisation for a payment.
 * __CaptureCall__ performs a capture operation on an authorized payment.
 * __VoidCall__ cancels a previously authenticated payment.
-* __PurchaseCall__ does an authorize and capture operations at once (and cannot be voided).
+* __PurchaseCall__ does an authorize and capture operations at once (and cannot be voided). It also supports Recurring Payments(COF) - set cardOnFileType to 'First' for initial transaction, set cardOnFileType to 'Repeat' and cardOnFileInitiator to 'Merchant' for subsequent transactions.
 * __RefundCall__ refunds a previous capture operation, partially or in full.
 * __StatusCheckCall__ returns the status of an already issued payment transaction, as such it doesn’t actually generate a new transaction.
 
