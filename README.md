@@ -1,5 +1,5 @@
-# Global-Turnkey-JAVA-SDK
-This  library provides integration access to the Turnkey Global Api.
+# Evopayments-Turnkey-JAVA-SDK
+This  library provides integration access to the Turnkey Evopayments Api.
 
 ## Quick Start
 
@@ -31,15 +31,15 @@ __It is possible to use the SDK from the command line__ (this is also Server-to-
 
 ## Configure
 
-The global configuration can be set with the "global-turnkey-sdk-config" system property.
+The global configuration can be set with the "evopayments-turnkey-sdk-config" system property.
 The possible values are: "production" and "test" (default).
 
 ```bash
--Dglobal-turnkey-sdk-config=test
+-Devopayments-turnkey-sdk-config=test
 ``` 
 
 ```bash
--Dglobal-turnkey-sdk-config=production
+-Devopayments-turnkey-sdk-config=production
 ```
 
 The releavant .properties files are in the src\main\resources\
@@ -149,5 +149,5 @@ https://logging.apache.org/log4j/2.x/log4j-iostreams/apidocs/org/apache/logging/
 To enable the additional verbose API call log (= raw HTTP requests/response logs) use this system property:
 
 ```bash
--Dglobal-turnkey-sdk-http-log=verbose
+-Devopayments-turnkey-sdk-http-log=verbose
 ``` 
