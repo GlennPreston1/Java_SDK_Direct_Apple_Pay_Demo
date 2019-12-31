@@ -218,7 +218,6 @@ public class PurchaseCallTest extends  BaseTest{
 		// TOKENIZE
 		final Map<String, String> tokenizeParams = super.buildTokenizeParam();
 
-
 		final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, new PrintWriter(System.out));
 		final JSONObject tokenizeCall = tokenize.execute();
 
@@ -230,13 +229,14 @@ public class PurchaseCallTest extends  BaseTest{
 		purchaseParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
 		purchaseParams.put("specinCreditCardCVV", "111");
 		purchaseParams.put("mmrpContractNumber","1234");
+		purchaseParams.put("mmrpExistingDebt","NotExistingDebt");
+		purchaseParams.put("mmrpCurrentInstallmentNumber","1");
 
-		final PurchaseCall call = new PurchaseCall(config, purchaseParams, null, PurchaseCall.SUB_ACTION_MMRP_MX_FIRST);
+		final PurchaseCall call = new PurchaseCall(config, purchaseParams, null, PurchaseCall.SUB_ACTION_MMRP_FIRST);
 		JSONObject result = call.execute();
 
 		// note that any error will cause the throwing of some kind of SDKException (which extends RuntimeException)
 		// still we make an assertNotNull
-
 		Assert.assertNotNull(result);
 	}
 
@@ -249,7 +249,7 @@ public class PurchaseCallTest extends  BaseTest{
 	public void MmrpRecurringMxTestCall(){
 /********** Replace the merchantTxId with the transaction id from the MmrpFirstMxTestCall test case ***/
 		String merchantTxId = SAMPLE_TX_ID;
-//		String merchantTxId = "1yccOOkp1LthnvudBWVw";
+//		String merchantTxId = "VjUgGXxA6aiUPU54tjPA";
 		if(SAMPLE_TX_ID.equals(merchantTxId)) {
 			System.out.println("**** Warning: to run recurring payment, please assign the merchantTxId of the 'First' transaction to variable  [ merchantTxId ] ");
 			return;
@@ -260,7 +260,7 @@ public class PurchaseCallTest extends  BaseTest{
 		final Map<String, String> tokenizeParams = super.buildTokenizeParam();
 
 
-		final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
+		final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, new PrintWriter(System.out));
 		final JSONObject tokenizeCall = tokenize.execute();
 
 		// PURCHASE
@@ -276,7 +276,7 @@ public class PurchaseCallTest extends  BaseTest{
 		purchaseParams.put("mmrpOriginalMerchantTransactionId",merchantTxId);
 
 
-		final PurchaseCall call = new PurchaseCall(config, purchaseParams, null,PurchaseCall.SUB_ACTION_MMRP_MX_RECURRING);
+		final PurchaseCall call = new PurchaseCall(config, purchaseParams, null,PurchaseCall.SUB_ACTION_MMRP_RECURRING);
 		JSONObject result = call.execute();
 
 		// note that any error will cause the throwing of some kind of SDKException (which extends RuntimeException)
