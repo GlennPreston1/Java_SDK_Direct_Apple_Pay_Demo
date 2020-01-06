@@ -60,6 +60,7 @@ Every payment operation has its own Call Object. To successfully perform any req
 * __PurchaseCall__ does an authorize and capture operations at once (and cannot be voided). It also supports Recurring Payments(COF) - set cardOnFileType to 'First' for initial transaction, set cardOnFileType to 'Repeat' and cardOnFileInitiator to 'Merchant' for subsequent transactions.
 * __RefundCall__ refunds a previous capture operation, partially or in full.
 * __StatusCheckCall__ returns the status of an already issued payment transaction, as such it doesn’t actually generate a new transaction.
+* __GetCashierURLCall__ get the cashier url which will show the cashier UI to input cardInfo (such as card number,expiryMonth, expiryYear, name on card ) and other related pages.
 
 All classes are descendants of the _ApiCall_ class.
 

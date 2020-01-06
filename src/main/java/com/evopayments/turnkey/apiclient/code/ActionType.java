@@ -12,7 +12,8 @@ public enum ActionType {
     REFUND("REFUND"),
     GET_AVAILABLE_PAYSOLS("GET_AVAILABLE_PAYSOLS"),
     STATUS_CHECK("STATUS_CHECK"),
-    VERIFY("VERIFY");
+    VERIFY("VERIFY"),
+    GET_CASHIER_URL("getCashierUrl");
 
     private final String code;
 
