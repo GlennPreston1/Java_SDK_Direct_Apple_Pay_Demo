@@ -223,7 +223,7 @@ public abstract class ApiCall {
 				if (actionParams == null) {
 					return tokenResponse;
 				}
-				final JSONObject actionResponse;
+				JSONObject actionResponse ;
 				if(actionParams.get("action") == ActionType.GET_CASHIER_URL.getCode()) {
 					actionResponse = postToApi(config.getProperty(BACKOFFICE_OPERATION_ACTION_URL_PROP_KEY), actionParams);
 				} else {
