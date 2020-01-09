@@ -40,7 +40,7 @@ public abstract class ApiCall {
 
 	private static final String TOKEN_URL_PROP_KEY = "application.sessionTokenRequestUrl";
 	private static final String OPERATION_ACTION_URL_PROP_KEY = "application.paymentOperationActionUrl";
-	private static final String BACKOFFICE_OPERATION_ACTION_URL_PROP_KEY = "application.backofficeOperationActionUrl";
+	private static final String MOBILE_CASHIER_URL = "application.mobile.cashierUrl";
 
 	protected static final String ALLOW_ORIGIN_URL_PROP_KEY = "application.allowOriginUrl";
 	protected static final String MERCHANT_NOTIFICATION_URL_PROP_KEY = "application.merchantNotificationUrl";
@@ -225,7 +225,8 @@ public abstract class ApiCall {
 				}
 				final JSONObject actionResponse ;
 				if(actionParams.get("action") == ActionType.GET_CASHIER_URL.getCode()) {
-					actionResponse = postToApi(config.getProperty(BACKOFFICE_OPERATION_ACTION_URL_PROP_KEY), actionParams);
+					actionResponse = tokenResponse;
+					actionResponse.put("cashierUrl", config.getProperty(MOBILE_CASHIER_URL));
 				} else {
 					 actionResponse = postToApi(config.getProperty(OPERATION_ACTION_URL_PROP_KEY), actionParams);
 				}
