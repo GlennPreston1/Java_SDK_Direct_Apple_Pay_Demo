@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class GetCashierURLCallTest extends  BaseTest{
+public class GetMobileCashierURLCallTest extends  BaseTest{
 
 	private static ApplicationConfig config;
 
@@ -45,7 +45,7 @@ public class GetCashierURLCallTest extends  BaseTest{
 	@Test
 	public void noExTestCall() {
 		final Map<String, String> tokenizeParams = buildTokenizeParam();
-		final GetCashierURLCall call = new GetCashierURLCall(config, tokenizeParams, null);
+		final GetMobileCashierURLCall call = new GetMobileCashierURLCall(config, tokenizeParams, null);
 		JSONObject result = call.execute();
 
 		// note that any error will cause the throwing of some kind of SDKException (which extends RuntimeException)
@@ -70,7 +70,7 @@ public class GetCashierURLCallTest extends  BaseTest{
 //			inputParams.put("currency", CurrencyCode.PLN.getCode()); // left out field
 			inputParams.put("paymentSolutionId", "500");
 
-			final GetCashierURLCall call = new GetCashierURLCall(config, inputParams, null);
+			final GetMobileCashierURLCall call = new GetMobileCashierURLCall(config, inputParams, null);
 			call.execute();
 
 		} catch (RequiredParamException e) {

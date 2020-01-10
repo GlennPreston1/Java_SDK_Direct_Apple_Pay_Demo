@@ -224,9 +224,9 @@ public abstract class ApiCall {
 					return tokenResponse;
 				}
 				final JSONObject actionResponse ;
-				if(actionParams.get("action") == ActionType.GET_CASHIER_URL.getCode()) {
-					actionResponse = tokenResponse;
-					actionResponse.put("cashierUrl", config.getProperty(MOBILE_CASHIER_URL));
+				if(actionParams.get("action") == ActionType.GET_MOBILE_CASHIER_URL.getCode()) {
+                    tokenResponse.put("cashierUrl", config.getProperty(MOBILE_CASHIER_URL));
+                    actionResponse = tokenResponse;
 				} else {
 					 actionResponse = postToApi(config.getProperty(OPERATION_ACTION_URL_PROP_KEY), actionParams);
 				}

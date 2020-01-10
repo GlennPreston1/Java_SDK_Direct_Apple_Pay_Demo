@@ -12,9 +12,9 @@ import java.util.*;
  * @author shiying
  *
  */
-public class GetCashierURLCall extends ApiCall {
+public class GetMobileCashierURLCall extends ApiCall {
 
-	public GetCashierURLCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
+	public GetMobileCashierURLCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
@@ -53,14 +53,14 @@ public class GetCashierURLCall extends ApiCall {
 
 		actionParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
 		actionParams.put("token", token);
-		actionParams.put("action", String.valueOf(ActionType.GET_CASHIER_URL.getCode()));
+		actionParams.put("action", String.valueOf(ActionType.GET_MOBILE_CASHIER_URL.getCode()));
 
 		return actionParams;
 	}
 
 	@Override
 	protected ActionType getActionType() {
-		return ActionType.GET_CASHIER_URL ;
+		return ActionType.GET_MOBILE_CASHIER_URL ;
 	}
 
 }

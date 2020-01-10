@@ -13,7 +13,7 @@ public enum ActionType {
     GET_AVAILABLE_PAYSOLS("GET_AVAILABLE_PAYSOLS"),
     STATUS_CHECK("STATUS_CHECK"),
     VERIFY("VERIFY"),
-    GET_CASHIER_URL("getCashierUrl");
+    GET_MOBILE_CASHIER_URL("getMobileCashierUrl");
 
     private final String code;
 

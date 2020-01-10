@@ -103,8 +103,8 @@ public class Start {
 			case VOID:
 				result = new VoidCall(config, params, new PrintWriter(System.out, true)).execute();
 				break;
-			case GET_CASHIER_URL:
-				result = new GetCashierURLCall(config, params, new PrintWriter(System.out, true)).execute();
+			case GET_MOBILE_CASHIER_URL:
+				result = new GetMobileCashierURLCall(config, params, new PrintWriter(System.out, true)).execute();
 				break;
 			default:
 				System.err.println("Illegal action parameter usage");
