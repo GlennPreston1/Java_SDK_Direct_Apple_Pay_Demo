@@ -6,18 +6,11 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.evopayments.turnkey.apiclient.*;
 import com.evopayments.turnkey.apiclient.code.ActionType;
 import com.evopayments.turnkey.config.ApplicationConfig;
 import org.json.JSONObject;
 
-import com.evopayments.turnkey.apiclient.AuthCall;
-import com.evopayments.turnkey.apiclient.CaptureCall;
-import com.evopayments.turnkey.apiclient.GetAvailablePaymentSolutionsCall;
-import com.evopayments.turnkey.apiclient.PurchaseCall;
-import com.evopayments.turnkey.apiclient.RefundCall;
-import com.evopayments.turnkey.apiclient.StatusCheckCall;
-import com.evopayments.turnkey.apiclient.TokenizeCall;
-import com.evopayments.turnkey.apiclient.VoidCall;
 import com.evopayments.turnkey.apiclient.exception.ActionCallException;
 import com.evopayments.turnkey.apiclient.exception.GeneralException;
 import com.evopayments.turnkey.apiclient.exception.PostToApiException;
@@ -109,6 +102,9 @@ public class Start {
 				break;
 			case VOID:
 				result = new VoidCall(config, params, new PrintWriter(System.out, true)).execute();
+				break;
+			case GET_MOBILE_CASHIER_URL:
+				result = new GetMobileCashierURLCall(config, params, new PrintWriter(System.out, true)).execute();
 				break;
 			default:
 				System.err.println("Illegal action parameter usage");
