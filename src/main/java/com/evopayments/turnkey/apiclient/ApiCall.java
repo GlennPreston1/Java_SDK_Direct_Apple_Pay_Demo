@@ -97,6 +97,13 @@ public abstract class ApiCall {
 
 			throw new TurnkeyValidationException();
 
+		}  catch (final TurnkeyInternalException e) {
+
+			outputWriter.println("(error)");
+			outputWriter.println("general SDK error (cause/class: " + e.getClass().getName() + ", cause/msg: " + e.getMessage() + ")");
+
+			throw new TurnkeyInternalException();
+
 		} catch (final Exception e) {
 
 			outputWriter.println("(error)");
@@ -265,7 +272,9 @@ public abstract class ApiCall {
 
 			throw new TurnkeyInternalException();
 
-		} catch (final GeneralException e) {
+		} catch (TurnkeyGenericException e) {
+			throw e;
+		}  catch (final GeneralException e) {
 
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getCause().getClass().getName() + ", cause/msg: " + e.getCause().getMessage() + ")");
