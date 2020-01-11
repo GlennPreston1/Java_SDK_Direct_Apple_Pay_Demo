@@ -10,6 +10,10 @@ public class TurnkeyCommunicationException extends TurnkeyGenericException {
 
     private static final ErrorType ERROR_TYPE = ErrorType.COMMUNICATION_ERROR;
 
+    public TurnkeyCommunicationException() {
+        super(ERROR_TYPE, ERROR_TYPE.getDescription());
+    }
+
     /**
      * Creates new instance
      *

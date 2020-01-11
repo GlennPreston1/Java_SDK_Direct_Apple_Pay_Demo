@@ -13,7 +13,7 @@ public enum ErrorType {
 
     TOKEN_ERROR(-2000, "Got Token error"),
 
-    VALIDATION_ERROR(-10000, "Requested parameter missed");
+    VALIDATION_ERROR(-10000, "Requested parameter missing or invalid");
 
 
 

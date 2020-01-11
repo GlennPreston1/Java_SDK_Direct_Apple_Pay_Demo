@@ -12,7 +12,7 @@ public class TurnkeyTokenException extends TurnkeyGenericException {
      *            error message
      */
     public TurnkeyTokenException(String message) {
-        super(ERROR_TYPE, message);
+        super(ERROR_TYPE, ERROR_TYPE.getDescription() + ":" + message);
     }
 
     /**

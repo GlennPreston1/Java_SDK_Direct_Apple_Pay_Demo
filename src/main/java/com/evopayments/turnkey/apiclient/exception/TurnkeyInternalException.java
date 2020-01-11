@@ -10,6 +10,10 @@ public class TurnkeyInternalException extends TurnkeyGenericException {
 
     private static final ErrorType ERROR_TYPE = ErrorType.INTERNAL_ERROR;
 
+    public TurnkeyInternalException() {
+        super(ERROR_TYPE, ERROR_TYPE.getDescription());
+    }
+
     /**
      * Creates new instance
      *

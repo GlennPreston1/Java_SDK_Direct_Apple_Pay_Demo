@@ -58,7 +58,7 @@ public abstract class ApiCall {
 	 *            optional, null disables the printing
 	 * @throws RequiredParamException
 	 */
-	public ApiCall(final ApplicationConfig config, final Map<String, String> inputParams, PrintWriter outputWriter) throws RequiredParamException {
+	public ApiCall(final ApplicationConfig config, final Map<String, String> inputParams, PrintWriter outputWriter) throws TurnkeyValidationException {
 
 		try {
 
@@ -86,16 +86,23 @@ public abstract class ApiCall {
 		} catch (final RequiredParamException e) {
 
 			outputWriter.println("(error)");
-			outputWriter.println("missing required params: " + e.getMissingFields());
+			outputWriter.println("missing required params: " + e.getMessage());
 
-			throw e;
+			throw new TurnkeyValidationException();
+
+		} catch (final TurnkeyValidationException e) {
+
+			outputWriter.println("(error)");
+			outputWriter.println("missing required params: " + e.getMessage());
+
+			throw new TurnkeyValidationException();
 
 		} catch (final Exception e) {
 
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getClass().getName() + ", cause/msg: " + e.getMessage() + ")");
 
-			throw new GeneralException(e);
+			throw new TurnkeyInternalException();
 
 		} finally {
 
@@ -150,7 +157,7 @@ public abstract class ApiCall {
 			final HttpResponse apiResponse = Request.Post(url).bodyForm(paramList).execute().returnResponse();
 			apiResponseStr = new BasicResponseHandler().handleResponse(apiResponse);
 		} catch (Exception e) {
-			throw new TurnkeyCommunicationException("Connection Timeout");
+			throw new TurnkeyCommunicationException();
 		}
 
 		try {
@@ -198,7 +205,7 @@ public abstract class ApiCall {
 	 * @throws PostToApiException
 	 * @throws GeneralException
 	 */
-	public JSONObject execute() throws PostToApiException, TokenAcquirationException, ActionCallException, GeneralException {
+	public JSONObject execute() throws PostToApiException, TurnkeyTokenException, ActionCallException, GeneralException, TurnkeyInternalException {
 
 		logger.log(Level.INFO, "API/SDK call: " + this.getActionType());
 
@@ -249,32 +256,32 @@ public abstract class ApiCall {
 			outputWriter.println("");
 			outputWriter.println(tokenResponse.toString(4));
 
-			throw new TurnkeyTokenException(tokenResponse.toString());
+			throw new TurnkeyTokenException(tokenResponse.toMap().get("errors").toString());
 
 		} catch (final PostToApiException e) {
 
 			outputWriter.println("(error)");
 			outputWriter.println("outgoing POST failed (cause/class: " + e.getCause().getClass().getName() + ", cause/msg: " + e.getCause().getMessage() + ")");
 
-			throw new TurnkeyInternalException("General Exception");
+			throw new TurnkeyInternalException();
 
 		} catch (final GeneralException e) {
 
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getCause().getClass().getName() + ", cause/msg: " + e.getCause().getMessage() + ")");
 
-			throw new TurnkeyInternalException("General Exception");
+			throw new TurnkeyInternalException();
 
 		} catch (final SDKException e) {
 
-			throw new TurnkeyInternalException("General Exception");
+			throw new TurnkeyInternalException();
 
 		} catch (final Exception e) {
 
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getClass().getName() + ", cause/msg: " + e.getMessage() + ")");
 
-			throw new TurnkeyInternalException("General Exception");
+			throw new TurnkeyInternalException();
 
 		} finally {
 
@@ -295,7 +302,7 @@ public abstract class ApiCall {
 		}
 
 		if (!requiredParams.isEmpty()) {
-			throw new TurnkeyValidationException(requiredParams.toString());
+			throw new TurnkeyValidationException();
 		}
 
 	}

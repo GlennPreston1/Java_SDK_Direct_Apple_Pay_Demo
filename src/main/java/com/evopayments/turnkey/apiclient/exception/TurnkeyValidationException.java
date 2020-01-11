@@ -9,6 +9,12 @@ public class TurnkeyValidationException extends TurnkeyGenericException {
 
     private static final ErrorType ERROR_TYPE = ErrorType.VALIDATION_ERROR;
 
+    public TurnkeyValidationException() {
+        super(ERROR_TYPE, ERROR_TYPE.getDescription());
+    }
+
+
+
     /**
      * Creates new instance
      *
@@ -29,5 +35,14 @@ public class TurnkeyValidationException extends TurnkeyGenericException {
      */
     public TurnkeyValidationException(String message, Throwable cause) {
         super(ERROR_TYPE, message, cause);
+    }
+
+    public TurnkeyValidationException( Throwable cause) {
+        super(ERROR_TYPE, ERROR_TYPE.getDescription(), cause);
+    }
+
+
+    public static String getValidationErrorDescription() {
+        return ERROR_TYPE.getDescription();
     }
 }

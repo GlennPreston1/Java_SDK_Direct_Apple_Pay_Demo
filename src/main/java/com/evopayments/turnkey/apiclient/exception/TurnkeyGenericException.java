@@ -1,6 +1,4 @@
 package com.evopayments.turnkey.apiclient.exception;
-import com.evopayments.turnkey.apiclient.exception.ErrorType;
-
 /**
  * Generic Exception
  *
