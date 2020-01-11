@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.apiclient.exception.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -21,12 +22,6 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.json.JSONObject;
 
-import com.evopayments.turnkey.apiclient.exception.ActionCallException;
-import com.evopayments.turnkey.apiclient.exception.GeneralException;
-import com.evopayments.turnkey.apiclient.exception.PostToApiException;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
-import com.evopayments.turnkey.apiclient.exception.SDKException;
-import com.evopayments.turnkey.apiclient.exception.TokenAcquirationException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 
 /**
@@ -155,7 +150,7 @@ public abstract class ApiCall {
 			final HttpResponse apiResponse = Request.Post(url).bodyForm(paramList).execute().returnResponse();
 			apiResponseStr = new BasicResponseHandler().handleResponse(apiResponse);
 		} catch (Exception e) {
-			throw new PostToApiException("HTTP POST error", e);
+			throw new TurnkeyCommunicationException("Connection Timeout");
 		}
 
 		try {
@@ -254,32 +249,32 @@ public abstract class ApiCall {
 			outputWriter.println("");
 			outputWriter.println(tokenResponse.toString(4));
 
-			throw new TokenAcquirationException();
+			throw new TurnkeyTokenException(tokenResponse.toString());
 
 		} catch (final PostToApiException e) {
 
 			outputWriter.println("(error)");
 			outputWriter.println("outgoing POST failed (cause/class: " + e.getCause().getClass().getName() + ", cause/msg: " + e.getCause().getMessage() + ")");
 
-			throw e;
+			throw new TurnkeyInternalException("General Exception");
 
 		} catch (final GeneralException e) {
 
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getCause().getClass().getName() + ", cause/msg: " + e.getCause().getMessage() + ")");
 
-			throw e;
+			throw new TurnkeyInternalException("General Exception");
 
 		} catch (final SDKException e) {
 
-			throw e;
+			throw new TurnkeyInternalException("General Exception");
 
 		} catch (final Exception e) {
 
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getClass().getName() + ", cause/msg: " + e.getMessage() + ")");
 
-			throw new GeneralException(e);
+			throw new TurnkeyInternalException("General Exception");
 
 		} finally {
 
@@ -300,7 +295,7 @@ public abstract class ApiCall {
 		}
 
 		if (!requiredParams.isEmpty()) {
-			throw new RequiredParamException(requiredParams);
+			throw new TurnkeyValidationException(requiredParams.toString());
 		}
 
 	}

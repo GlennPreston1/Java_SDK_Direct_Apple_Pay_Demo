@@ -1,0 +1,33 @@
+package com.evopayments.turnkey.apiclient.exception;
+
+/**
+ * Validation Exception
+ * @version $Id: TurnkeyValidationException.java 17118 2014-03-18 14:09:33Z semysm $
+ */
+@SuppressWarnings("serial")
+public class TurnkeyValidationException extends TurnkeyGenericException {
+
+    private static final ErrorType ERROR_TYPE = ErrorType.VALIDATION_ERROR;
+
+    /**
+     * Creates new instance
+     *
+     * @param message
+     *            error message
+     */
+    public TurnkeyValidationException(String message) {
+        super(ERROR_TYPE, message);
+    }
+
+    /**
+     * Creates new instance
+     *
+     * @param message
+     *            error message
+     * @param cause
+     *            cause
+     */
+    public TurnkeyValidationException(String message, Throwable cause) {
+        super(ERROR_TYPE, message, cause);
+    }
+}
