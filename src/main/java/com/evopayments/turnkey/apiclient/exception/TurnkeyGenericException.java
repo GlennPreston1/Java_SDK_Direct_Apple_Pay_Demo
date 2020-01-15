@@ -1,5 +1,6 @@
 package com.evopayments.turnkey.apiclient.exception;
 /**
+ * RuntimeException is to ensure that exception text that gets sent to the external merchant is safe .
  * Generic Exception
  *
  * @version $Id: GenericException.java 17118 2014-03-18 14:09:33Z semysm $

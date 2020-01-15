@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @author erbalazs
  *
  */
-public abstract class BaseApiCall extends ApiCall {
+public abstract class BaseApiCall extends GatewayApiRestClient {
 
 	public static String SUB_ACTION_COF_FIRST = "SUB_ACTION_COF_FIRST";
 	public static String SUB_ACTION_COF_RECURRING = "SUB_ACTION_COF_RECURRING";

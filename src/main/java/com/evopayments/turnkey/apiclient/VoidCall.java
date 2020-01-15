@@ -17,7 +17,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * @author erbalazs
  *
  */
-public class VoidCall extends ApiCall {
+public class VoidCall extends GatewayApiRestClient {
 
 	public VoidCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);

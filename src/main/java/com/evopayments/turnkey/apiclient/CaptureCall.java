@@ -17,7 +17,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * @author erbalazs
  *
  */
-public class CaptureCall extends ApiCall {
+public class CaptureCall extends GatewayApiRestClient {
 
 	public CaptureCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);

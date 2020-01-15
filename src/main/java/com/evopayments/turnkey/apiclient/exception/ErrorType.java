@@ -1,24 +1,25 @@
 package com.evopayments.turnkey.apiclient.exception;
 
 /**
+ * Enum is to define the exception text that gets sent to the external merchant in a safe way
  * Error Type
  *
  * @version $Id: ErrorType.java 17118 2014-03-18 14:09:33Z semysm $
  */
 public enum ErrorType {
 
-    COMMUNICATION_ERROR(-1998, "Timeout Exception"),
+    COMMUNICATION_ERROR(-1998, "A communication error occurred"),
 
-    INTERNAL_ERROR(-1999, "Internal error"),
+    INTERNAL_ERROR(-1999, "An internal error occurred"),
 
-    TOKEN_ERROR(-2000, "Got Token error"),
+    TOKEN_ERROR(-2000, "A token error occurred"),
 
-    VALIDATION_ERROR(-10000, "Requested parameter missing or invalid");
+    VALIDATION_ERROR(-10000, "A request parameter was missing or invalid");
 
 
-
+    // code refers to the error type, like -1998 refers to communication_error, -1999 refers to internal_error
     private final int code;
-
+    // description refers to the error message, like 'A communication error occurred','An internal error occurred'
     private final String description;
 
     private ErrorType(int code, String description) {

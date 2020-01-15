@@ -75,7 +75,7 @@ public class GetMobileCashierURLCallTest extends  BaseTest{
 
 		} catch (TurnkeyValidationException e) {
 
-			Assert.assertEquals(TurnkeyValidationException.getValidationErrorDescription(),e.getErrorDescription());
+			Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("country", "currency").toString(),e.getMessage());
 			throw e;
 
 		}

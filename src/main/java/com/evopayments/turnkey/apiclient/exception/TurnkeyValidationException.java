@@ -13,6 +13,15 @@ public class TurnkeyValidationException extends TurnkeyGenericException {
         super(ERROR_TYPE, ERROR_TYPE.getDescription());
     }
 
+    /**
+     * get turnkey validation error description
+     *
+     * @return turnkey validation error description
+     */
+    public String getTurnkeyValidationErrorDescription() {
+        return ERROR_TYPE.getDescription();
+    }
+
 
 
     /**
@@ -22,7 +31,7 @@ public class TurnkeyValidationException extends TurnkeyGenericException {
      *            error message
      */
     public TurnkeyValidationException(String message) {
-        super(ERROR_TYPE, message);
+        super(ERROR_TYPE, ERROR_TYPE.getDescription() + ":" + message);
     }
 
     /**

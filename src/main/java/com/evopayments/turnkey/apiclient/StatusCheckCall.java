@@ -14,7 +14,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * @author erbalazs
  *
  */
-public class StatusCheckCall extends ApiCall {
+public class StatusCheckCall extends GatewayApiRestClient {
 
 	public StatusCheckCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);

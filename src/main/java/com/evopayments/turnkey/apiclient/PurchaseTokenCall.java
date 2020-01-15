@@ -18,7 +18,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  *
  * @see PurchaseCall
  */
-public class PurchaseTokenCall extends ApiCall {
+public class PurchaseTokenCall extends GatewayApiRestClient {
 
 	public PurchaseTokenCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);

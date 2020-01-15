@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.evopayments.turnkey.apiclient.code.ActionType;
 import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
@@ -31,6 +29,8 @@ import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.json.JSONObject;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.evopayments.turnkey.config.ApplicationConfig;
 
@@ -39,9 +39,9 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  *
  * @author erbalazs
  */
-public abstract class ApiCall {
+public abstract class GatewayApiRestClient {
 
-	private final static Logger logger = Logger.getLogger(ApiCall.class.getName());
+	private final static Logger logger = LogManager.getLogger();
 
 	private static final String TOKEN_URL_PROP_KEY = "application.sessionTokenRequestUrl";
 	private static final String OPERATION_ACTION_URL_PROP_KEY = "application.paymentOperationActionUrl";
@@ -68,7 +68,7 @@ public abstract class ApiCall {
 	 *            optional, null disables the printing
 	 * @throws RequiredParamException
 	 */
-	public ApiCall(final ApplicationConfig config, final Map<String, String> inputParams, PrintWriter outputWriter) throws TurnkeyValidationException {
+	public GatewayApiRestClient(final ApplicationConfig config, final Map<String, String> inputParams, PrintWriter outputWriter) throws RequiredParamException {
 
 		try {
 
@@ -94,39 +94,27 @@ public abstract class ApiCall {
 			preValidateParams(inputParams);
 
 		} catch (final RequiredParamException e) {
-
+			logger.error("RequiredParamException: ", e);
 			outputWriter.println("(error)");
-			outputWriter.println("missing required params: " + e.getMessage());
+			outputWriter.println("missing required params: " + e.getMissingFields());
+			throw new TurnkeyValidationException(e.getMissingFields().toString());
 
-			throw new TurnkeyValidationException();
-
-		} catch (final TurnkeyValidationException e) {
-
-			outputWriter.println("(error)");
-			outputWriter.println("missing required params: " + e.getMessage());
-
-			throw new TurnkeyValidationException();
-
-		}  catch (final TurnkeyInternalException e) {
-
+		} catch (final TurnkeyInternalException e) {
+			logger.error("TurnkeyInternalException: ", e);
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getClass().getName() + ", cause/msg: " + e.getMessage() + ")");
-
 			throw new TurnkeyInternalException();
 
 		} catch (final Exception e) {
-
+			logger.error("TurnkeyInternalException: ", e);
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getClass().getName() + ", cause/msg: " + e.getMessage() + ")");
-
 			throw new TurnkeyInternalException();
 
 		} finally {
-
 			if (outputWriter != null) {
 				outputWriter.flush();
 			}
-
 		}
 
 	}
@@ -167,6 +155,7 @@ public abstract class ApiCall {
 		try {
 			paramList = getForm(paramMap).build();
 		} catch (Exception e) {
+			logger.error("PostToApiException: ", e);
 			throw new PostToApiException("cannot build bodyForm for the HTTP request", e);
 		}
 
@@ -174,12 +163,14 @@ public abstract class ApiCall {
 			final HttpResponse apiResponse = Request.Post(url).bodyForm(paramList).execute().returnResponse();
 			apiResponseStr = new BasicResponseHandler().handleResponse(apiResponse);
 		} catch (Exception e) {
+			logger.error("TurnkeyCommunicationException: ", e);
 			throw new TurnkeyCommunicationException();
 		}
 
 		try {
 			return new JSONObject(apiResponseStr);
 		} catch (Exception e) {
+			logger.error("PostToApiException: ", e);
 			throw new PostToApiException("failed to parse API call response (not JSON?)", e);
 		}
 
@@ -223,8 +214,7 @@ public abstract class ApiCall {
 	 * @throws GeneralException
 	 */
 	public JSONObject execute() throws PostToApiException, TurnkeyTokenException, ActionCallException, GeneralException, TurnkeyInternalException {
-
-		logger.log(Level.INFO, "API/SDK call: " + this.getActionType());
+		logger.info("API/SDK call: ", this.getActionType());
 
 		try {
 
@@ -276,38 +266,35 @@ public abstract class ApiCall {
 			throw new TurnkeyTokenException(tokenResponse.toMap().get("errors").toString());
 
 		} catch (final PostToApiException e) {
-
+			logger.error("PostToApiException: ", e);
 			outputWriter.println("(error)");
 			outputWriter.println("outgoing POST failed (cause/class: " + e.getCause().getClass().getName() + ", cause/msg: " + e.getCause().getMessage() + ")");
-
 			throw new TurnkeyInternalException();
 
 		} catch (TurnkeyGenericException e) {
-			throw e;
-		}  catch (final GeneralException e) {
+			logger.error("TurnkeyGenericException: ", e);
+			throw new TurnkeyInternalException();
 
+		}  catch (final GeneralException e) {
+			logger.error("GeneralException: ", e);
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getCause().getClass().getName() + ", cause/msg: " + e.getCause().getMessage() + ")");
-
 			throw new TurnkeyInternalException();
 
 		} catch (final SDKException e) {
-
+			logger.error("SDKException: ", e);
 			throw new TurnkeyInternalException();
 
 		} catch (final Exception e) {
-
+			logger.error("Exception: ", e);
 			outputWriter.println("(error)");
 			outputWriter.println("general SDK error (cause/class: " + e.getClass().getName() + ", cause/msg: " + e.getMessage() + ")");
-
 			throw new TurnkeyInternalException();
 
 		} finally {
-
 			if (outputWriter != null) {
 				outputWriter.flush();
 			}
-
 		}
 	}
 
@@ -321,7 +308,7 @@ public abstract class ApiCall {
 		}
 
 		if (!requiredParams.isEmpty()) {
-			throw new TurnkeyValidationException();
+			throw new RequiredParamException(requiredParams);
 		}
 
 	}
