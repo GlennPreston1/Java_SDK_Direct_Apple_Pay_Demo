@@ -17,7 +17,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * @author erbalazs
  *
  */
-public class RefundCall extends ApiCall {
+public class RefundCall extends GatewayApiRestClient {
 
 	public RefundCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);

@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @author erbalazs
  *
  */
-public abstract class BaseApiCall extends ApiCall {
+public abstract class BaseApiCall extends GatewayApiRestClient {
 
 	/**
 	 * CARD ON FILE

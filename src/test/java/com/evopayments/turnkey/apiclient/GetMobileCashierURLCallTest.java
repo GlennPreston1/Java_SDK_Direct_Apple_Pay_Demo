@@ -3,7 +3,7 @@ package com.evopayments.turnkey.apiclient;
 import com.evopayments.turnkey.apiclient.code.Channel;
 import com.evopayments.turnkey.apiclient.code.CountryCode;
 import com.evopayments.turnkey.apiclient.code.CurrencyCode;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.TestConfig;
 import org.json.JSONObject;
@@ -58,7 +58,7 @@ public class GetMobileCashierURLCallTest extends  BaseTest{
 	/**
 	 * RequiredParamException test (intentionally left out param)
 	 */
-	@Test(expected = RequiredParamException.class)
+	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {
 		try {
 
@@ -73,9 +73,9 @@ public class GetMobileCashierURLCallTest extends  BaseTest{
 			final GetMobileCashierURLCall call = new GetMobileCashierURLCall(config, inputParams, null);
 			call.execute();
 
-		} catch (RequiredParamException e) {
+		} catch (TurnkeyValidationException e) {
 
-			Assert.assertEquals(new HashSet<>(Arrays.asList("currency", "country")), e.getMissingFields());
+			Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("country", "currency").toString(),e.getMessage());
 			throw e;
 
 		}

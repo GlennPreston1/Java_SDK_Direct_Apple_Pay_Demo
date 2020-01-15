@@ -17,7 +17,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * @author erbalazs
  *
  */
-public class TokenizeCall extends ApiCall {
+public class TokenizeCall extends GatewayApiRestClient {
 
 	public TokenizeCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);

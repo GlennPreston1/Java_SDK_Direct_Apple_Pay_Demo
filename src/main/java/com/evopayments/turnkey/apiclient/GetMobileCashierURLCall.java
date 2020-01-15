@@ -12,7 +12,7 @@ import java.util.*;
  * @author shiying
  *
  */
-public class GetMobileCashierURLCall extends ApiCall {
+public class GetMobileCashierURLCall extends GatewayApiRestClient {
 
 	public GetMobileCashierURLCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);

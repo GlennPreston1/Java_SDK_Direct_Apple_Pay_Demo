@@ -18,7 +18,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * @author erbalazs
  *
  */
-public class GetAvailablePaymentSolutionsCall extends ApiCall {
+public class GetAvailablePaymentSolutionsCall extends GatewayApiRestClient {
 
 	public GetAvailablePaymentSolutionsCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
