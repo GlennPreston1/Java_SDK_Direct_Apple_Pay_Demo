@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.TestConfig;
 
@@ -79,7 +79,7 @@ public class RefundCallTest extends BaseTest {
 	/**
 	 * RequiredParamException test (intentionally left out param)
 	 */
-	@Test(expected = RequiredParamException.class)
+	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {
 
 		try {
@@ -93,9 +93,8 @@ public class RefundCallTest extends BaseTest {
 			final RefundCall call = new RefundCall(config, inputParams, null);
 			call.execute();
 
-		} catch (RequiredParamException e) {
-
-			Assert.assertEquals(new HashSet<>(Arrays.asList("originalMerchantTxId", "currency")), e.getMissingFields());
+		} catch (TurnkeyValidationException e) {
+			Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("originalMerchantTxId", "currency").toString(),e.getMessage());
 			throw e;
 
 		}
