@@ -1,7 +1,7 @@
 package com.evopayments.turnkey.apiclient;
 
 import com.evopayments.turnkey.apiclient.code.Channel;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.TestConfig;
 import org.json.JSONObject;
@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 public class VerifyCallTest extends  BaseTest{
@@ -37,7 +36,7 @@ public class VerifyCallTest extends  BaseTest{
 		// PURCHASE
 		final Map<String, String> purchaseParams = new HashMap<>();
 		super.addCommonParams(purchaseParams);
-		purchaseParams.put("amount", "20.0");
+		purchaseParams.put("amount", "0");
 		purchaseParams.put("customerId", tokenizeCall.getString("customerId"));
 		purchaseParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
 		purchaseParams.put("specinCreditCardCVV", "111");
@@ -56,7 +55,7 @@ public class VerifyCallTest extends  BaseTest{
 	/**
 	 * RequiredParamException test (intentionally left out param)
 	 */
-	@Test(expected = RequiredParamException.class)
+	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {
 
 		try {
@@ -72,9 +71,8 @@ public class VerifyCallTest extends  BaseTest{
 			final VerifyCall call = new VerifyCall(config, inputParams, null);
 			call.execute();
 
-		} catch (RequiredParamException e) {
-
-			Assert.assertEquals(new HashSet<>(Arrays.asList("currency", "country")), e.getMissingFields());
+		} catch (TurnkeyValidationException e) {
+			Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("country","currency").toString(),e.getMessage());
 			throw e;
 
 		}

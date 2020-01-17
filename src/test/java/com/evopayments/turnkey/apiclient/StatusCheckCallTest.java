@@ -3,12 +3,12 @@ package com.evopayments.turnkey.apiclient;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.evopayments.turnkey.apiclient.exception.ActionCallException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.TestConfig;
 
@@ -61,7 +61,7 @@ public class StatusCheckCallTest extends BaseTest {
 	/**
 	 * ActionCallException test
 	 */
-	@Test(expected = ActionCallException.class)
+	@Test(expected = TurnkeyInternalException.class)
 	public void reqParExExpTestCall() {
 
 		final Map<String, String> inputParams = new HashMap<>();

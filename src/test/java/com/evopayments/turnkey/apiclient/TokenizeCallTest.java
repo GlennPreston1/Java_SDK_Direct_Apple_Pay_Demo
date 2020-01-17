@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
+import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.evopayments.turnkey.apiclient.exception.ActionCallException;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.TestConfig;
 
@@ -44,7 +44,7 @@ public class TokenizeCallTest extends BaseTest{
 	/**
 	 * RequiredParamException test (intentionally left out param)
 	 */
-	@Test(expected = RequiredParamException.class)
+	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {
 
 		try {
@@ -58,9 +58,8 @@ public class TokenizeCallTest extends BaseTest{
 			final TokenizeCall call = new TokenizeCall(config, inputParams, null);
 			call.execute();
 
-		} catch (RequiredParamException e) {
-
-			Assert.assertEquals(new HashSet<>(Arrays.asList("expiryYear")), e.getMissingFields());
+		} catch (TurnkeyValidationException e) {
+			Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("expiryYear").toString(),e.getMessage());
 			throw e;
 
 		}
@@ -69,7 +68,7 @@ public class TokenizeCallTest extends BaseTest{
 	/**
 	 * ActionCallException test (via intentionally wrong expiryYear)
 	 */
-	@Test(expected = ActionCallException.class)
+	@Test(expected = TurnkeyInternalException.class)
 	public void actCallExExpTestCall() {
 
 		final Map<String, String> inputParams = new HashMap<>();
