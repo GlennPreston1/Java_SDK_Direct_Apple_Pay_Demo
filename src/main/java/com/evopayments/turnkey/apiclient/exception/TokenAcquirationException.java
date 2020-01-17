@@ -5,6 +5,8 @@ package com.evopayments.turnkey.apiclient.exception;
  * 
  * @author erbalazs
  */
+
+@SuppressWarnings("serial")
 public class TokenAcquirationException extends SDKException {
 
 	/**
