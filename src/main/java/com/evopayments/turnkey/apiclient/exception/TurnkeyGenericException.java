@@ -1,46 +1,46 @@
 package com.evopayments.turnkey.apiclient.exception;
 /**
- * RuntimeException is to ensure that exception text that gets sent to the external merchant is safe .
+ * RuntimeException is to ensure exception text
+ * that gets sent to the external merchant is safe .
  * Generic Exception
  *
- * @version $Id: GenericException.java 17118 2014-03-18 14:09:33Z semysm $
+ * @version $Id: GenericException.java $
  */
+
 @SuppressWarnings("serial")
 public abstract class TurnkeyGenericException extends RuntimeException {
 
-
+    /**
+     * specify the errorType.
+     */
     private final ErrorType errorType;
 
     /**
-     * Creates new instance
+     * Creates new instance.
      *
      * @param errorType
      *            error type
      * @param message
      *            error message
      */
-    protected TurnkeyGenericException(ErrorType errorType, String message) {
+    protected TurnkeyGenericException(final ErrorType errorType, final String message) {
         super(message);
         this.errorType = errorType;
     }
 
     /**
-     * Creates new instance
-     *
+     * Creates new instance.
      * @param errorType
-     *            error type
      * @param message
-     *            error message
      * @param cause
-     *            cause
      */
-    protected TurnkeyGenericException(ErrorType errorType, String message, Throwable cause) {
+    protected TurnkeyGenericException(final ErrorType errorType, final String message, final Throwable cause) {
         super(message, cause);
         this.errorType = errorType;
     }
 
     /**
-     * Gets error type
+     * Gets error type.
      *
      * @return error type
      */
@@ -49,7 +49,7 @@ public abstract class TurnkeyGenericException extends RuntimeException {
     }
 
     /**
-     * Gets error type code
+     * Gets error type code.
      * @return
      */
     public int getErrorCode() {
@@ -57,7 +57,7 @@ public abstract class TurnkeyGenericException extends RuntimeException {
     }
 
     /**
-     * Gets error type description
+     * Gets error type description.
      * @return
      */
     public String getErrorDescription() {

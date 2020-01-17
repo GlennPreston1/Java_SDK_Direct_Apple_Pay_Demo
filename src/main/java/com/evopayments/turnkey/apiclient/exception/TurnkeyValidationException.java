@@ -1,20 +1,27 @@
 package com.evopayments.turnkey.apiclient.exception;
 
 /**
- * Validation Exception
- * @version $Id: TurnkeyValidationException.java 17118 2014-03-18 14:09:33Z semysm $
+ * Validation Exception.
+ * @version $Id: TurnkeyValidationException.java $
  */
+
 @SuppressWarnings("serial")
 public class TurnkeyValidationException extends TurnkeyGenericException {
 
+    /**
+     * define the error type is VALIDATION_ERROR for current class.
+     */
     private static final ErrorType ERROR_TYPE = ErrorType.VALIDATION_ERROR;
 
+    /**
+     * constructor of current class.
+     */
     public TurnkeyValidationException() {
         super(ERROR_TYPE, ERROR_TYPE.getDescription());
     }
 
     /**
-     * get turnkey validation error description
+     * get turnkey validation error description.
      *
      * @return turnkey validation error description
      */
@@ -25,32 +32,37 @@ public class TurnkeyValidationException extends TurnkeyGenericException {
 
 
     /**
-     * Creates new instance
+     * Creates new instance.
      *
      * @param message
      *            error message
      */
-    public TurnkeyValidationException(String message) {
+    public TurnkeyValidationException(final String message) {
         super(ERROR_TYPE, ERROR_TYPE.getDescription() + ":" + message);
     }
 
     /**
-     * Creates new instance
-     *
+     * Creates new instance.
      * @param message
-     *            error message
      * @param cause
-     *            cause
      */
-    public TurnkeyValidationException(String message, Throwable cause) {
+    public TurnkeyValidationException(final String message, final Throwable cause) {
         super(ERROR_TYPE, message, cause);
     }
 
-    public TurnkeyValidationException( Throwable cause) {
+    /**
+     * constructor of current class.
+     * @param cause
+     */
+    public TurnkeyValidationException(final Throwable cause) {
         super(ERROR_TYPE, ERROR_TYPE.getDescription(), cause);
     }
 
 
+    /**
+     * get ValidationError Description.
+     * @return error description
+     */
     public static String getValidationErrorDescription() {
         return ERROR_TYPE.getDescription();
     }
