@@ -8,9 +8,9 @@ import java.util.logging.Logger;
 /**
  * Application properties (request URLs etc.)
  */
-abstract public class ApplicationConfig {
+public abstract class ApplicationConfig {
 
-	private final static Logger logger = Logger.getLogger(ApplicationConfig.class.getName());
+	private static final  Logger logger = Logger.getLogger(ApplicationConfig.class.getName());
 
 	private final Properties properties = new Properties();
 
@@ -24,14 +24,23 @@ abstract public class ApplicationConfig {
 		// -Devopayments-turnkey-sdk-http-log=verbose
 		// (none is the default)
 
-		if (System.getProperty("evopayments-turnkey-sdk-http-log", "none").equals("verbose")) {
-			System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+		if (System.getProperty("evopayments-turnkey-sdk-http-log", "none")
+				.equals("verbose")) {
+			System.setProperty("org.apache.commons.logging.Log",
+					"org.apache.commons.logging.impl.SimpleLog");
 			System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
-			System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.wire", "DEBUG");
+			System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.wire",
+					"DEBUG");
 		}
 
 	}
 
+	/**
+	 * get production/test instance which represents the production/test property file.
+	 *
+	 * @return production/test instance
+	 *
+	 */
 	public static ApplicationConfig getInstanceBasedOnSysProp() {
 
 		// USE
@@ -40,11 +49,12 @@ abstract public class ApplicationConfig {
 		// -Devopayments-turnkey-sdk-config=production
 		// (test is the default)
 
-		final String configParamStr = System.getProperty("evopayments-turnkey-sdk-config", "test");
+		final String configParamStr = System.getProperty("evopayments-turnkey-sdk-config",
+				"test");
 
 		ApplicationConfig config;
 
-		if (configParamStr.equals("production")) {
+		if ("production".equals(configParamStr)) {
 			config = ProductionConfig.getInstance();
 		} else {
 			config = TestConfig.getInstance();
@@ -56,6 +66,9 @@ abstract public class ApplicationConfig {
 
 	}
 
+	/**
+	 * constructor of current class.
+	 */
 	public ApplicationConfig() {
 
 		final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -69,7 +82,7 @@ abstract public class ApplicationConfig {
 	}
 
 	/**
-	 * Read values from properties
+	 * Read values from properties.
 	 *
 	 * @param key
 	 * @return a value from properties
@@ -78,5 +91,9 @@ abstract public class ApplicationConfig {
 		return properties.getProperty(key);
 	}
 
+	/**
+	 * get config property file name
+	 * @return
+	 */
 	protected abstract String getFilename();
 }

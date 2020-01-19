@@ -1,20 +1,31 @@
 package com.evopayments.turnkey.apiclient;
 
+import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.PrintWriter;
 import java.util.Map;
 
-import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.config.ApplicationConfig;
 
 /**
- * Requests authorisation for a payment
+ * Requests authorisation for a payment.
  * 
  * @author erbalazs
  *
  */
 public class AuthCall extends BaseApiCall {
 
-	public AuthCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
+	/**
+	 * constructor of current class.
+	 *
+	 * @param config
+	 *
+	 * @param inputParams
+	 *
+	 * @param outputWriter
+	 *
+	 */
+	public AuthCall(final ApplicationConfig config, final Map<String, String> inputParams,
+					final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 

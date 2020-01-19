@@ -1,17 +1,5 @@
 package com.evopayments.turnkey.web.servlet.sample.b2s;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.evopayments.turnkey.apiclient.GatewayApiRestClient;
 import com.evopayments.turnkey.apiclient.PurchaseTokenCall;
 import com.evopayments.turnkey.apiclient.exception.GeneralException;
@@ -20,16 +8,28 @@ import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.apiclient.exception.TokenAcquirationException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.web.servlet.sample.s2s.AbstractServlet;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.json.JSONObject;
 
 /**
- * Redirect used in Browser-to-Server mode
+ * Redirect used in Browser-to-Server mode.
  * 
  * @author erbalazs
  *
  */
-@WebServlet(name = "PaymentRedirect", description = "Redirect used in Browser-to-Server mode", urlPatterns = "/redirectforpurchase")
+@WebServlet(name = "PaymentRedirect", description = "Redirect used in Browser-to-Server mode",
+		urlPatterns = "/redirectforpurchase")
+@SuppressWarnings("serial")
 public class PaymentRedirectServlet extends HttpServlet {
 
 	private final static Logger logger = Logger.getLogger(PaymentRedirectServlet.class.getName());
@@ -39,23 +39,30 @@ public class PaymentRedirectServlet extends HttpServlet {
 
 	protected final ApplicationConfig config;
 
+	/**
+	 * constructor of current  class.
+	 */
 	public PaymentRedirectServlet() {
 		super();
 		config = ApplicationConfig.getInstanceBasedOnSysProp();
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		try {
 			
 			final Map<String, String> inputParams = AbstractServlet.extractParams(req);
 			
-			JSONObject jsonObject = new PurchaseTokenCall(config, inputParams, new PrintWriter(System.out, true)).execute();
+			final JSONObject jsonObject = new PurchaseTokenCall(config, inputParams,
+					new PrintWriter(System.out, true)).execute();
 			
 			inputParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
 			inputParams.put("token", jsonObject.getString("token"));
-			resp.sendRedirect(config.getProperty(CASHIER_URL_PROP_KEY)+ "?" + URLEncodedUtils.format(GatewayApiRestClient.getForm(inputParams).build(), "UTF-8"));
+			resp.sendRedirect(config.getProperty(CASHIER_URL_PROP_KEY)+ "?"
+					+ URLEncodedUtils.format(GatewayApiRestClient.getForm(inputParams).build(),
+					"UTF-8"));
 			
 		} catch (RequiredParamException e) {
 			

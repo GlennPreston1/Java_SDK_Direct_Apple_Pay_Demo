@@ -2,11 +2,9 @@ package com.evopayments.turnkey.apiclient;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.NetworkFailConfig;
 
@@ -20,7 +18,7 @@ public class NetworkingFailTest extends  BaseTest{
 	}
 
 	/**
-	 * PostToApiException test (intentional network error (wrong URLs))
+	 * PostToApiException test (intentional network error (wrong URLs)).
 	 */
 	@Test(expected = TurnkeyInternalException.class)
 	public void networkingExExpTestCall() {

@@ -1,7 +1,7 @@
 package com.evopayments.turnkey.config;
 
 /**
- * Intentionally not valid / wrong URLs, can be used for network exception unit tests
+ * Intentionally not valid / wrong URLs, can be used for network exception unit tests.
  * 
  * @author erbalazs
  *
@@ -11,7 +11,7 @@ public class NetworkFailConfig extends ApplicationConfig {
 	private static NetworkFailConfig instance;
 
 	/**
-	 * Java singleton implementation
+	 * Java singleton implementation.
 	 *
 	 * @return the instance from this object
 	 */
@@ -21,9 +21,13 @@ public class NetworkFailConfig extends ApplicationConfig {
 		}
 		return instance;
 	}
-	
+
+	/**
+	 * constructor of current class.
+	 */
 	private NetworkFailConfig(){
 		// use getInstance...
+		super();
 	}
 
 	@Override

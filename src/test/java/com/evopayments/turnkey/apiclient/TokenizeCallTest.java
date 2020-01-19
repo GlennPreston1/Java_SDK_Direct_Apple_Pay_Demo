@@ -2,16 +2,13 @@ package com.evopayments.turnkey.apiclient;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-
 import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.TestConfig;
 
@@ -42,7 +39,7 @@ public class TokenizeCallTest extends BaseTest{
 	}
 
 	/**
-	 * RequiredParamException test (intentionally left out param)
+	 * RequiredParamException test (intentionally left out param).
 	 */
 	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {
@@ -66,7 +63,7 @@ public class TokenizeCallTest extends BaseTest{
 	}
 
 	/**
-	 * ActionCallException test (via intentionally wrong expiryYear)
+	 * ActionCallException test (via intentionally wrong expiryYear).
 	 */
 	@Test(expected = TurnkeyInternalException.class)
 	public void actCallExExpTestCall() {

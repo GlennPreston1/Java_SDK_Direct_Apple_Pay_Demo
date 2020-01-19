@@ -1,5 +1,8 @@
 package com.evopayments.turnkey.apiclient;
 
+import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,19 +10,26 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
-import com.evopayments.turnkey.config.ApplicationConfig;
-
 /**
- * Refunds a previous capture operation, partially or in full
+ * Refunds a previous capture operation, partially or in full.
  * 
  * @author erbalazs
  *
  */
 public class RefundCall extends GatewayApiRestClient {
 
-	public RefundCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
+	/**
+	 * constructor of current class.
+	 *
+	 * @param config
+	 *
+	 * @param inputParams
+	 *
+	 * @param outputWriter
+	 *
+	 */
+	public RefundCall(final ApplicationConfig config, final Map<String, String> inputParams,
+					  final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
@@ -29,13 +39,15 @@ public class RefundCall extends GatewayApiRestClient {
 	}
 
 	@Override
-	protected void preValidateParams(final Map<String, String> inputParams) throws RequiredParamException {
+	protected void preValidateParams(final Map<String, String> inputParams)
+			throws RequiredParamException {
 
-		final Set<String> requiredParams = new HashSet<>(Arrays.asList("amount", "country", "currency", "originalMerchantTxId"));
+		final Set<String> requiredParams = new HashSet<>(Arrays.asList("amount", "country",
+				"currency", "originalMerchantTxId"));
 
 		for (final Map.Entry<String, String> entry : inputParams.entrySet()) {
 
-			if ((entry.getValue() != null) && !entry.getValue().trim().isEmpty()) {
+			if (entry.getValue() != null && !entry.getValue().trim().isEmpty()) {
 				requiredParams.remove(entry.getKey());
 			}
 
@@ -64,7 +76,8 @@ public class RefundCall extends GatewayApiRestClient {
 	}
 
 	@Override
-	protected Map<String, String> getActionParams(final Map<String, String> inputParams, final String token) {
+	protected Map<String, String> getActionParams(final Map<String, String> inputParams,
+												  final String token) {
 
 		final Map<String, String> actionParams = new HashMap<>();
 

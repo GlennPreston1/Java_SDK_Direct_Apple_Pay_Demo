@@ -1,33 +1,41 @@
 package com.evopayments.turnkey.web.servlet.sample.s2s;
 
+import com.evopayments.turnkey.apiclient.exception.ActionCallException;
+import com.evopayments.turnkey.apiclient.exception.GeneralException;
+import com.evopayments.turnkey.apiclient.exception.PostToApiException;
+import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.apiclient.exception.TokenAcquirationException;
+import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.apiclient.exception.ActionCallException;
-import com.evopayments.turnkey.apiclient.exception.GeneralException;
-import com.evopayments.turnkey.apiclient.exception.PostToApiException;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
-import com.evopayments.turnkey.apiclient.exception.TokenAcquirationException;
-
 /**
- * Sample servlet base class
+ * Sample servlet base class.
  * 
  * @author erbalazs
  *
  */
+@SuppressWarnings("serial")
 public abstract class AbstractServlet extends HttpServlet {
 
-	private final static Logger logger = Logger.getLogger(AbstractServlet.class.getName());
+	private static final Logger logger = Logger.getLogger(AbstractServlet.class.getName());
+	protected final ApplicationConfig config;
 
+	/**
+	 * extract params from http request.
+	 *
+	 * @param request
+	 *
+	 * @return
+	 *
+	 */
 	public static Map<String, String> extractParams(final HttpServletRequest request) {
 
 		final HashMap<String, String> requestMap = new HashMap<>();
@@ -42,17 +50,18 @@ public abstract class AbstractServlet extends HttpServlet {
 
 		return requestMap;
 	}
-	
-	protected final ApplicationConfig config;
-	
+
+	/**
+	 * constructor of current class.
+	 */
 	public AbstractServlet() {
 		super();
-	
 		config = ApplicationConfig.getInstanceBasedOnSysProp();
 	}
 
 	@Override
-	protected final void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
+	protected final void doGet(final HttpServletRequest req, final HttpServletResponse resp)
+			throws IOException {
 		try {
 			process(req, resp);
 		} catch (RequiredParamException e) {
@@ -76,5 +85,17 @@ public abstract class AbstractServlet extends HttpServlet {
 		}
 	}
 
-	protected abstract void process(final HttpServletRequest req, final HttpServletResponse resp) throws RequiredParamException, ActionCallException, TokenAcquirationException, GeneralException, IOException;
+	/**
+	 * process
+	 * @param req
+	 * @param resp
+	 * @throws RequiredParamException
+	 * @throws ActionCallException
+	 * @throws TokenAcquirationException
+	 * @throws GeneralException
+	 * @throws IOException
+	 */
+	protected abstract void process(final HttpServletRequest req, final HttpServletResponse resp)
+			throws RequiredParamException, ActionCallException, TokenAcquirationException,
+			GeneralException, IOException;
 }

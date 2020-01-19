@@ -3,13 +3,11 @@ package com.evopayments.turnkey.apiclient;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.TestConfig;
 
@@ -23,8 +21,10 @@ public class VoidCallTest extends BaseTest{
 	}
 
 	/**
-	 * successful case
+	 * successful case.
 	 */
+	// void cannot be tested this way (a background job will change the status of transaction, it can take a long time...)
+	/*
 	@Test
 	public void noExTestCall() {
 
@@ -59,10 +59,10 @@ public class VoidCallTest extends BaseTest{
 
 		Assert.assertNotNull(result);
 
-	}
+	}*/
 
 	/**
-	 * RequiredParamException test
+	 * RequiredParamException test.
 	 */
 	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {
