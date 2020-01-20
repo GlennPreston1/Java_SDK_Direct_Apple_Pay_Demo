@@ -24,7 +24,8 @@ public class GetMobileCashierURLCall extends GatewayApiRestClient {
 	 * @param inputParams
 	 * @param outputWriter
 	 */
- 	public GetMobileCashierURLCall(final ApplicationConfig config,final Map<String, String> inputParams,
+ 	public GetMobileCashierURLCall(final ApplicationConfig config,
+								   final Map<String, String> inputParams,
 								   final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
@@ -34,14 +35,18 @@ public class GetMobileCashierURLCall extends GatewayApiRestClient {
 			throws RequiredParamException {
 
 		final Set<String> requiredParams = new HashSet<>(
-				Arrays.asList("action", "amount", "channel", "country", "currency", "paymentSolutionId"));
+				Arrays.asList("action", "amount", "channel", "country", "currency",
+						"paymentSolutionId"));
 		mandatoryValidation(inputParams,requiredParams);
 	}
 
 	@Override
 	protected Map<String, String> getTokenParams(
 			final Map<String, String> inputParams) {
-		final Map<String, String> tokenParams = new HashMap<>(inputParams); // all of the input params plus the ones below
+		/**
+		 *  all of the input params plus the ones below.
+		 */
+		final Map<String, String> tokenParams = new HashMap<>(inputParams);
 
 		tokenParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
 		tokenParams.put("password", config.getProperty(PASSWORD_PROP_KEY));

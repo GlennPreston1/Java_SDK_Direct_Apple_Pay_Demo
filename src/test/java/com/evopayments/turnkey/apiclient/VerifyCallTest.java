@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +21,7 @@ public class VerifyCallTest extends  BaseTest{
 	}
 
 	/**
-	 * successful case
+	 * successful case.
 	 */
 	@Test
 	public void noExTestCall() {
@@ -53,7 +52,7 @@ public class VerifyCallTest extends  BaseTest{
 	}
 
 	/**
-	 * RequiredParamException test (intentionally left out param)
+	 * RequiredParamException test (intentionally left out param).
 	 */
 	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {

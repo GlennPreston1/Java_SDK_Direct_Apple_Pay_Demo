@@ -1,20 +1,23 @@
 package com.evopayments.turnkey.apiclient.code;
 
 /**
- * Type of documents
+ * Type of documents.
  */
 public enum DocumentType {
-    PASSPORT ("PASSPORT"),
+    PASSPORT("PASSPORT"),
     NATIONAL_ID("NATIONAL_ID"),
     DRIVING_LICENSE("DRIVING_LICENSE"),
     UNIQUE_TAXPAYER_REFERENCE("UNIQUE_TAXPAYER_REFERENCE"),
     OTHER("OTHER");
 
-    DocumentType(String code) {
+    /**
+     * define document type code.
+     */
+    protected String code;
+
+    DocumentType(final String code) {
         this.code = code;
     }
-
-    protected String code;
 
     public String getCode() {
         return code;

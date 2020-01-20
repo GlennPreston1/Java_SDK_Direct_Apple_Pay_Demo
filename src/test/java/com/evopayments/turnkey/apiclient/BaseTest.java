@@ -3,7 +3,6 @@ package com.evopayments.turnkey.apiclient;
 import com.evopayments.turnkey.apiclient.code.Channel;
 import com.evopayments.turnkey.apiclient.code.CountryCode;
 import com.evopayments.turnkey.apiclient.code.CurrencyCode;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +13,10 @@ import java.util.Map;
  */
 public class BaseTest {
 
+    /**
+     * build the params map for token request.
+     * @return tokenizeParams map
+     */
     protected Map<String, String> buildTokenizeParam(){
         Map<String, String> tokenizeParams = new HashMap<>();
         tokenizeParams.put("number", "5413330300002004");
@@ -24,6 +27,10 @@ public class BaseTest {
         return tokenizeParams;
     }
 
+    /**
+     * add common params for action.
+     * @param authParams
+     */
     protected  void addCommonParams(Map<String, String> authParams){
         authParams.put("channel", Channel.ECOM.getCode());
         authParams.put("country", CountryCode.PL.getCode());

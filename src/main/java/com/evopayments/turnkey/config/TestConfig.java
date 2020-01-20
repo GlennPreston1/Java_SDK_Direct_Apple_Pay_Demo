@@ -6,7 +6,7 @@ public class TestConfig extends ApplicationConfig {
 	private static TestConfig instance;
 
 	/**
-	 * Java singleton implementation
+	 * Java singleton implementation.
 	 *
 	 * @return the instance from this object
 	 */
@@ -16,9 +16,13 @@ public class TestConfig extends ApplicationConfig {
 		}
 		return instance;
 	}
-	
-	private TestConfig(){
+
+	/**
+	 * constructor of current class.
+	 */
+	private TestConfig() {
 		// use getInstance...
+		super();
 	}
 
 	@Override

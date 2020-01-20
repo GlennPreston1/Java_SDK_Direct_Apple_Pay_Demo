@@ -1,5 +1,8 @@
 package com.evopayments.turnkey.apiclient;
 
+import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,12 +10,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
-import com.evopayments.turnkey.config.ApplicationConfig;
-
 /**
- * Only token acquiration for purchase
+ * Only token acquiration for purchase.
  * 
  * @author erbalazs
  *
@@ -20,7 +19,18 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class PurchaseTokenCall extends GatewayApiRestClient {
 
-	public PurchaseTokenCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
+	/**
+	 * constructor of current class.
+	 *
+	 * @param config
+	 *
+	 * @param inputParams
+	 *
+	 * @param outputWriter
+	 *
+	 */
+	public PurchaseTokenCall(final ApplicationConfig config, final Map<String, String> inputParams,
+							 final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
@@ -30,13 +40,15 @@ public class PurchaseTokenCall extends GatewayApiRestClient {
 	}
 
 	@Override
-	protected void preValidateParams(final Map<String, String> inputParams) throws RequiredParamException {
+	protected void preValidateParams(final Map<String, String> inputParams)
+			throws RequiredParamException {
 
-		final Set<String> requiredParams = new HashSet<>(Arrays.asList("amount", "channel", "country", "currency", "paymentSolutionId"));
+		final Set<String> requiredParams = new HashSet<>(Arrays.asList("amount", "channel",
+				"country", "currency", "paymentSolutionId"));
 
 		for (final Map.Entry<String, String> entry : inputParams.entrySet()) {
 
-			if ((entry.getValue() != null) && !entry.getValue().trim().isEmpty()) {
+			if (entry.getValue() != null && !entry.getValue().trim().isEmpty()) {
 				requiredParams.remove(entry.getKey());
 			}
 
@@ -64,14 +76,17 @@ public class PurchaseTokenCall extends GatewayApiRestClient {
 		tokenParams.put("currency", inputParams.get("currency"));
 		tokenParams.put("country", inputParams.get("country"));
 		tokenParams.put("paymentSolutionId", inputParams.get("paymentSolutionId"));
-		tokenParams.put("merchantNotificationUrl", config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
-		tokenParams.put("merchantLandingPageUrl", config.getProperty(MERCHANT_LANDING_PAGE_URL_PROP_KEY));
+		tokenParams.put("merchantNotificationUrl",
+				config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
+		tokenParams.put("merchantLandingPageUrl",
+				config.getProperty(MERCHANT_LANDING_PAGE_URL_PROP_KEY));
 
 		return tokenParams;
 	}
 
 	@Override
-	protected Map<String, String> getActionParams(final Map<String, String> inputParams, final String token) {
+	protected Map<String, String> getActionParams(final Map<String, String> inputParams,
+												  final String token) {
 		return null;
 	}
 }

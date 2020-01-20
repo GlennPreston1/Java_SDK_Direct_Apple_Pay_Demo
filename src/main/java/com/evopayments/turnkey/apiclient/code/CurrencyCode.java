@@ -1,7 +1,7 @@
 package com.evopayments.turnkey.apiclient.code;
 
 /**
- * ISO-4217 Currency codes
+ * ISO-4217 Currency codes.
  */
 public enum CurrencyCode {
     ADP("ADP"), // Andorran Peseta (ANDORRA)
@@ -11,7 +11,8 @@ public enum CurrencyCode {
     ALK("ALK"), // Old Lek (ALBANIA)
     ALL("ALL"), // Lek (ALBANIA)
     AMD("AMD"), // Armenian Dram (ARMENIA)
-    ANG("ANG"), // Netherlands Antillean Guilder (CURAÇAO, SINT MAARTEN (DUTCH PART), NETHERLANDS ANTILLES)
+    // Netherlands Antillean Guilder (CURAÇAO, SINT MAARTEN (DUTCH PART), NETHERLANDS ANTILLES)
+    ANG("ANG"),
     AOA("AOA"), // Kwanza (ANGOLA)
     AOK("AOK"), // Kwanza (ANGOLA)
     AON("AON"), // New Kwanza (ANGOLA)
@@ -21,7 +22,9 @@ public enum CurrencyCode {
     ARS("ARS"), // Argentine Peso (ARGENTINA)
     ARY("ARY"), // Peso (ARGENTINA)
     ATS("ATS"), // Schilling (AUSTRIA)
-    AUD("AUD"), // Australian Dollar (AUSTRALIA, CHRISTMAS ISLAND ,COCOS (KEELING) ISLANDS, HEARD ISLAND AND McDONALD ISLANDS, KIRIBATI, NAURU, NORFOLK ISLAND, TUVALU)
+    // Australian Dollar (AUSTRALIA, CHRISTMAS ISLAND ,COCOS (KEELING) ISLANDS,
+    // HEARD ISLAND AND McDONALD ISLANDS, KIRIBATI, NAURU, NORFOLK ISLAND, TUVALU)
+    AUD("AUD"),
     AWG("AWG"), // Aruban Florin (ARUBA)
     AYM("AYM"), // Azerbaijan Manat (AZERBAIJAN)
     AZM("AZM"), // Azerbaijanian Manat (AZERBAIJAN)
@@ -94,11 +97,20 @@ public enum CurrencyCode {
     ESB("ESB"), // "A Account (convertible Peseta Account) (SPAIN)
     ESP("ESP"), // Spanish Peseta (SPAIN, ANDORRA)
     ETB("ETB"), // Ethiopian Birr (ETHIOPIA)
-    EUR("EUR"), // Euro (EUROPEAN UNION, ÅLAND ISLAND, ANDORRA, AUSTRIA, BELGIUM, CYPRUS, ESTONIA, FINLAND, FRANCE, FRENCH GUIANA, FRENCH SOUTHERN TERRITORIES, GERMANY, GREECE, GUADELOUPE, HOLY SEE (VATICAN CITY STATE), IRELAND, ITALY, LATVIA, LUXEMBOURG, MALTA, MARTINIQUE, MAYOTTE, NETHERLANDS, MONTENEGRO, MONACO, PORTUGAL, RÉUNION, SAINT BARTHÉLEMY, SAINT MARTIN (FRENCH PART), SAINT PIERRE AND MIQUELON, SAN MARINO, SLOVAKIA, SLOVENIA, SPAIN, SERBIA AND MONTENEGRO)
+    // Euro (EUROPEAN UNION, ÅLAND ISLAND, ANDORRA, AUSTRIA, BELGIUM, CYPRUS,
+    // ESTONIA, FINLAND, FRANCE, FRENCH GUIANA, FRENCH SOUTHERN TERRITORIES,
+    // GERMANY, GREECE, GUADELOUPE, HOLY SEE (VATICAN CITY STATE), IRELAND, ITALY, LATVIA,
+    // LUXEMBOURG, MALTA, MARTINIQUE, MAYOTTE, NETHERLANDS, MONTENEGRO, MONACO, PORTUGAL, RÉUNION,
+    // SAINT BARTHÉLEMY, SAINT MARTIN (FRENCH PART),SAINT PIERRE AND MIQUELON, SAN MARINO, SLOVAKIA,
+    // SLOVENIA, SPAIN, SERBIA AND MONTENEGRO)
+    EUR("EUR"),
     FIM("FIM"), // Markka (FINLAND, ÅLAND ISLANDS)
     FJD("FJD"), // Fiji Dollar (FIJI)
     FKP("FKP"), // Falkland Islands Pound (FALKLAND ISLANDS (MALVINAS))
-    FRF("FRF"), // French Franc (FRANCE, ANDORRA, FRENCH  GUIANA, FRENCH SOUTHERN TERRITORIES, GUADELOUPE, MARTINIQUE, MAYOTTE, MONACO, RÉUNION, SAINT MARTIN, SAINT PIERRE AND MIQUELON, SAINT-BARTHÉLEMY)
+    // French Franc (FRANCE, ANDORRA, FRENCH  GUIANA, FRENCH SOUTHERN TERRITORIES, GUADELOUPE,
+    // MARTINIQUE, MAYOTTE, MONACO, RÉUNION, SAINT MARTIN, SAINT PIERRE AND MIQUELON,
+    // SAINT-BARTHÉLEMY)
+    FRF("FRF"),
     GBP("GBP"), // Pound Sterling (UNITED KINGDOM, GUERNSEY, ISLE OF MAN, JERSEY)
     GEK("GEK"), // Georgian Coupon (GEORGIA)
     GEL("GEL"), // Lari (GEORGIA)
@@ -212,7 +224,9 @@ public enum CurrencyCode {
     RON("RON"), // New Romanian Leu (ROMANIA)
     RSD("RSD"), // Serbian Dinar (SERBIA)
     RUB("RUB"), // Russian Ruble (RUSSIAN FEDERATION)
-    RUR("RUR"), // Russian Ruble (RUSSIAN FEDERATION, ARMENIA, AZERBAIJAN, BELARUS, GEORGIA, KAZAKHSTAN, KYRGYZSTAN, REPUBLIC OF MOLDOVA, TAJIKISTAN, TURKMENISTAN, UZBEKISTAN)
+    // Russian Ruble (RUSSIAN FEDERATION, ARMENIA, AZERBAIJAN, BELARUS, GEORGIA, KAZAKHSTAN, K
+    // YRGYZSTAN, REPUBLIC OF MOLDOVA, TAJIKISTAN, TURKMENISTAN, UZBEKISTAN)
+    RUR("RUR"),
     RWF("RWF"), // Rwanda Franc (RWANDA)
     SAR("SAR"), // Saudi Riyal (SAUDI ARABIA)
     SBD("SBD"), // Solomon Islands Dollar (SOLOMON ISLANDS)
@@ -253,7 +267,12 @@ public enum CurrencyCode {
     UGS("UGS"), // Uganda Shilling (UGANDA)
     UGW("UGW"), // Old Shilling (UGANDA)
     UGX("UGX"), // Uganda Shilling (UGANDA)
-    USD("USD"), // US Dollar (UNITED STATES, AMERICAN SAMOA, BONAIRE, SINT EUSTATIUS AND SABA, BRITISH INDIAN OCEAN TERRITORY, ECUADOR, EL SALVADOR, GUAM, HAITI, MARSHALL ISLANDS, FEDERATED STATES OF MICRONESIA, NORTHERN MARIANA ISLANDS, PALAU, PANAMA, PUERTO RICO, TIMOR-LESTE, TURKS AND CAICOS ISLANDS, VIRGIN ISLANDS (BRITISH) ,UNITED STATES MINOR OUTLYING ISLANDS, VIRGIN ISLANDS (U.S.))
+    // US Dollar (UNITED STATES, AMERICAN SAMOA, BONAIRE, SINT EUSTATIUS AND SABA,
+    // BRITISH INDIAN OCEAN TERRITORY, ECUADOR, EL SALVADOR, GUAM, HAITI, MARSHALL ISLANDS,
+    // FEDERATED STATES OF MICRONESIA, NORTHERN MARIANA ISLANDS, PALAU, PANAMA, PUERTO RICO,
+    // TIMOR-LESTE, TURKS AND CAICOS ISLANDS, VIRGIN ISLANDS (BRITISH) ,
+    // UNITED STATES MINOR OUTLYING ISLANDS, VIRGIN ISLANDS (U.S.))
+    USD("USD"),
     USN("USN"), // US Dollar (Next day) (UNITED STATES)
     USS("USS"), // US Dollar (Same day) (UNITED STATES)
     UYI("UYI"), // Uruguay Peso en Unidades Indexadas (URUIURUI) (URUGUAY)
@@ -267,19 +286,30 @@ public enum CurrencyCode {
     VND("VND"), // Dong (VIETNAM)
     VUV("VUV"), // Vatu (VANUATU)
     WST("WST"), // Tala (SAMOA)
-    XAF("XAF"), // CFA Franc BEAC (CAMEROON, CENTRAL AFRICAN REPUBLIC, CHAD, CONGO, EQUATORIAL GUINEA, GABON)
+    // CFA Franc BEAC (CAMEROON, CENTRAL AFRICAN REPUBLIC, CHAD, CONGO, EQUATORIAL GUINEA, GABON)
+    XAF("XAF"),
     XAG("XAG"), // Silver (ZZ11_Silver)
     XAU("XAU"), // Gold (ZZ08_Gold)
-    XBA("XBA"), // Bond Markets Unit European Composite Unit (EURCO) (ZZ01_Bond Markets Unit European_EURCO)
-    XBB("XBB"), // Bond Markets Unit European Monetary Unit (E.M.U.-6) (ZZ02_Bond Markets Unit European_EMU-6)
-    XBC("XBC"), // Bond Markets Unit European Unit of Account 9 (E.U.A.-9) (ZZ03_Bond Markets Unit European_EUA-9)
-    XBD("XBD"), // Bond Markets Unit European Unit of Account 17 (E.U.A.-17) (ZZ04_Bond Markets Unit European_EUA-17)
-    XCD("XCD"), // East Caribbean Dollar (ANGUILLA, ANTIGUA AND BARBUDA, DOMINICA, GRENADA, MONTSERRAT, SAINT KITTS AND NEVIS, SAINT LUCIA, SAINT VINCENT AND THE GRENADINES)
+    // Bond Markets Unit European Composite Unit (EURCO) (ZZ01_Bond Markets Unit European_EURCO)
+    XBA("XBA"),
+    // Bond Markets Unit European Monetary Unit (E.M.U.-6) (ZZ02_Bond Markets Unit European_EMU-6)
+    XBB("XBB"),
+    // Bond Markets Unit European Unit of Account 9 (E.U.A.-9)
+    // (ZZ03_Bond Markets Unit European_EUA-9)
+    XBC("XBC"),
+    // Bond Markets Unit European Unit of Account 17 (E.U.A.-17)
+    // (ZZ04_Bond Markets Unit European_EUA-17)
+    XBD("XBD"),
+    // East Caribbean Dollar (ANGUILLA, ANTIGUA AND BARBUDA, DOMINICA, GRENADA, MONTSERRAT,
+    // SAINT KITTS AND NEVIS, SAINT LUCIA, SAINT VINCENT AND THE GRENADINES)
+    XCD("XCD"),
     XDR("XDR"), // SDR (Special Drawing Right) (INTERNATIONAL MONETARY FUND (IMF))
     XEU("XEU"), // European Currency Unit (E.C.U) (EUROPEAN MONETARY CO-OPERATION FUND (EMCF))
     XFO("XFO"), // Gold-Franc (ZZ01_Gold-Franc)
     XFU("XFU"), // UIC-Franc (ZZ05_UIC-Franc)
-    XOF("XOF"), // CFA Franc BCEAO (BENIN, BURKINA FASO, CÔTE D'IVOIRE, GUINEA-BISSAU, MALI, NIGER, SENEGAL, TOGO)
+    // CFA Franc BCEAO (BENIN, BURKINA FASO, CÔTE D'IVOIRE, GUINEA-BISSAU, MALI, NIGER,
+    // SENEGAL, TOGO)
+    XOF("XOF"),
     XPD("XPD"), // Palladium (ZZ09_Palladium)
     XPF("XPF"), // CFP Franc (FRENCH POLYNESIA, NEW CALEDONIA, WALLIS AND FUTUNA)
     XPT("XPT"), // Platinum (ZZ10_Platinum)
@@ -304,15 +334,22 @@ public enum CurrencyCode {
     ZWN("ZWN"), // Zimbabwe Dollar (new) (ZIMBABWE)
     ZWR("ZWR"); // Zimbabwe Dollar (ZIMBABWE)
 
+    /**
+     * defind currency code.
+     */
     private final String code;
 
     /**
-     * @param code currnecy code by ISO-4217
+     * @param code currnecy code by ISO-4217.
      */
-    CurrencyCode(String code) {
+    CurrencyCode(final String code) {
         this.code = code;
     }
 
+    /**
+     * get code.
+     * @return code
+     */
     public String getCode() {
         return code;
     }

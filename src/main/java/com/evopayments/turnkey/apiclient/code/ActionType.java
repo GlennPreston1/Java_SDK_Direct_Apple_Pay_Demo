@@ -1,7 +1,7 @@
 package com.evopayments.turnkey.apiclient.code;
 
 /**
- * Type of actions
+ * Type of actions.
  */
 public enum ActionType {
     TOKENIZE("TOKENIZE"),
@@ -15,18 +15,35 @@ public enum ActionType {
     VERIFY("VERIFY"),
     GET_MOBILE_CASHIER_URL("getMobileCashierUrl");
 
+    /**
+     * error type code
+     */
     private final String code;
 
-    ActionType(String code) {
+    /**
+     * constructor of current class.
+     *
+     * @param code
+     */
+    ActionType(final String code) {
         this.code = code;
     }
 
+    /**
+     * get error code.
+     * @return code
+     */
     public String getCode() {
         return code;
     }
 
-    public static ActionType valueOfCode(String code) {
-        for (ActionType actionType : values()) {
+    /**
+     *  get actionType.
+     * @param code
+     * @return
+     */
+    public static ActionType valueOfCode(final String code) {
+        for (final ActionType actionType : values()) {
             if (actionType.code.equals(code)) {
                 return actionType;
             }

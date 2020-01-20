@@ -1,7 +1,7 @@
 package com.evopayments.turnkey.apiclient.code;
 
 /**
- * ISO-3166 Countries with Regional Codes
+ * ISO-3166 Countries with Regional Codes.
  */
 public enum CountryCode {
     AF("AF"), // Afghanistan
@@ -254,12 +254,15 @@ public enum CountryCode {
     ZM("ZM"), // Zambia
     ZW("ZW"); // Zimbabwe
 
+    /**
+     * define country code.
+     */
     private final String code;
 
     /**
-     * @param code country or regional code by ISO-3166
+     * @param code country or regional code by ISO-3166.
      */
-    CountryCode(String code) {
+    CountryCode(final String code) {
         this.code = code;
     }
 
