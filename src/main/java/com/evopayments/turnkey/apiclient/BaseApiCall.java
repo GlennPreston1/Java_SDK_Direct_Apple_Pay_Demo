@@ -20,14 +20,11 @@ import java.util.Set;
 public abstract class BaseApiCall extends GatewayApiRestClient {
 
 	/**
-	 * define action SUB_ACTION_COF_FIRST
-	 */
-	/**
 	 * CARD ON FILE
 	 */
 	public static String SUB_ACTION_COF_FIRST = "SUB_ACTION_COF_FIRST";
 	/**
-	 * defind action SUB_ACTION_COF_RECURRING
+	 * define action SUB_ACTION_COF_RECURRING
 	 */
 	public static String SUB_ACTION_COF_RECURRING = "SUB_ACTION_COF_RECURRING";
 	/**
@@ -100,19 +97,20 @@ public abstract class BaseApiCall extends GatewayApiRestClient {
 		tokenParams.put("paymentSolutionId", inputParams.get("paymentSolutionId"));
 		tokenParams.put("merchantNotificationUrl",
 				config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
-		if (SUB_ACTION_COF_FIRST.equals(this.subActionType)) {
-		tokenParams.put("merchantNotificationUrl", config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
-		tokenParams.put("merchantLandingPageUrl", config.getProperty(MERCHANT_LANDING_PAGE_URL_PROP_KEY));
+		tokenParams.put("merchantLandingPageUrl",
+				config.getProperty(MERCHANT_LANDING_PAGE_URL_PROP_KEY));
 
 		tokenParams.put("mmrpContractNumber",inputParams.get("mmrpContractNumber"));
-		tokenParams.put("mmrpOriginalMerchantTransactionId",inputParams.get("mmrpOriginalMerchantTransactionId"));
+		tokenParams.put("mmrpOriginalMerchantTransactionId",
+				inputParams.get("mmrpOriginalMerchantTransactionId"));
 
 		if(SUB_ACTION_COF_FIRST.equals(this.subActionType)){
 			tokenParams.put("cardOnFileType", "First");
 		} else if (SUB_ACTION_COF_RECURRING.equals(this.subActionType)) {
 			tokenParams.put("cardOnFileType", "Repeat");
 			tokenParams.put("cardOnFileInitiator", "Merchant");
-			tokenParams.put("cardOnFileInitialTransactionId",inputParams.get("cardOnFileInitialTransactionId"));
+			tokenParams.put("cardOnFileInitialTransactionId",
+					inputParams.get("cardOnFileInitialTransactionId"));
 		} else if (SUB_ACTION_MMRP_FIRST.equals(this.subActionType)) {
 			tokenParams.put("cardOnFileType", "First");
 			tokenParams.put("mmrpBillPayment", "Recurring");
@@ -120,11 +118,10 @@ public abstract class BaseApiCall extends GatewayApiRestClient {
 		}else if (SUB_ACTION_MMRP_RECURRING.equals(this.subActionType)) {
 			tokenParams.put("cardOnFileType", "Repeat");
 			tokenParams.put("cardOnFileInitiator", "Merchant");
-			tokenParams.put("cardOnFileInitialTransactionId",inputParams.get("cardOnFileInitialTransactionId"));
-			tokenParams.put("mmrpBillPayment", "Recurring");
-			tokenParams.put("mmrpCustomerPresent", "BillPayment");
 			tokenParams.put("cardOnFileInitialTransactionId",
 					inputParams.get("cardOnFileInitialTransactionId"));
+			tokenParams.put("mmrpBillPayment", "Recurring");
+			tokenParams.put("mmrpCustomerPresent", "BillPayment");
 		}
 
 		return tokenParams;
@@ -136,10 +133,12 @@ public abstract class BaseApiCall extends GatewayApiRestClient {
 	 * @param tokenParams
 	 * @param inputParams
 	 */
-	private void populateParamsForRecurring(Map<String, String> tokenParams, Map<String, String> inputParams) {
+	private void populateParamsForRecurring(Map<String, String> tokenParams,
+											Map<String, String> inputParams) {
 		tokenParams.put("cardOnFileType", "Repeat");
 		tokenParams.put("cardOnFileInitiator", "Merchant");
-		tokenParams.put("cardOnFileInitialTransactionId",inputParams.get("cardOnFileInitialTransactionId"));
+		tokenParams.put("cardOnFileInitialTransactionId",
+				inputParams.get("cardOnFileInitialTransactionId"));
 		tokenParams.put("mmrpBillPayment", "Recurring");
 		tokenParams.put("mmrpCustomerPresent", "BillPayment");
 	}
