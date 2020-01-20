@@ -1,20 +1,19 @@
 package com.evopayments.turnkey.apiclient;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-
-import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
-import org.json.JSONObject;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import com.evopayments.turnkey.apiclient.code.Channel;
 import com.evopayments.turnkey.apiclient.code.CountryCode;
 import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.config.TestConfig;
+import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 
 public class AuthCallTest extends BaseTest {
 
@@ -26,7 +25,7 @@ public class AuthCallTest extends BaseTest {
 	}
 
 	/**
-	 * successful case
+	 * successful case.
 	 */
 	@Test
 	public void noExTestCall() {
@@ -54,7 +53,7 @@ public class AuthCallTest extends BaseTest {
 	}
 
 	/**
-	 *  able to get the token,
+	 *  able to get the token.
 	 */
 	@Test
 	public void redirectionResponseTestCall() {
@@ -80,7 +79,7 @@ public class AuthCallTest extends BaseTest {
 	}
 
 	/**
-	 * RequiredParamException test (intentionally left out param)
+	 * RequiredParamException test (intentionally left out param).
 	 */
 	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {

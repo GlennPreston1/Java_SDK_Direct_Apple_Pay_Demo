@@ -1,22 +1,33 @@
 package com.evopayments.turnkey.apiclient;
 
+import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
-import com.evopayments.turnkey.config.ApplicationConfig;
-
 /**
- * Returns the status of an already issued payment transaction, as such it doesn’t actually generate a new transaction
+ * Returns the status of an already issued payment transaction,
+ * as such it doesn’t actually generate a new transaction.
  * 
  * @author erbalazs
  *
  */
 public class StatusCheckCall extends GatewayApiRestClient {
 
-	public StatusCheckCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
+	/**
+	 * constructor of current class.
+	 *
+	 * @param config
+	 *
+	 * @param inputParams
+	 *
+	 * @param outputWriter
+	 *
+	 */
+	public StatusCheckCall(final ApplicationConfig config, final Map<String, String> inputParams,
+						   final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
@@ -26,7 +37,8 @@ public class StatusCheckCall extends GatewayApiRestClient {
 	}
 
 	@Override
-	protected void preValidateParams(final Map<String, String> inputParams) throws RequiredParamException {
+	protected void preValidateParams(final Map<String, String> inputParams)
+			throws RequiredParamException {
 		// 
 	}
 
@@ -45,7 +57,8 @@ public class StatusCheckCall extends GatewayApiRestClient {
 	}
 
 	@Override
-	protected Map<String, String> getActionParams(final Map<String, String> inputParams, final String token) {
+	protected Map<String, String> getActionParams(final Map<String, String> inputParams,
+												  final String token) {
 
 		final Map<String, String> actionParams = new HashMap<>();
 

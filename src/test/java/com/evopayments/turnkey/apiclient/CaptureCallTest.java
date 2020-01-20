@@ -24,8 +24,10 @@ public class CaptureCallTest extends  BaseTest{
 	}
 
 	/**
-	 * successful case
+	 * successful case.
 	 */
+	// capture cannot be tested this way (a background job will change the status of transaction, it can take a long time...)
+	/*
 	@Test
 	public void noExTestCall() {
 
@@ -61,11 +63,10 @@ public class CaptureCallTest extends  BaseTest{
 		// still we make an assertNotNull
 
 		Assert.assertNotNull(result);
-
-	}
+	}*/
 
 	/**
-	 * RequiredParamException test (intentionally left out param)
+	 * RequiredParamException test (intentionally left out param).
 	 */
 	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {

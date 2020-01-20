@@ -1,35 +1,47 @@
 package com.evopayments.turnkey;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.evopayments.turnkey.apiclient.*;
+import com.evopayments.turnkey.apiclient.AuthCall;
+import com.evopayments.turnkey.apiclient.CaptureCall;
+import com.evopayments.turnkey.apiclient.GetAvailablePaymentSolutionsCall;
+import com.evopayments.turnkey.apiclient.GetMobileCashierURLCall;
+import com.evopayments.turnkey.apiclient.PurchaseCall;
+import com.evopayments.turnkey.apiclient.RefundCall;
+import com.evopayments.turnkey.apiclient.StatusCheckCall;
+import com.evopayments.turnkey.apiclient.TokenizeCall;
+import com.evopayments.turnkey.apiclient.VoidCall;
 import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import org.json.JSONObject;
-
 import com.evopayments.turnkey.apiclient.exception.ActionCallException;
 import com.evopayments.turnkey.apiclient.exception.GeneralException;
 import com.evopayments.turnkey.apiclient.exception.PostToApiException;
 import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.apiclient.exception.TokenAcquirationException;
+import com.evopayments.turnkey.config.ApplicationConfig;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONObject;
 
 /**
- * Command line version
+ * Command line version.
  *
  * @author erbalazs
  */
 public class Start {
 
-	private final static Logger logger = Logger.getLogger(Start.class.getName());
+	private static final Logger logger = Logger.getLogger(Start.class.getName());
 
+	/**
+	 * main method.
+	 *
+	 * @param args
+	 */
 	public static void main(final String[] args) {
 
 		// sample cmd params:
-		// -action TOKENIZE -merchantId 5000 -password 5678 -number 5454545454545454 -nameOnCard "John Doe" -expiryMonth 12 -expiryYear 2018
+		// -action TOKENIZE -merchantId 5000 -password 5678 -number 5454545454545454
+		// -nameOnCard "John Doe" -expiryMonth 12 -expiryYear 2018
 
 		final Map<String, String> params = new HashMap<>();
 
@@ -76,35 +88,45 @@ public class Start {
 
 			final ApplicationConfig config = ApplicationConfig.getInstanceBasedOnSysProp();
 
-			JSONObject result; // note that the optional PrintWriter prints the result too (and if errors/exceptions happen, they will be printed too)
-
+			// note that the optional PrintWriter prints the result too
+			// (and if errors/exceptions happen, they will be printed too)
+			JSONObject result;
 			switch (action) {
 			case AUTH:
-				result = new AuthCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new AuthCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			case CAPTURE:
-				result = new CaptureCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new CaptureCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			case GET_AVAILABLE_PAYSOLS:
-				result = new GetAvailablePaymentSolutionsCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new GetAvailablePaymentSolutionsCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			case PURCHASE:
-				result = new PurchaseCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new PurchaseCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			case REFUND:
-				result = new RefundCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new RefundCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			case STATUS_CHECK:
-				result = new StatusCheckCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new StatusCheckCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			case TOKENIZE:
-				result = new TokenizeCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new TokenizeCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			case VOID:
-				result = new VoidCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new VoidCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			case GET_MOBILE_CASHIER_URL:
-				result = new GetMobileCashierURLCall(config, params, new PrintWriter(System.out, true)).execute();
+				result = new GetMobileCashierURLCall(config, params,
+						new PrintWriter(System.out, true)).execute();
 				break;
 			default:
 				System.err.println("Illegal action parameter usage");

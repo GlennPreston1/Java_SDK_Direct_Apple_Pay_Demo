@@ -1,16 +1,15 @@
 package com.evopayments.turnkey.web.servlet.sample.callback;
 
+
+import com.evopayments.turnkey.web.servlet.sample.s2s.AbstractServlet;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.evopayments.turnkey.web.servlet.sample.s2s.AbstractServlet;
 
 /**
  * When an operation is completed (successfully or not), a notification is sent to inform the
@@ -19,13 +18,24 @@ import com.evopayments.turnkey.web.servlet.sample.s2s.AbstractServlet;
  * 
  * @author erbalazs
  */
-@WebServlet(name = "TransactionResultCallback", description = "TransactionResultCallback servlet", urlPatterns = "/transactionresultcallback")
+@SuppressWarnings("serial")
+@WebServlet(name = "TransactionResultCallback", description = "TransactionResultCallback servlet",
+		urlPatterns = "/transactionresultcallback")
 public class TransactionResultCallbackServlet extends HttpServlet {
 
-	private final static Logger logger = Logger.getLogger(TransactionResultCallbackServlet.class.getName());
+	private static final Logger logger = Logger.getLogger(
+			TransactionResultCallbackServlet.class.getName());
+
+	/**
+	 * constructor of current  class.
+	 */
+	public TransactionResultCallbackServlet() {
+		super();
+	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(final HttpServletRequest req, final HttpServletResponse resp)
+			throws ServletException, IOException {
 
 		final Map<String, String> notificationParams = AbstractServlet.extractParams(req);
 

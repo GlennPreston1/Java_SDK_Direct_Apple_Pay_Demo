@@ -1,24 +1,47 @@
 package com.evopayments.turnkey.apiclient;
 
+import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.PrintWriter;
 import java.util.Map;
 
-import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.config.ApplicationConfig;
-
 /**
- * Does an authorize and capture operations at once (and cannot be voided)
+ * Does an authorize and capture operations at once (and cannot be voided).
  * 
  * @author erbalazs
  *
  */
 public class PurchaseCall extends BaseApiCall {
 
-	public PurchaseCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter) {
+	/**
+	 * constructor of current class.
+	 *
+	 * @param config
+	 *
+	 * @param inputParams
+	 *
+	 * @param outputWriter
+	 *
+	 */
+	public PurchaseCall(final ApplicationConfig config, final Map<String, String> inputParams,
+						final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
-	public PurchaseCall(ApplicationConfig config, Map<String, String> inputParams, PrintWriter outputWriter, String subActionType) {
+	/**
+	 * constructor of current class.
+	 *
+	 * @param config
+	 *
+	 * @param inputParams
+	 *
+	 * @param outputWriter
+	 *
+	 * @param subActionType
+	 *
+	 */
+	public PurchaseCall(final ApplicationConfig config, final Map<String, String> inputParams,
+						final PrintWriter outputWriter, final String subActionType) {
 		super(config, inputParams, outputWriter, subActionType);
 	}
 
