@@ -1,6 +1,6 @@
 package com.evopayments.turnkey.web.servlet.sample.b2s;
 
-import com.evopayments.turnkey.apiclient.GatewayApiRestClient;
+import com.evopayments.turnkey.apiclient.ApiCall;
 import com.evopayments.turnkey.apiclient.PurchaseTokenCall;
 import com.evopayments.turnkey.apiclient.exception.GeneralException;
 import com.evopayments.turnkey.apiclient.exception.PostToApiException;
@@ -61,7 +61,7 @@ public class PaymentRedirectServlet extends HttpServlet {
 			inputParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
 			inputParams.put("token", jsonObject.getString("token"));
 			resp.sendRedirect(config.getProperty(CASHIER_URL_PROP_KEY)+ "?"
-					+ URLEncodedUtils.format(GatewayApiRestClient.getForm(inputParams).build(),
+					+ URLEncodedUtils.format(ApiCall.getForm(inputParams).build(),
 					"UTF-8"));
 			
 		} catch (RequiredParamException e) {

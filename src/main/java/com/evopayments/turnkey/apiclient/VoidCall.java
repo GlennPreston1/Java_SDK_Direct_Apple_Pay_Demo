@@ -16,7 +16,7 @@ import java.util.Set;
  * @author erbalazs
  *
  */
-public class VoidCall extends GatewayApiRestClient {
+public class VoidCall extends ApiCall {
 
 	/**
 	 * constructor of current class.

@@ -16,7 +16,7 @@ import java.util.Set;
  * @author shiying
  *
  */
-public class GetMobileCashierURLCall extends GatewayApiRestClient {
+public class GetMobileCashierURLCall extends ApiCall {
 
 	/**
 	 * the constructor of class GetMobileCashierURLCall.

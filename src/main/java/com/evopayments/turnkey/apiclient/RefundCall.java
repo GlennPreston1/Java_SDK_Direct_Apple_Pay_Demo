@@ -16,7 +16,7 @@ import java.util.Set;
  * @author erbalazs
  *
  */
-public class RefundCall extends GatewayApiRestClient {
+public class RefundCall extends ApiCall {
 
 	/**
 	 * constructor of current class.

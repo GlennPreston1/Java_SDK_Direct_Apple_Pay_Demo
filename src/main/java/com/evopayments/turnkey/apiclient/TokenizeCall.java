@@ -16,7 +16,7 @@ import java.util.Set;
  * @author erbalazs
  *
  */
-public class TokenizeCall extends GatewayApiRestClient {
+public class TokenizeCall extends ApiCall {
 
 	/**
 	 * constructor of current class.

@@ -14,7 +14,7 @@ import java.util.Map;
  * @author erbalazs
  *
  */
-public class StatusCheckCall extends GatewayApiRestClient {
+public class StatusCheckCall extends ApiCall {
 
 	/**
 	 * constructor of current class.

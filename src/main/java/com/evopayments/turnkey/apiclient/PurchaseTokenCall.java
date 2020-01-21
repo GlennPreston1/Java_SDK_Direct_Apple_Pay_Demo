@@ -17,7 +17,7 @@ import java.util.Set;
  *
  * @see PurchaseCall
  */
-public class PurchaseTokenCall extends GatewayApiRestClient {
+public class PurchaseTokenCall extends ApiCall {
 
 	/**
 	 * constructor of current class.
