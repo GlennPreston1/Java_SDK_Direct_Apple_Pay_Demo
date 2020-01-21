@@ -38,7 +38,7 @@ import org.json.JSONObject;
  *
  * @author erbalazs
  */
-public abstract class GatewayApiRestClient {
+public abstract class ApiCall {
 
 	private static final Logger logger = LogManager.getLogger();
 
@@ -73,8 +73,8 @@ public abstract class GatewayApiRestClient {
 	 * @throws RequiredParamException
 	 *
 	 */
-	public GatewayApiRestClient(final ApplicationConfig config,
-								final Map<String, String> inputParams, PrintWriter outputWriter)
+	public ApiCall(final ApplicationConfig config,
+				   final Map<String, String> inputParams, PrintWriter outputWriter)
 			throws RequiredParamException {
 
 		try {

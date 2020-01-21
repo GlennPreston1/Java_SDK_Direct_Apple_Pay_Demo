@@ -17,7 +17,7 @@ import java.util.Set;
  *
  */
 @SuppressWarnings("serial")
-public abstract class BaseApiCall extends GatewayApiRestClient {
+public abstract class BaseApiCall extends ApiCall {
 
 	/**
 	 * CARD ON FILE

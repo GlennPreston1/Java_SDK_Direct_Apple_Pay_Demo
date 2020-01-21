@@ -19,7 +19,7 @@ import java.util.Set;
  * @author erbalazs
  *
  */
-public class GetAvailablePaymentSolutionsCall extends GatewayApiRestClient {
+public class GetAvailablePaymentSolutionsCall extends ApiCall {
 
 	/**
 	 * get available payment solution.

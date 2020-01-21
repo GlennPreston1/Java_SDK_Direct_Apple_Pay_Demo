@@ -16,7 +16,7 @@ import java.util.Set;
  * @author erbalazs
  *
  */
-public class CaptureCall extends GatewayApiRestClient {
+public class CaptureCall extends ApiCall {
 
 	/**
 	 * constructor of current  class.
