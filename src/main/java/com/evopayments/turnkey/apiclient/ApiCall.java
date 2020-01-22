@@ -306,8 +306,7 @@ public abstract class ApiCall {
 
 		} catch (TurnkeyGenericException e) {
 			logger.error("TurnkeyGenericException: ", e);
-			throw new TurnkeyInternalException();
-
+			throw e;
 		}  catch (final GeneralException e) {
 			logger.error("GeneralException: ", e);
 			outputWriter.println("(error)");
