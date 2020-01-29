@@ -1,23 +1,14 @@
 package com.evopayments.turnkey.apiclient;
 
+import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.TestConfig;
 
 public class RefundCallTest extends BaseTest {
-
-	private static ApplicationConfig config;
-
-	@BeforeClass
-	public static void setUp() {
-		config = TestConfig.getInstance();
-	}
 
 	// refund cannot be tested this way (a background job will change the status of transaction, it can take a long time...)
 

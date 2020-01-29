@@ -3,22 +3,13 @@ package com.evopayments.turnkey.apiclient;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.TestConfig;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GetAvailablePaymentSolutionsCallTest {
-
-	private static ApplicationConfig config;
-
-	@BeforeClass
-	public static void setUp() {
-		config = TestConfig.getInstance();
-	}
+public class GetAvailablePaymentSolutionsCallTest extends BaseTest{
 
 	/**
 	 * successful case.
@@ -27,6 +18,7 @@ public class GetAvailablePaymentSolutionsCallTest {
 	public void noExTestCall() {
 
 		final Map<String, String> inputParams = new HashMap<>();
+		super.addCommonParams(inputParams);
 		inputParams.put("country", "PL");
 		inputParams.put("currency", "PLN");
 

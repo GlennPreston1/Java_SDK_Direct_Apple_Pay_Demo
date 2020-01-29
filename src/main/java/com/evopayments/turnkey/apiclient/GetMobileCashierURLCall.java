@@ -48,8 +48,8 @@ public class GetMobileCashierURLCall extends ApiCall {
 		 */
 		final Map<String, String> tokenParams = new HashMap<>(inputParams);
 
-		tokenParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
-		tokenParams.put("password", config.getProperty(PASSWORD_PROP_KEY));
+		tokenParams.put("merchantId", inputParams.get("merchantId"));
+		tokenParams.put("password", inputParams.get("password"));
 		tokenParams.put("timestamp",
 				String.valueOf(System.currentTimeMillis()));
 		tokenParams.put("allowOriginUrl", config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
@@ -73,7 +73,7 @@ public class GetMobileCashierURLCall extends ApiCall {
 
 		final Map<String, String> actionParams = new HashMap<>();
 
-		actionParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
+		actionParams.put("merchantId", inputParams.get("merchantId"));
 		actionParams.put("token", token);
 		actionParams.put("action",
 				String.valueOf(ActionType.GET_MOBILE_CASHIER_URL.getCode()));

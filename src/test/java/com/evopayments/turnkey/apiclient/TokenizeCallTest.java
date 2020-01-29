@@ -1,25 +1,16 @@
 package com.evopayments.turnkey.apiclient;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.TestConfig;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TokenizeCallTest extends BaseTest{
-
-	private static ApplicationConfig config;
-
-	@BeforeClass
-	public static void setUp() {
-		config = TestConfig.getInstance();
-	}
 
 	/**
 	 * successful case
@@ -69,6 +60,8 @@ public class TokenizeCallTest extends BaseTest{
 	public void actCallExExpTestCall() {
 
 		final Map<String, String> inputParams = new HashMap<>();
+		inputParams.put("merchantId", config.getProperty("application.merchantId"));
+		inputParams.put("password", config.getProperty("application.password"));
 		inputParams.put("number", "5454545454545454");
 		inputParams.put("nameOnCard", "John Doe");
 		inputParams.put("expiryMonth", "12");

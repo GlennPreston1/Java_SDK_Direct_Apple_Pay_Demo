@@ -53,9 +53,6 @@ public abstract class ApiCall {
 	protected static final String MERCHANT_LANDING_PAGE_URL_PROP_KEY =
 			"application.merchantLandingPageUrl";
 
-	protected static final String MERCHANT_ID_PROP_KEY = "application.merchantId";
-	protected static final String PASSWORD_PROP_KEY = "application.password";
-
 	protected final ApplicationConfig config;
 
 	private final Map<String, String> inputParams;

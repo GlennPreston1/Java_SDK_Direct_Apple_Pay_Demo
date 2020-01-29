@@ -3,26 +3,17 @@ package com.evopayments.turnkey.apiclient;
 
 import com.evopayments.turnkey.apiclient.code.Channel;
 import com.evopayments.turnkey.apiclient.code.CountryCode;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.TestConfig;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
+import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import org.json.JSONObject;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 
 public class AuthCallTest extends BaseTest {
-
-	private static ApplicationConfig config;
-
-	@BeforeClass
-	public static void setUp() {
-		config = TestConfig.getInstance();
-	}
 
 	/**
 	 * successful case.

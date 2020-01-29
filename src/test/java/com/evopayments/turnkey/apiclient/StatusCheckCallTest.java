@@ -1,23 +1,14 @@
 package com.evopayments.turnkey.apiclient;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.TestConfig;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class StatusCheckCallTest extends BaseTest {
-
-	private static ApplicationConfig config;
-
-	@BeforeClass
-	public static void setUp() {
-		config = TestConfig.getInstance();
-	}
 
 	/**
 	 * successful case
@@ -43,6 +34,7 @@ public class StatusCheckCallTest extends BaseTest {
 		final JSONObject authCall = auth.execute();
 
 		final Map<String, String> inputParams = new HashMap<>();
+		super.addCommonParams(inputParams);
 		inputParams.put("txId", authCall.getString("txId"));
 		inputParams.put("merchantTxId", authCall.getString("merchantTxId"));
 
@@ -63,6 +55,8 @@ public class StatusCheckCallTest extends BaseTest {
 	public void reqParExExpTestCall() {
 
 		final Map<String, String> inputParams = new HashMap<>();
+		inputParams.put("merchantId", config.getProperty("application.merchantId"));
+		inputParams.put("password", config.getProperty("application.password"));
 		// inputParams.put("txId", "11387591"); // intentionally left out
 		// inputParams.put("merchantTxId", "11282092"); // intentionally left out
 

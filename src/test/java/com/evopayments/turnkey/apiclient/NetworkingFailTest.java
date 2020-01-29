@@ -1,22 +1,16 @@
 package com.evopayments.turnkey.apiclient;
 
+import com.evopayments.turnkey.apiclient.config.NetworkFailConfig;
+import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
+import com.evopayments.turnkey.config.ApplicationConfig;
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
-import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.NetworkFailConfig;
 
 public class NetworkingFailTest extends  BaseTest{
 
-	private static ApplicationConfig config;
-
-	@BeforeClass
-	public static void setUp() {
-		config = NetworkFailConfig.getInstance(); // intentional network error (wrong/malformed URLs)
-	}
-
+	protected static ApplicationConfig config = NetworkFailConfig.getInstance();
 	/**
 	 * PostToApiException test (intentional network error (wrong URLs)).
 	 */
@@ -24,6 +18,8 @@ public class NetworkingFailTest extends  BaseTest{
 	public void networkingExExpTestCall() {
 
 		final Map<String, String> inputParams = new HashMap<>();
+		inputParams.put("merchantId", config.getProperty("application.merchantId"));
+		inputParams.put("password", config.getProperty("application.password"));
 		inputParams.put("country", "FR");
 		inputParams.put("currency", "EUR");
 

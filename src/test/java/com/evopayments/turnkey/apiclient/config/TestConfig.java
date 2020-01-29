@@ -1,5 +1,7 @@
-package com.evopayments.turnkey.config;
+package com.evopayments.turnkey.apiclient.config;
 
+
+import com.evopayments.turnkey.config.ApplicationConfig;
 
 public class TestConfig extends ApplicationConfig {
 	
