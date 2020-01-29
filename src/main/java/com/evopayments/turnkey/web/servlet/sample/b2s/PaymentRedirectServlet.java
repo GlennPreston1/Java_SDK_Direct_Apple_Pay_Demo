@@ -33,8 +33,7 @@ import org.json.JSONObject;
 public class PaymentRedirectServlet extends HttpServlet {
 
 	private final static Logger logger = Logger.getLogger(PaymentRedirectServlet.class.getName());
-	
-	protected static final String MERCHANT_ID_PROP_KEY = "application.merchantId";
+
 	protected static final String CASHIER_URL_PROP_KEY = "application.cashierUrl";
 
 	protected final ApplicationConfig config;
@@ -58,7 +57,7 @@ public class PaymentRedirectServlet extends HttpServlet {
 			final JSONObject jsonObject = new PurchaseTokenCall(config, inputParams,
 					new PrintWriter(System.out, true)).execute();
 			
-			inputParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
+			inputParams.put("merchantId", inputParams.get("merchantId"));
 			inputParams.put("token", jsonObject.getString("token"));
 			resp.sendRedirect(config.getProperty(CASHIER_URL_PROP_KEY)+ "?"
 					+ URLEncodedUtils.format(ApiCall.getForm(inputParams).build(),

@@ -33,8 +33,6 @@ import org.json.JSONObject;
 public class PurchaseTokenServlet extends HttpServlet {
 
 	private static final Logger logger = Logger.getLogger(PurchaseTokenServlet.class.getName());
-	
-	protected static final String MERCHANT_ID_PROP_KEY = "application.merchantId";
 
 	protected final ApplicationConfig config;
 
@@ -56,7 +54,7 @@ public class PurchaseTokenServlet extends HttpServlet {
 			
 			final JSONObject jsonObject = new PurchaseTokenCall(config, inputParams,
 					new PrintWriter(System.out, true)).execute();
-			jsonObject.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
+			jsonObject.put("merchantId", inputParams.get("merchantId"));
 			
 			resp.getWriter().print(jsonObject.toString());
 			

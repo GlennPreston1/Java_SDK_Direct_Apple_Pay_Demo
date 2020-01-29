@@ -2,23 +2,15 @@ package com.evopayments.turnkey.apiclient;
 
 import com.evopayments.turnkey.apiclient.code.Channel;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.TestConfig;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class VerifyCallTest extends  BaseTest{
-	private static ApplicationConfig config;
-
-	@BeforeClass
-	public static void setUp() {
-		config = TestConfig.getInstance();
-	}
 
 	/**
 	 * successful case.

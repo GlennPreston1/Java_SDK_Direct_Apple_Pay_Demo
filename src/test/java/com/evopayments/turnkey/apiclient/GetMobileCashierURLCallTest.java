@@ -4,22 +4,18 @@ import com.evopayments.turnkey.apiclient.code.Channel;
 import com.evopayments.turnkey.apiclient.code.CountryCode;
 import com.evopayments.turnkey.apiclient.code.CurrencyCode;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.TestConfig;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GetMobileCashierURLCallTest extends  BaseTest{
 
-	private static ApplicationConfig config;
-
 	protected Map<String, String> buildTokenizeParam(){
-		Map<String, String> tokenizeParams = new HashMap<>();
+		Map<String, String> tokenizeParams = super.buildTokenizeParam();
 		tokenizeParams.put("action", "AUTH");
 		tokenizeParams.put("amount", "20.0");
 		tokenizeParams.put("channel", Channel.ECOM.getCode());
@@ -27,16 +23,11 @@ public class GetMobileCashierURLCallTest extends  BaseTest{
 		tokenizeParams.put("currency", CurrencyCode.PLN.getCode());
 		tokenizeParams.put("paymentSolutionId", "500");
 		tokenizeParams.put("customerId", "8Gii57iYNVSd27xnFZzR");
+		tokenizeParams.put("expiryYear", "21");
 
 
 		return tokenizeParams;
 	}
-
-	@BeforeClass
-	public static void setUp() {
-		config = TestConfig.getInstance();
-	}
-
 	/**
 	 * successful case
 	 */

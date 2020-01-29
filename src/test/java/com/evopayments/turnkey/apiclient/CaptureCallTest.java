@@ -1,27 +1,14 @@
 package com.evopayments.turnkey.apiclient;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
-import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.evopayments.turnkey.config.ApplicationConfig;
-import com.evopayments.turnkey.config.TestConfig;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CaptureCallTest extends  BaseTest{
-
-	private static ApplicationConfig config;
-
-	@BeforeClass
-	public static void setUp() {
-		config = TestConfig.getInstance();
-	}
 
 	/**
 	 * successful case.
