@@ -64,8 +64,7 @@ public class RefundCall extends ApiCall {
 
 		final Map<String, String> tokenParams = new HashMap<>();
 
-		tokenParams.put("merchantId", inputParams.get("merchantId"));
-		tokenParams.put("password", inputParams.get("password"));
+		MerchantManager.putMerchantCredentials(inputParams, tokenParams, config);
 		tokenParams.put("originalMerchantTxId", inputParams.get("originalMerchantTxId"));
 		tokenParams.put("action", getActionType().getCode());
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));

@@ -70,8 +70,7 @@ public class GetAvailablePaymentSolutionsCall extends ApiCall {
 		 */
 		final Map<String, String> tokenParams = new HashMap<>(inputParams);
 
-		tokenParams.put("merchantId", inputParams.get("merchantId"));
-		tokenParams.put("password", inputParams.get("password"));
+		MerchantManager.putMerchantCredentials(inputParams, tokenParams, config);
 		tokenParams.put("action", getActionType().getCode());
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
 		tokenParams.put("allowOriginUrl", config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
