@@ -9,6 +9,8 @@ import com.evopayments.turnkey.config.ApplicationConfig;
 public class MerchantManager {
 
     /**
+     * This method get merchantId and password from inputParams and add it to tokenParams.
+     * If param merchantId don't exist in inputParams then it's get from config file
      * @param inputParams parameters passed from the Merchant.
      * @param tokenParams parameters for the session token.
      * @param config the SDK configuration file contents, which should never be used. It's there for backwards compatibility.
