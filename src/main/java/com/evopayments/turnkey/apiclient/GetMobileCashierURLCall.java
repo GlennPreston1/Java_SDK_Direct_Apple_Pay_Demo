@@ -3,6 +3,7 @@ package com.evopayments.turnkey.apiclient;
 import com.evopayments.turnkey.apiclient.code.ActionType;
 import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.config.ApplicationConfig;
+
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,8 +36,7 @@ public class GetMobileCashierURLCall extends ApiCall {
 			throws RequiredParamException {
 
 		final Set<String> requiredParams = new HashSet<>(
-				Arrays.asList("action", "amount", "channel", "country", "currency",
-						"paymentSolutionId"));
+				Arrays.asList("action", "amount", "channel", "country", "currency"));
 		mandatoryValidation(inputParams,requiredParams);
 	}
 
@@ -62,7 +62,6 @@ public class GetMobileCashierURLCall extends ApiCall {
 		tokenParams.put("paymentSolutionId", inputParams.get("paymentSolutionId"));
 		tokenParams.put("customerId", inputParams.get("customerId"));
 
-
 		return tokenParams;
 	}
 
@@ -76,7 +75,6 @@ public class GetMobileCashierURLCall extends ApiCall {
 		actionParams.put("token", token);
 		actionParams.put("action",
 				String.valueOf(ActionType.GET_MOBILE_CASHIER_URL.getCode()));
-
 		return actionParams;
 	}
 
@@ -84,5 +82,4 @@ public class GetMobileCashierURLCall extends ApiCall {
 	protected ActionType getActionType() {
 		return ActionType.GET_MOBILE_CASHIER_URL;
 	}
-
 }
