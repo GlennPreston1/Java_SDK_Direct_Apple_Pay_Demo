@@ -21,8 +21,7 @@ public class MerchantManager {
             final ApplicationConfig config) {
 
         String merchantID = inputParams.get(ApiCall.MERCHANT_ID_PROP_KEY);
-        String password = inputParams.get(ApiCall.PASSWORD_PROP_KEY);
-        if (merchantID == null || merchantID.isEmpty() || password == null || password.isEmpty()) {
+        if (merchantID == null || merchantID.isEmpty()) {
 			/*  This is a temporary bug fix for legacy code.
 			Here we query the config file if we lack a merchantID. However this hopefully never happens.
 			Turnkey SDK Config for storing Merchant ID is probably not used by Merchants (and shouldn't be),
@@ -33,7 +32,7 @@ public class MerchantManager {
         } else {
             // This is the correct path. Here the Merchant will have defined the Merchant ID in input parameters to the SDK.
             tokenParams.put("merchantId", merchantID);
-            tokenParams.put("password", password);
+            tokenParams.put("password", inputParams.get(ApiCall.PASSWORD_PROP_KEY));
         }
     }
 
