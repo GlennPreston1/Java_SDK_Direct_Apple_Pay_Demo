@@ -43,9 +43,22 @@ public abstract class ApplicationConfig {
 	 */
 	public static ApplicationConfig getInstanceBasedOnSysProp() {
 
+		// USE
+		// -Devopayments-turnkey-sdk-config=test
+		// OR
+		// -Devopayments-turnkey-sdk-config=production
+		// (test is the default)
+
+		final String configParamStr = System.getProperty("evopayments-turnkey-sdk-config",
+				"test");
+
 		ApplicationConfig config;
 
-		config = ProductionConfig.getInstance();
+		if ("production".equals(configParamStr)) {
+			config = ProductionConfig.getInstance();
+		} else {
+			config = TestConfig.getInstance();
+		}
 
 		logger.log(Level.INFO, "active config: " + config.getFilename());
 
