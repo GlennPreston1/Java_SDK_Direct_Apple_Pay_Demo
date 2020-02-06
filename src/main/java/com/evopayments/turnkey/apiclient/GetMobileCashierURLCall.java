@@ -71,7 +71,7 @@ public class GetMobileCashierURLCall extends ApiCall {
 
 		final Map<String, String> actionParams = new HashMap<>();
 
-		actionParams.put("merchantId", inputParams.get("merchantId"));
+		actionParams.put(ApiCall.MERCHANT_ID, inputParams.get(ApiCall.MERCHANT_ID));
 		actionParams.put("token", token);
 		actionParams.put("action",
 				String.valueOf(ActionType.GET_MOBILE_CASHIER_URL.getCode()));
