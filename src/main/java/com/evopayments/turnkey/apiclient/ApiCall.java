@@ -55,6 +55,8 @@ public abstract class ApiCall {
 
     protected static final String MERCHANT_ID_PROP_KEY = "application.merchantId";
     protected static final String PASSWORD_PROP_KEY = "application.password";
+    protected static final String PASSWORD = "password";
+    protected static final String MERCHANT_ID = "merchantId";
 
     protected final ApplicationConfig config;
 
@@ -224,9 +226,8 @@ public abstract class ApiCall {
         logger.info("API/SDK call: ", this.getActionType());
 
         try {
-
-            final JSONObject tokenResponse = postToApi(config.getProperty(TOKEN_URL_PROP_KEY),
-                    getTokenParams(new HashMap<>(inputParams)));
+            Map<String, String> tokenParams = getTokenParams(new HashMap<>(inputParams));
+            final JSONObject tokenResponse = postToApi(config.getProperty(TOKEN_URL_PROP_KEY), tokenParams);
 
             if (!((String) tokenResponse.get("result")).equals("failure")) {
 
@@ -243,7 +244,7 @@ public abstract class ApiCall {
                 JSONObject actionResponse;
                 if (actionParams.get("action") == ActionType.GET_MOBILE_CASHIER_URL.getCode()) {
                     tokenResponse.put("mobileCashierUrl", config.getProperty(MOBILE_CASHIER_URL));
-                    tokenResponse.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
+                    tokenResponse.put("merchantId", tokenParams.get(MERCHANT_ID));
                     actionResponse = tokenResponse;
                 } else {
                     actionResponse = postToApi(config.getProperty(OPERATION_ACTION_URL_PROP_KEY),
