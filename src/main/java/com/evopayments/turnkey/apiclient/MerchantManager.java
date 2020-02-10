@@ -15,6 +15,7 @@ public class MerchantManager {
      * @param tokenParams parameters for the session token.
      * @param config the SDK configuration file contents, which should never be used. It's there for backwards compatibility.
      */
+    @Deprecated
     public static void putMerchantCredentials(
             final Map<String, String> inputParams,
             final Map<String, String> tokenParams,
