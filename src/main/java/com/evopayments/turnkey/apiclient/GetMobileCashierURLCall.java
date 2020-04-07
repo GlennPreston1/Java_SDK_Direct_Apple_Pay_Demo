@@ -1,7 +1,6 @@
 package com.evopayments.turnkey.apiclient;
 
 import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 
 import java.io.PrintWriter;
@@ -10,96 +9,91 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * Queries the cashier URL.
- * 
- * @author shiying
  *
+ * @author shiying
  */
 public class GetMobileCashierURLCall extends ApiCall {
 
-	/**
-	 * the constructor of class GetMobileCashierURLCall.
-	 * @param config
-	 * @param inputParams
-	 * @param outputWriter
-	 */
- 	public GetMobileCashierURLCall(final ApplicationConfig config,
-								   final Map<String, String> inputParams,
-								   final PrintWriter outputWriter) {
-		super(config, inputParams, outputWriter);
-	}
+  public static final String ACTION = "action";
+  public static final String AMOUNT = "amount";
+  public static final String CHANNEL = "channel";
+  public static final String COUNTRY = "country";
+  public static final String CURRENCY = "currency";
+  public static final String PAYMENT_SOLUTION_ID = "paymentSolutionId";
+  public static final String CUSTOMER_ID = "customerId";
+  public static final String TIMESTAMP = "timestamp";
+  public static final String ALLOW_ORIGIN_URL = "allowOriginUrl";
+  public static final String MERCHANT_NOTIFICATION_URL = "merchantNotificationUrl";
+  public static final String OUTPUT_CUSTOM_PARAMETER_D_OR = "CustomParameter%dOr";
+  public static final String INPUT_CUSTOM_PARAMETER_D_OR = "customParameter%dOr";
+  public static final String TOKEN = "token";
 
-	@Override
-	protected void preValidateParams(final Map<String, String> inputParams)
-			throws RequiredParamException {
+  /**
+   * the constructor of class GetMobileCashierURLCall.
+   *
+   * @param config SDK configuration file content
+   * @param inputParams input params which comes from MSS
+   * @param outputWriter stores execution result
+   */
+  public GetMobileCashierURLCall(
+      final ApplicationConfig config,
+      final Map<String, String> inputParams,
+      final PrintWriter outputWriter) {
+    super(config, inputParams, outputWriter);
+  }
 
-		final Set<String> requiredParams = new HashSet<>(
-				Arrays.asList("action", "amount", "channel", "country", "currency"));
-		mandatoryValidation(inputParams,requiredParams);
-	}
+  @Override
+  protected void preValidateParams(final Map<String, String> inputParams) {
+    final Set<String> requiredParams =
+        new HashSet<>(Arrays.asList(ACTION, AMOUNT, CHANNEL, COUNTRY, CURRENCY));
+    mandatoryValidation(inputParams, requiredParams);
+  }
 
-	@Override
-	protected Map<String, String> getTokenParams(
-			final Map<String, String> inputParams) {
-		/**
-		 *  all of the input params plus the ones below.
-		 */
-		final Map<String, String> tokenParams = new HashMap<>(inputParams);
+  @Override
+  protected Map<String, String> getTokenParams(final Map<String, String> inputParams) {
+    /** all of the input params plus the ones below. */
+    final Map<String, String> tokenParams = new HashMap<>(inputParams);
 
-		MerchantManager.putMerchantCredentials(inputParams, tokenParams, config);
-		tokenParams.put("timestamp",
-				String.valueOf(System.currentTimeMillis()));
-		tokenParams.put("allowOriginUrl", config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
-		tokenParams.put("merchantNotificationUrl",
-				config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
-		tokenParams.put("action", inputParams.get("action"));
-		tokenParams.put("channel", inputParams.get("channel"));
-		tokenParams.put("amount", inputParams.get("amount"));
-		tokenParams.put("currency", inputParams.get("currency"));
-		tokenParams.put("country", inputParams.get("country"));
-		tokenParams.put("paymentSolutionId", inputParams.get("paymentSolutionId"));
-		tokenParams.put("customerId", inputParams.get("customerId"));
-		tokenParams.put("CustomParameter1Or", inputParams.get("customParameter1Or"));
-		tokenParams.put("CustomParameter2Or", inputParams.get("customParameter2Or"));
-		tokenParams.put("CustomParameter3Or", inputParams.get("customParameter3Or"));
-		tokenParams.put("CustomParameter4Or", inputParams.get("customParameter4Or"));
-		tokenParams.put("CustomParameter5Or", inputParams.get("customParameter5Or"));
-		tokenParams.put("CustomParameter6Or", inputParams.get("customParameter6Or"));
-		tokenParams.put("CustomParameter7Or", inputParams.get("customParameter7Or"));
-		tokenParams.put("CustomParameter8Or", inputParams.get("customParameter8Or"));
-		tokenParams.put("CustomParameter9Or", inputParams.get("customParameter9Or"));
-		tokenParams.put("CustomParameter10Or", inputParams.get("customParameter10Or"));
-		tokenParams.put("CustomParameter11Or", inputParams.get("customParameter11Or"));
-		tokenParams.put("CustomParameter12Or", inputParams.get("customParameter12Or"));
-		tokenParams.put("CustomParameter13Or", inputParams.get("customParameter13Or"));
-		tokenParams.put("CustomParameter14Or", inputParams.get("customParameter14Or"));
-		tokenParams.put("CustomParameter15Or", inputParams.get("customParameter15Or"));
-		tokenParams.put("CustomParameter16Or", inputParams.get("customParameter16Or"));
-		tokenParams.put("CustomParameter17Or", inputParams.get("customParameter17Or"));
-		tokenParams.put("CustomParameter18Or", inputParams.get("customParameter18Or"));
-		tokenParams.put("CustomParameter19Or", inputParams.get("customParameter19Or"));
-		tokenParams.put("CustomParameter20Or", inputParams.get("customParameter20Or"));
+    MerchantManager.putMerchantCredentials(inputParams, tokenParams, config);
+    tokenParams.put(TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+    tokenParams.put(ALLOW_ORIGIN_URL, config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
+    tokenParams.put(
+        MERCHANT_NOTIFICATION_URL, config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
+    tokenParams.put(ACTION, inputParams.get(ACTION));
+    tokenParams.put(CHANNEL, inputParams.get(CHANNEL));
+    tokenParams.put(AMOUNT, inputParams.get(AMOUNT));
+    tokenParams.put(CURRENCY, inputParams.get(CURRENCY));
+    tokenParams.put(COUNTRY, inputParams.get(COUNTRY));
+    tokenParams.put(PAYMENT_SOLUTION_ID, inputParams.get(PAYMENT_SOLUTION_ID));
+    tokenParams.put(CUSTOMER_ID, inputParams.get(CUSTOMER_ID));
+    IntStream.range(1, 20)
+        .forEach(
+            counter ->
+                tokenParams.put(
+                    String.format(OUTPUT_CUSTOM_PARAMETER_D_OR, counter),
+                    inputParams.get(String.format(INPUT_CUSTOM_PARAMETER_D_OR, counter))));
 
-		return tokenParams;
-	}
+    return tokenParams;
+  }
 
-	@Override
-	protected Map<String, String> getActionParams(
-			final Map<String, String> inputParams, final String token) {
+  @Override
+  protected Map<String, String> getActionParams(
+      final Map<String, String> inputParams, final String token) {
 
-		final Map<String, String> actionParams = new HashMap<>();
+    final Map<String, String> actionParams = new HashMap<>();
 
-		actionParams.put(ApiCall.MERCHANT_ID, inputParams.get(ApiCall.MERCHANT_ID));
-		actionParams.put("token", token);
-		actionParams.put("action",
-				String.valueOf(ActionType.GET_MOBILE_CASHIER_URL.getCode()));
-		return actionParams;
-	}
+    actionParams.put(ApiCall.MERCHANT_ID, inputParams.get(ApiCall.MERCHANT_ID));
+    actionParams.put(TOKEN, token);
+    actionParams.put(ACTION, String.valueOf(ActionType.GET_MOBILE_CASHIER_URL.getCode()));
+    return actionParams;
+  }
 
-	@Override
-	protected ActionType getActionType() {
-		return ActionType.GET_MOBILE_CASHIER_URL;
-	}
+  @Override
+  protected ActionType getActionType() {
+    return ActionType.GET_MOBILE_CASHIER_URL;
+  }
 }
