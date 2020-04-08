@@ -70,12 +70,10 @@ public class GetMobileCashierURLCall extends ApiCall {
     tokenParams.put(COUNTRY, inputParams.get(COUNTRY));
     tokenParams.put(PAYMENT_SOLUTION_ID, inputParams.get(PAYMENT_SOLUTION_ID));
     tokenParams.put(CUSTOMER_ID, inputParams.get(CUSTOMER_ID));
-    IntStream.range(1, 20)
-        .forEach(
-            counter ->
-                tokenParams.put(
-                    String.format(OUTPUT_CUSTOM_PARAMETER_D_OR, counter),
-                    inputParams.get(String.format(INPUT_CUSTOM_PARAMETER_D_OR, counter))));
+    for (int counter = 1; counter < 20; counter++) {
+      tokenParams.put(String.format(OUTPUT_CUSTOM_PARAMETER_D_OR, counter),
+              inputParams.get(String.format(INPUT_CUSTOM_PARAMETER_D_OR, counter)));
+    }
 
     return tokenParams;
   }
