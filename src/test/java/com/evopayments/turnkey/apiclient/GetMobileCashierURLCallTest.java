@@ -27,13 +27,10 @@ public class GetMobileCashierURLCallTest extends BaseTest {
     tokenizeParams.put("paymentSolutionId", "500");
     tokenizeParams.put("customerId", "8Gii57iYNVSd27xnFZzR");
     tokenizeParams.put("expiryYear", "21");
-    IntStream.range(1, 20)
-        .forEach(
-            counter -> {
-              tokenizeParams.put(
-                  String.format("customParameter%dOr", counter),
-                  String.format("example custom param %d", counter));
-            });
+    for (int counter = 1; counter < 20; counter++) {
+      tokenizeParams.put(String.format("customParameter%dOr", counter),
+              String.format("example custom param %d", counter));
+    }
 
     return tokenizeParams;
   }
@@ -83,12 +80,9 @@ public class GetMobileCashierURLCallTest extends BaseTest {
     final Map<String, String> tokenizeParams = buildTokenizeParam();
     final GetMobileCashierURLCall call = new GetMobileCashierURLCall(config, tokenizeParams, null);
     Map<String, String> requestParams = call.getTokenParams(tokenizeParams);
-    IntStream.range(1, 20)
-        .forEach(
-            counter -> {
-              assertEquals(
-                  String.format("example custom param %d", counter),
-                  requestParams.get(String.format("CustomParameter%dOr", counter)));
-            });
+    for (int counter = 1; counter < 20; counter++) {
+      assertEquals(String.format("example custom param %d", counter),
+              requestParams.get(String.format("CustomParameter%dOr", counter)));
+    }
   }
 }
