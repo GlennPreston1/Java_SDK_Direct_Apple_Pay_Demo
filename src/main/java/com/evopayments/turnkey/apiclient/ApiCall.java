@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -167,7 +168,7 @@ public abstract class ApiCall {
 
         String apiResponseStr;
         try {
-            final HttpResponse apiResponse = Request.Post(url).bodyForm(paramList).execute()
+            final HttpResponse apiResponse = Request.Post(url).bodyForm(paramList, Consts.UTF_8).execute()
                     .returnResponse();
             apiResponseStr = new BasicResponseHandler().handleResponse(apiResponse);
         } catch (Exception e) {
