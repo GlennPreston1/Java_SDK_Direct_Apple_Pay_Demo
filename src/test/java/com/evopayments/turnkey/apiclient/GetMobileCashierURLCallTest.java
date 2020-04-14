@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -82,7 +81,7 @@ public class GetMobileCashierURLCallTest extends BaseTest {
     Map<String, String> requestParams = call.getTokenParams(tokenizeParams);
     for (int counter = 1; counter < 20; counter++) {
       assertEquals(String.format("example custom param %d", counter),
-              requestParams.get(String.format("CustomParameter%dOr", counter)));
+              requestParams.get(String.format("customParameter%dOr", counter)));
     }
   }
 }
