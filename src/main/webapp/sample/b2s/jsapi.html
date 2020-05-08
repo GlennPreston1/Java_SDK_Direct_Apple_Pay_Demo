@@ -21,7 +21,7 @@ body {
 </style>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script src="https://cashier-turnkeyuat.test.myriadpayments.com/js/api.js"></script>
+<script src="https://cashier-turnkeyuat.test.myriadpayments.com/js/api.js"  ></script>
 
 </head>
 <body>
@@ -29,10 +29,13 @@ body {
 	<div>
 
 		<form id="form">
-		
 			<div class="form-group">
-				<label for="country">customerId:</label><input name="customerId" value="" class="form-control" />
+				<label for="merchantId">merchantId:</label><input name="merchantId" value="176259" class="form-control" />
 			</div>
+			<div class="form-group">
+				<label for="password">password:</label><input name="password" value="12345" class="form-control" />
+			</div>
+
 
 			<div class="form-group">
 				<label for="country">country:</label><input name="country" value="PL" class="form-control" />
@@ -51,6 +54,9 @@ body {
 			</div>
 
 			<div class="form-group">
+				<label for="country">customerId:</label><input name="customerId" value="" class="form-control" />
+			</div>
+			<div class="form-group">
 				<label for="paymentSolutionId">paymentSolutionId:</label><input name="paymentSolutionId" value="500" class="form-control" />
 			</div>
 
@@ -58,7 +64,16 @@ body {
 
 		<button onclick="pay()">Pay</button>
 
+		<div>
+			The CASHIERURL used in this page is  -
+			<li style="color:red"> https://cashier-turnkeyuat.test.myriadpayments.com/ui/cashier . </li>
+			Please make sure the application.sessionTokenRequestUrl in application-test.properties file has the same value.
+
+			Otherwise, you will see a blank page,  and there's a 'cross domain' issue showing in the console panel of the browser.
+		</div>
 	</div>
+
+
 
 	<div id="ipgCashierDiv"></div>
 
@@ -70,7 +85,9 @@ body {
 		});
 
 		function handleResult(result, data) {
-			alert(JSON.stringify(result));
+			alert(JSON.stringify(result) );
+			alert('The result is:' +  JSON.stringify(data) );
+			alert('This window is going to be closed' );
 			console.log(JSON.stringify(data));
 		}
 
@@ -79,7 +96,9 @@ body {
 			// get token
 			// note: jQuery is not required for Turnkey JS (only used for the token request etc.)!
 
-			var merchantId = "";
+			var merchantId =  $("[name='merchantId']", $("#form")).val();
+			var password =  $("[name='password']", $("#form")).val();
+
 			var token = "";
 
 			$.post("../../tokenforpurchase", {
@@ -88,7 +107,9 @@ body {
 				amount : $("[name='amount']", $("#form")).val(),
 				currency : $("[name='currency']", $("#form")).val(),
 				country : $("[name='country']", $("#form")).val(),
-				customerId : $("[name='customerId']", $("#form")).val()
+				customerId : $("[name='customerId']", $("#form")).val(),
+				merchantId: merchantId,
+				password: password
 			}).done(function(data) {
 
 				var p = JSON.parse(data);
