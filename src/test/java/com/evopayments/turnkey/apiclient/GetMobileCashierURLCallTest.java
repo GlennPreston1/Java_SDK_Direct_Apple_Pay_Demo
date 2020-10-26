@@ -145,20 +145,20 @@ public class GetMobileCashierURLCallTest extends BaseTest {
         final Map<String, String> tokenizeParams = buildTokenizeParam();
         final GetMobileCashierURLCall call = new GetMobileCashierURLCall(config, tokenizeParams, null);
         Map<String, String> requestParams = call.getTokenParams(tokenizeParams);
-        assertEquals("myFavourite45thPresident",  requestParams.get("merchantReference"));
-        assertEquals("12/10/2020",  requestParams.get("customerRegistrationDate"));
-        assertEquals("01",  requestParams.get("merchantChallengeInd"));
-        assertEquals("N",  requestParams.get("merchantDecReqInd"));
-        assertEquals("10080",  requestParams.get("merchantDecMaxTime"));
-        assertEquals("MOBILE",  requestParams.get("userDevice"));
-        assertEquals("okhttp/4.3.1",  requestParams.get("userAgent"));
-        assertEquals("31.60.88.55",  requestParams.get("customerIPAddress"));
-        assertEquals("floating bricks",  requestParams.get("customerAddressHouseName"));
-        assertEquals("Curvy",  requestParams.get("customerBillingAddressStreet"));
-        assertEquals("SBillburg",  requestParams.get("customerShippingAddressCity"));
-        assertEquals("customerAccountInfo JsonObject",  requestParams.get("customerAccountInfo"));
-        assertEquals("merchantAuthInfo JSON Object",  requestParams.get("merchantAuthInfo"));
-        assertEquals("merchantPriorAuthInfo JSON Object",  requestParams.get("merchantPriorAuthInfo"));
-        assertEquals("merchantRiskIndicator JSON Object",  requestParams.get("merchantRiskIndicator"));
+        assertEquals("myFavourite45thPresident", requestParams.get("merchantReference"));
+        assertEquals("12/10/2020", requestParams.get("customerRegistrationDate"));
+        assertEquals("01", requestParams.get("merchantChallengeInd"));
+        assertEquals("N", requestParams.get("merchantDecReqInd"));
+        assertEquals("10080", requestParams.get("merchantDecMaxTime"));
+        assertEquals("MOBILE", requestParams.get("userDevice"));
+        assertEquals("okhttp/4.3.1", requestParams.get("userAgent"));
+        assertEquals("31.60.88.55", requestParams.get("customerIPAddress"));
+        assertEquals("floating bricks", requestParams.get("customerAddressHouseName"));
+        assertEquals("Curvy", requestParams.get("customerBillingAddressStreet"));
+        assertEquals("SBillburg", requestParams.get("customerShippingAddressCity"));
+        assertEquals("customerAccountInfo JsonObject", requestParams.get("customerAccountInfo"));
+        assertEquals("merchantAuthInfo JSON Object", requestParams.get("merchantAuthInfo"));
+        assertEquals("merchantPriorAuthInfo JSON Object", requestParams.get("merchantPriorAuthInfo"));
+        assertEquals("merchantRiskIndicator JSON Object", requestParams.get("merchantRiskIndicator"));
     }
 }
