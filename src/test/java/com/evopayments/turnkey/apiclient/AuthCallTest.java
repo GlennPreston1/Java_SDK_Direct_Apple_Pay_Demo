@@ -43,6 +43,56 @@ public class AuthCallTest extends BaseTest {
 
 	}
 
+    /**
+     * Test for payment with 3DSV2 (External Auth)
+     */
+    @Test
+    public void testThreeDSecureV2Parameters() {
+
+        final Map<String, String> tokenizeParams = super.buildTokenizeParam();
+
+        final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
+        final JSONObject tokenizeCall = tokenize.execute();
+
+        final Map<String, String> authParams = new HashMap<>();
+        super.addCommonParams(authParams);
+        authParams.put("amount", "20.0");
+        authParams.put("customerId", tokenizeCall.getString("customerId"));
+        authParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
+        authParams.put("specinCreditCardCVV", "111");
+
+        final AuthCall call = new AuthCall(config, add3DSV2Parameters(authParams), null);
+        JSONObject result = call.execute();
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals("NOT_SET_FOR_CAPTURE", result.getString("status"));
+    }
+
+    /**
+     * Test for payment with 3DSV2 (Challenge Flow)
+     */
+    @Test
+    public void testThreeDSecureV2ParametersWithCR() {
+
+        final Map<String, String> tokenizeParams = super.buildTokenizeParam();
+
+        final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
+        final JSONObject tokenizeCall = tokenize.execute();
+
+        final Map<String, String> authParams = new HashMap<>();
+        super.addCommonParams(authParams);
+        authParams.put("amount", "20.0");
+        authParams.put("customerId", tokenizeCall.getString("customerId"));
+        authParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
+        authParams.put("specinCreditCardCVV", "111");
+
+        final AuthCall call = new AuthCall(config, add3DSV2ParametersNoExt(authParams), null);
+        JSONObject result = call.execute();
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals("INCOMPLETE", result.getString("status"));
+    }
+
 	/**
 	 *  able to get the token.
 	 */

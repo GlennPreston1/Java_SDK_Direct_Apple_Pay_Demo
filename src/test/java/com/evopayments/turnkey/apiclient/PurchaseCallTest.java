@@ -274,6 +274,58 @@ public class PurchaseCallTest extends  BaseTest{
 		Assert.assertEquals("success", result.getString("result"));
 	}
 
+    /**
+     * Test for payment with 3DSV2 (External Auth)
+     */
+	@Test
+    public void testThreeDSecureV2Parameters(){
+        // TOKENIZE
+        final Map<String, String> tokenizeParams = super.buildTokenizeParam();
 
+
+        final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
+        final JSONObject tokenizeCall = tokenize.execute();
+
+        // PURCHASE
+        final Map<String, String> purchaseParams = new HashMap<>();
+        super.addCommonParams(purchaseParams);
+        purchaseParams.put("amount", "20.0");
+        purchaseParams.put("customerId", tokenizeCall.getString("customerId"));
+        purchaseParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
+        purchaseParams.put("specinCreditCardCVV", "111");
+
+        final PurchaseCall call = new PurchaseCall(config, add3DSV2Parameters(purchaseParams), null, null);
+        JSONObject result = call.execute();
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals("CAPTURED", result.getString("status"));
+    }
+
+    /**
+     * Test for payment with 3DSV2 (Challenge Flow)
+     */
+    @Test
+    public void testThreeDSecureV2ParametersWithCR(){
+        // TOKENIZE
+        final Map<String, String> tokenizeParams = super.buildTokenizeParam();
+
+
+        final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
+        final JSONObject tokenizeCall = tokenize.execute();
+
+        // PURCHASE
+        final Map<String, String> purchaseParams = new HashMap<>();
+        super.addCommonParams(purchaseParams);
+        purchaseParams.put("amount", "20.0");
+        purchaseParams.put("customerId", tokenizeCall.getString("customerId"));
+        purchaseParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
+        purchaseParams.put("specinCreditCardCVV", "111");
+
+        final PurchaseCall call = new PurchaseCall(config, add3DSV2ParametersNoExt(purchaseParams), null, null);
+        JSONObject result = call.execute();
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals("INCOMPLETE", result.getString("status"));
+    }
 
 }
