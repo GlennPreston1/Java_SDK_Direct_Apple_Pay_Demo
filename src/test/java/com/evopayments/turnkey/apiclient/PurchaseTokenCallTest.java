@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,19 +16,8 @@ public class PurchaseTokenCallTest extends BaseTest {
      */
     @Test
     public void testThreeDSecureV2Parameters() {
-        // TOKENIZE
-        final Map<String, String> tokenizeParams = super.buildTokenizeParam();
-
-        final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
-        final JSONObject tokenizeCall = tokenize.execute();
-
         // PURCHASE
-        final Map<String, String> purchaseParams = new HashMap<>();
-        super.addCommonParams(purchaseParams);
-        purchaseParams.put("amount", "22.0");
-        purchaseParams.put("customerId", tokenizeCall.getString("customerId"));
-        purchaseParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
-        purchaseParams.put("specinCreditCardCVV", "111");
+        final Map<String, String> purchaseParams = super.prepareAPICall();
 
         final PurchaseTokenCall call = new PurchaseTokenCall(config, add3DSV2Parameters(purchaseParams), null);
         JSONObject result = call.execute();

@@ -1,15 +1,11 @@
 package com.evopayments.turnkey.apiclient;
 
-
-import com.evopayments.turnkey.apiclient.code.Channel;
-import com.evopayments.turnkey.apiclient.code.CountryCode;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -21,17 +17,7 @@ public class AuthCallTest extends BaseTest {
 	@Test
 	public void noExTestCall() {
 
-		final Map<String, String> tokenizeParams = super.buildTokenizeParam();
-
-		final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
-		final JSONObject tokenizeCall = tokenize.execute();
-
-		final Map<String, String> authParams = new HashMap<>();
-		super.addCommonParams(authParams);
-		authParams.put("amount", "20.0");
-		authParams.put("customerId", tokenizeCall.getString("customerId"));
-		authParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
-		authParams.put("specinCreditCardCVV", "111");
+        final Map<String, String> authParams = super.prepareAPICall();
 
 		final AuthCall call = new AuthCall(config, authParams, null);
 		JSONObject result = call.execute();
@@ -49,22 +35,13 @@ public class AuthCallTest extends BaseTest {
     @Test
     public void testThreeDSecureV2Parameters() {
 
-        final Map<String, String> tokenizeParams = super.buildTokenizeParam();
-
-        final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
-        final JSONObject tokenizeCall = tokenize.execute();
-
-        final Map<String, String> authParams = new HashMap<>();
-        super.addCommonParams(authParams);
-        authParams.put("amount", "20.0");
-        authParams.put("customerId", tokenizeCall.getString("customerId"));
-        authParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
-        authParams.put("specinCreditCardCVV", "111");
+        final Map<String, String> authParams = super.prepareAPICall();
 
         final AuthCall call = new AuthCall(config, add3DSV2Parameters(authParams), null);
         JSONObject result = call.execute();
 
         Assert.assertNotNull(result);
+        Assert.assertEquals("success", result.get("result"));
         Assert.assertEquals("NOT_SET_FOR_CAPTURE", result.getString("status"));
     }
 
@@ -74,23 +51,16 @@ public class AuthCallTest extends BaseTest {
     @Test
     public void testThreeDSecureV2ParametersWithCR() {
 
-        final Map<String, String> tokenizeParams = super.buildTokenizeParam();
-
-        final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
-        final JSONObject tokenizeCall = tokenize.execute();
-
-        final Map<String, String> authParams = new HashMap<>();
-        super.addCommonParams(authParams);
-        authParams.put("amount", "20.0");
-        authParams.put("customerId", tokenizeCall.getString("customerId"));
-        authParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
-        authParams.put("specinCreditCardCVV", "111");
+        final Map<String, String> authParams = super.prepareAPICall();
 
         final AuthCall call = new AuthCall(config, add3DSV2ParametersNoExt(authParams), null);
         JSONObject result = call.execute();
 
         Assert.assertNotNull(result);
         Assert.assertEquals("INCOMPLETE", result.getString("status"));
+        Assert.assertEquals("redirection", result.get("result"));
+        Assert.assertNotNull(result.get("redirectionUrl"));
+        Assert.assertEquals(config.getProperty("application.merchantId"), result.get("merchantId"));
     }
 
 	/**
@@ -99,23 +69,12 @@ public class AuthCallTest extends BaseTest {
 	@Test
 	public void redirectionResponseTestCall() {
 
-		final Map<String, String> tokenizeParams = super.buildTokenizeParam();
-
-		final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
-		final JSONObject tokenizeCall = tokenize.execute();
-
-		final Map<String, String> authParams = new HashMap<>();
-		super.addCommonParams(authParams);
-		authParams.put("amount", "20.0");
-		authParams.put("customerId", tokenizeCall.getString("customerId"));
-		authParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
-		authParams.put("specinCreditCardCVV", "111");
+        final Map<String, String> authParams = super.prepareAPICall();
 
 		final AuthCall call = new AuthCall(config, authParams, null);
 
 		JSONObject result = call.execute();
 		Assert.assertEquals(result.get("result"), "redirection");
-
 
 	}
 
@@ -125,23 +84,17 @@ public class AuthCallTest extends BaseTest {
 	@Test(expected = TurnkeyValidationException.class)
 	public void reqParExExpTestCall() {
 
-		try {
+        try {
+            final Map<String, String> inputParams = super.prepareAPICall();
+            inputParams.remove("currency");
 
-			final Map<String, String> inputParams = new HashMap<>();
-			inputParams.put("amount", "20.0");
-			inputParams.put("channel", Channel.ECOM.getCode());
-			inputParams.put("country", CountryCode.PL.getCode());
-			// inputParams.put("currency", CurrencyCode.EUR.getCode());
-			inputParams.put("paymentSolutionId", "500");
-			inputParams.put("customerId", "8Gii57iYNVSd27xnFZzR");
+            final AuthCall call = new AuthCall(config, inputParams, null);
+            call.execute();
 
-			final AuthCall call = new AuthCall(config, inputParams, null);
-			call.execute();
+        } catch (TurnkeyValidationException e) {
+            Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("currency").toString(), e.getMessage());
+            throw e;
 
-		} catch (TurnkeyValidationException e) {
-			Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("currency").toString(),e.getMessage());
-			throw e;
-
-		}
+        }
 	}
 }

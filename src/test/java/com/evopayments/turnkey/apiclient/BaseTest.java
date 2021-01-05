@@ -5,6 +5,7 @@ import com.evopayments.turnkey.apiclient.code.CountryCode;
 import com.evopayments.turnkey.apiclient.code.CurrencyCode;
 import com.evopayments.turnkey.apiclient.config.TestConfig;
 import com.evopayments.turnkey.config.ApplicationConfig;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,28 @@ public class BaseTest {
         authParams.put("paymentSolutionId", "500");
         authParams.put("merchantId", config.getProperty("application.merchantId"));
         authParams.put("password", config.getProperty("application.password"));
+    }
+
+    /**
+     * Add params for turnkey API.
+     * @return inputParams
+     */
+    protected Map<String, String> prepareAPICall(){
+
+        // TOKENIZE
+        final Map<String, String> tokenizeParams = this.buildTokenizeParam();
+
+        final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
+        final JSONObject tokenizeCall = tokenize.execute();
+
+        final Map<String, String> inputParams = new HashMap<>();
+        this.addCommonParams(inputParams);
+        inputParams.put("amount", "20.0");
+        inputParams.put("customerId", tokenizeCall.getString("customerId"));
+        inputParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
+        inputParams.put("specinCreditCardCVV", "111");
+
+        return inputParams;
     }
 
     /**
