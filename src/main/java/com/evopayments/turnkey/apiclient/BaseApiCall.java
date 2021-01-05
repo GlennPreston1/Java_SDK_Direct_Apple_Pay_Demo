@@ -83,7 +83,7 @@ public abstract class BaseApiCall extends ApiCall {
 	@Override
 	protected Map<String, String> getTokenParams(final Map<String, String> inputParams) {
 
-		final Map<String, String> tokenParams = new HashMap<>();
+		final Map<String, String> tokenParams = new HashMap<>(inputParams);
 
 		MerchantManager.putMerchantCredentials(inputParams, tokenParams, config);
 		tokenParams.put("action", getActionType().getCode());
