@@ -12,7 +12,7 @@
 	<version>2.0.0-SNAPSHOT</version>
 	
 	<name>Turnkey API SDK</name>
-	<description>library for integration, samples, tests</description>
+	<description>library for integration, samples, tests etc.</description>
 
 	<organization>
 		<name>EVO Payments</name>
@@ -29,12 +29,8 @@
 	<modules>
 
 		<module>java-sdk-core</module>
-		
 		<module>java-sdk-command-line-client</module>
-		<module>java-sdk-webapp-client</module>
-		
 		<module>java-sdk-sample-webshop</module>
-		<module>java-sdk-tester-tool</module>
 		
 	</modules>
 
