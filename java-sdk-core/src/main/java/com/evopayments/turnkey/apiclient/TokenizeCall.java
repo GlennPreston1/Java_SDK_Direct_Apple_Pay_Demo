@@ -1,8 +1,5 @@
 package com.evopayments.turnkey.apiclient;
 
-import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
-import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,26 +7,25 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.config.ApplicationConfig;
+
 /**
- * Tokenizes the card for future use.
+ * [only for PCI compliant merchants, needed for fully custom UI implementations] 
+ * 
+ * Tokenizes the card for future use (for added security). 
+ * The real card number is only used in this request, 
+ * in subsequent requests ({@link AuthCall} or {@link PurchaseCall} or {@link VerifyCall}) 
+ * the received (in the response here) card token has to be used.  
  * 
  * @author erbalazs
  *
  */
-public class TokenizeCall extends ApiCall {
+public class TokenizeCall extends AbstractApiCall {
 
-	/**
-	 * constructor of current class.
-	 *
-	 * @param config
-	 *
-	 * @param inputParams
-	 *
-	 * @param outputWriter
-	 *
-	 */
 	public TokenizeCall(final ApplicationConfig config, final Map<String, String> inputParams,
-						final PrintWriter outputWriter) {
+			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
@@ -64,17 +60,18 @@ public class TokenizeCall extends ApiCall {
 
 		final Map<String, String> tokenParams = new HashMap<>();
 
-		MerchantManager.putMerchantCredentials(inputParams, tokenParams, config);
-		tokenParams.put("action", getActionType().getCode());
+		putMerchantCredentials(inputParams, tokenParams, this.config);
+		
+		tokenParams.put("action", this.getActionType().getCode());
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
-		tokenParams.put("allowOriginUrl", config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
+		tokenParams.put("allowOriginUrl", this.config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
 
 		return tokenParams;
 	}
 
 	@Override
 	protected Map<String, String> getActionParams(final Map<String, String> inputParams,
-												  final String token) {
+			final String token) {
 
 		final Map<String, String> actionParams = new HashMap<>(inputParams);
 

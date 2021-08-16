@@ -1,9 +1,5 @@
 package com.evopayments.turnkey.apiclient;
 
-
-import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
-import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,28 +8,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.config.ApplicationConfig;
+
 /**
- * Queries the list of the possible payment solutions (ie. credit card) ,
- * (based on the country/currency).
+ * [only for PCI compliant merchants, needed for fully custom UI implementations] 
+ * 
+ * Queries the list of the available payment solutions 
+ * (ie. credit card, various bank transfers)
+ * (can depend on the selected country/currency).
  * 
  * @author erbalazs
- *
  */
-public class GetAvailablePaymentSolutionsCall extends ApiCall {
+public class GetAvailablePaymentSolutionsCall extends AbstractApiCall {
 
-	/**
-	 * get available payment solution.
-	 *
-	 * @param config
-	 *
-	 * @param inputParams
-	 *
-	 * @param outputWriter
-	 *
-	 */
 	public GetAvailablePaymentSolutionsCall(final ApplicationConfig config,
-											final Map<String, String> inputParams,
-											final PrintWriter outputWriter) {
+			final Map<String, String> inputParams,
+			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
@@ -65,15 +57,17 @@ public class GetAvailablePaymentSolutionsCall extends ApiCall {
 	@Override
 	protected Map<String, String> getTokenParams(final Map<String, String> inputParams) {
 
-		/**
+		/*
 		 * all of the input params plus the ones below
 		 */
+		
 		final Map<String, String> tokenParams = new HashMap<>(inputParams);
 
-		MerchantManager.putMerchantCredentials(inputParams, tokenParams, config);
-		tokenParams.put("action", getActionType().getCode());
+		putMerchantCredentials(inputParams, tokenParams, this.config);
+		
+		tokenParams.put("action", this.getActionType().getCode());
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
-		tokenParams.put("allowOriginUrl", config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
+		tokenParams.put("allowOriginUrl", this.config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
 
 		return tokenParams;
 	}

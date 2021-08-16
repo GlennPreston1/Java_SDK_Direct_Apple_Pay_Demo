@@ -1,8 +1,5 @@
 package com.evopayments.turnkey.apiclient;
 
-import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
-import com.evopayments.turnkey.config.ApplicationConfig;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,26 +7,23 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.evopayments.turnkey.apiclient.code.ActionType;
+import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
+import com.evopayments.turnkey.config.ApplicationConfig;
+
 /**
- * Cancels a previously authenticated payment.
+ * [only for PCI compliant merchants, needed for fully custom UI implementations] 
+ * 
+ * Cancels (voids) a previously authorized (AUTH operation) payment.
  * 
  * @author erbalazs
  *
+ * @see AuthCall
  */
-public class VoidCall extends ApiCall {
+public class VoidCall extends AbstractApiCall {
 
-	/**
-	 * constructor of current class.
-	 *
-	 * @param config
-	 *
-	 * @param inputParams
-	 *
-	 * @param outputWriter
-	 *
-	 */
 	public VoidCall(final ApplicationConfig config, final Map<String, String> inputParams,
-					final PrintWriter outputWriter) {
+			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
@@ -64,11 +58,12 @@ public class VoidCall extends ApiCall {
 
 		final Map<String, String> tokenParams = new HashMap<>();
 
-		MerchantManager.putMerchantCredentials(inputParams, tokenParams, config);
+		putMerchantCredentials(inputParams, tokenParams, this.config);
+		
 		tokenParams.put("originalMerchantTxId", inputParams.get("originalMerchantTxId"));
-		tokenParams.put("action", getActionType().getCode());
+		tokenParams.put("action", this.getActionType().getCode());
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
-		tokenParams.put("allowOriginUrl", config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
+		tokenParams.put("allowOriginUrl", this.config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
 		tokenParams.put("amount", inputParams.get("amount"));
 
 		return tokenParams;
@@ -76,7 +71,7 @@ public class VoidCall extends ApiCall {
 
 	@Override
 	protected Map<String, String> getActionParams(final Map<String, String> inputParams,
-												  final String token) {
+			final String token) {
 
 		final Map<String, String> actionParams = new HashMap<>();
 

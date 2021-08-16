@@ -31,7 +31,7 @@ public class RequiredParamException extends SDKException {
 	 * @return missingFields
 	 */
 	public Set<String> getMissingFields() {
-		return missingFields;
+		return this.missingFields;
 	}
 
 }

@@ -1,21 +1,19 @@
 package com.evopayments.turnkey.apiclient.code;
 
 /**
- * User device types-
+ * User device types (desktop or mobile etc.).
  */
 public enum UserDevice {
-	
-    MOBILE("MOBILE"),
-    DESKTOP("DESKTOP"),
-    UNKNOWN("UNKNOWN");
 
-    private String code;
+	MOBILE("MOBILE"), DESKTOP("DESKTOP"), UNKNOWN("UNKNOWN");
 
-    UserDevice(final String code) {
-        this.code = code;
-    }
+	private String code;
 
-    public String getCode() {
-        return code;
-    }
+	UserDevice(final String code) {
+		this.code = code;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
 }

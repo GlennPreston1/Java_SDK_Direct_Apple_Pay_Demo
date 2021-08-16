@@ -24,5 +24,5 @@ public abstract class SDKException extends RuntimeException {
 	public SDKException(final Throwable cause) {
 		super(cause);
 	}
-	
+
 }

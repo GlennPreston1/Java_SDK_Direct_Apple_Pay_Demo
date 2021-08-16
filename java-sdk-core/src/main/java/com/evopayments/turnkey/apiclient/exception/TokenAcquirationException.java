@@ -15,5 +15,5 @@ public class TokenAcquirationException extends SDKException {
 	public TokenAcquirationException() {
 		super();
 	}
-		
+
 }

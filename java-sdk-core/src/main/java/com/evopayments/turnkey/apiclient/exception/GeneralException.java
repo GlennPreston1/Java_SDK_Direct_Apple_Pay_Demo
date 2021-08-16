@@ -41,6 +41,6 @@ public class GeneralException extends SDKException {
 	 */
 	public GeneralException(final Throwable cause) {
 		super(cause);
-	}	 
-	
+	}
+
 }

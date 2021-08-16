@@ -4,17 +4,16 @@ package com.evopayments.turnkey.apiclient.code;
  * Type of sex.
  */
 public enum Sex {
-	
-    MALE("M"),
-    FEMALE("F");
 
-    protected String code;
+	MALE("M"), FEMALE("F");
 
-    Sex(final String code) {
-        this.code = code;
-    }
+	protected String code;
 
-    public String getCode() {
-        return code;
-    }
+	Sex(final String code) {
+		this.code = code;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
 }
