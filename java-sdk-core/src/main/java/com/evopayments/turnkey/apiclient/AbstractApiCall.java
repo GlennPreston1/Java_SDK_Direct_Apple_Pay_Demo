@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -59,17 +60,19 @@ public abstract class AbstractApiCall {
 	 */
 	protected static void mandatoryValidation(final Map<String, String> inputParams,
 			final Set<String> requiredParams) {
+		
+		final Set<String> requiredParams2 = new HashSet<>(requiredParams);
 
 		for (final Map.Entry<String, String> entry : inputParams.entrySet()) {
 
 			if (entry.getValue() != null && !entry.getValue().trim().isEmpty()) {
-				requiredParams.remove(entry.getKey());
+				requiredParams2.remove(entry.getKey());
 			}
 
 		}
 
-		if (!requiredParams.isEmpty()) {
-			throw new RequiredParamException(requiredParams);
+		if (!requiredParams2.isEmpty()) {
+			throw new RequiredParamException(requiredParams2);
 		}
 
 	}

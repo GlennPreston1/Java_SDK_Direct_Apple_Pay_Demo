@@ -2,10 +2,10 @@ package com.evopayments.turnkey.apiclient;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import com.evopayments.turnkey.apiclient.code.ActionType;
@@ -22,6 +22,8 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * @author erbalazs
  */
 public class GetAvailablePaymentSolutionsCall extends AbstractApiCall {
+	
+	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("country", "currency")));
 
 	public GetAvailablePaymentSolutionsCall(final ApplicationConfig config,
 			final Map<String, String> inputParams,
@@ -38,19 +40,7 @@ public class GetAvailablePaymentSolutionsCall extends AbstractApiCall {
 	protected void preValidateParams(final Map<String, String> inputParams)
 			throws RequiredParamException {
 
-		final Set<String> requiredParams = new HashSet<>(Arrays.asList("country", "currency"));
-
-		for (final Entry<String, String> entry : inputParams.entrySet()) {
-
-			if (entry.getValue() != null && !entry.getValue().trim().isEmpty()) {
-				requiredParams.remove(entry.getKey());
-			}
-
-		}
-
-		if (!requiredParams.isEmpty()) {
-			throw new RequiredParamException(requiredParams);
-		}
+		mandatoryValidation(inputParams, requiredParams);
 
 	}
 

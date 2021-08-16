@@ -2,6 +2,7 @@ package com.evopayments.turnkey.apiclient;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,6 +21,9 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractApvCall extends AbstractApiCall {
+	
+	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("amount",
+			"channel", "country", "currency", "paymentSolutionId")));
 
 	/**
 	 * @see SubActionType
@@ -28,7 +32,9 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 
 	public AbstractApvCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
+		
 		this(config, inputParams, outputWriter, null);
+		
 	}
 
 	/**
@@ -43,18 +49,19 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 	 */
 	public AbstractApvCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter, final String subActionType) {
+		
 		super(config, inputParams, outputWriter);
+		
 		this.subActionType = subActionType;
+		
 	}
 
 	@Override
 	protected void preValidateParams(final Map<String, String> inputParams)
-			throws RequiredParamException {
-
-		final Set<String> requiredParams = new HashSet<>(Arrays.asList("amount",
-				"channel", "country", "currency", "paymentSolutionId"));
+			throws RequiredParamException {	
 		
-		this.mandatoryValidation(inputParams, requiredParams);
+		mandatoryValidation(inputParams, requiredParams);
+		
 	}
 
 	@Override

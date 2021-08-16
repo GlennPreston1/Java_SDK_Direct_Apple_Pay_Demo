@@ -2,6 +2,7 @@ package com.evopayments.turnkey.apiclient;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,6 +26,9 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * @see Purchase
  */
 public class CaptureCall extends AbstractApiCall {
+	
+	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("amount",
+			"originalMerchantTxId")));
 
 	public CaptureCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
@@ -40,20 +44,7 @@ public class CaptureCall extends AbstractApiCall {
 	protected void preValidateParams(final Map<String, String> inputParams)
 			throws RequiredParamException {
 
-		final Set<String> requiredParams = new HashSet<>(Arrays.asList("amount",
-				"originalMerchantTxId"));
-
-		for (final Map.Entry<String, String> entry : inputParams.entrySet()) {
-
-			if (entry.getValue() != null && !entry.getValue().trim().isEmpty()) {
-				requiredParams.remove(entry.getKey());
-			}
-
-		}
-
-		if (!requiredParams.isEmpty()) {
-			throw new RequiredParamException(requiredParams);
-		}
+		mandatoryValidation(inputParams, requiredParams);
 
 	}
 

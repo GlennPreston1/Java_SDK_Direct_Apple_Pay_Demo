@@ -17,7 +17,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  *
  */
 public class StatusCheckCall extends AbstractApiCall {
-
+	
 	public StatusCheckCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
@@ -31,7 +31,9 @@ public class StatusCheckCall extends AbstractApiCall {
 	@Override
 	protected void preValidateParams(final Map<String, String> inputParams)
 			throws RequiredParamException {
-		//
+
+		// either txId or merchantTxId has to be supplied, but we don't pre-validate it here
+		
 	}
 
 	@Override

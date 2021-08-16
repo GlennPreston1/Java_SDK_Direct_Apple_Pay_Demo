@@ -14,17 +14,17 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * 
  * @author erbalazs
  *
- * @see PurchaseCall
+ * @see AuthTokenCall
  */
-public class PurchaseTokenCall extends AbstractApvTokenCall {
+public class AuthTokenCall extends AbstractApvTokenCall {
 
-	public PurchaseTokenCall(final ApplicationConfig config, final Map<String, String> inputParams,
+	public AuthTokenCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
 	@Override
 	protected ActionType getActionType() {
-		return ActionType.PURCHASE;
+		return ActionType.AUTH;
 	}
 }
