@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 
 /**
@@ -37,8 +36,7 @@ public class VoidCall extends AbstractApiCall {
 	}
 
 	@Override
-	protected void preValidateParams(final Map<String, String> inputParams)
-			throws RequiredParamException {
+	protected void preValidateParams(final Map<String, String> inputParams) {
 		
 		mandatoryValidation(inputParams, requiredParams);
 		

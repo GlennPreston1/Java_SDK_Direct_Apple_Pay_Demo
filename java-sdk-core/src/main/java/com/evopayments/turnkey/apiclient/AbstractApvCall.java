@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.evopayments.turnkey.apiclient.code.SubActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 
 /**
@@ -19,7 +18,6 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * 
  * @see AbstractApiCall
  */
-@SuppressWarnings("serial")
 public abstract class AbstractApvCall extends AbstractApiCall {
 	
 	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("amount",
@@ -57,8 +55,7 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 	}
 
 	@Override
-	protected void preValidateParams(final Map<String, String> inputParams)
-			throws RequiredParamException {	
+	protected void preValidateParams(final Map<String, String> inputParams) {	
 		
 		mandatoryValidation(inputParams, requiredParams);
 		

@@ -1,66 +1,32 @@
 package com.evopayments.turnkey.apiclient.exception;
 
-/**
- * RuntimeException is to ensure exception text
- * that gets sent to the external merchant is safe .
- * Generic Exception
- *
- * @version $Id: GenericException.java $
- */
-
-@SuppressWarnings("serial")
 public abstract class TurnkeyGenericException extends RuntimeException {
 
-	/**
-	 * specify the errorType.
-	 */
 	private final ErrorType errorType;
 
-	/**
-	 * Creates new instance.
-	 *
-	 * @param errorType
-	 *            error type
-	 * @param message
-	 *            error message
-	 */
+	protected TurnkeyGenericException(final ErrorType errorType) {
+		super(errorType.getDescription());
+		this.errorType = errorType;
+	}
+	
 	protected TurnkeyGenericException(final ErrorType errorType, final String message) {
-		super(message);
+		super(errorType.getDescription() + ": "+ message);
 		this.errorType = errorType;
 	}
 
-	/**
-	 * Creates new instance.
-	 * @param errorType
-	 * @param message
-	 * @param cause
-	 */
 	protected TurnkeyGenericException(final ErrorType errorType, final String message, final Throwable cause) {
-		super(message, cause);
+		super(errorType.getDescription() + ": "+ message, cause);
 		this.errorType = errorType;
 	}
 
-	/**
-	 * Gets error type.
-	 *
-	 * @return error type
-	 */
 	protected ErrorType getErrorType() {
 		return this.errorType;
 	}
 
-	/**
-	 * Gets error type code.
-	 * @return
-	 */
 	public int getErrorCode() {
 		return this.errorType.getCode();
 	}
 
-	/**
-	 * Gets error type description.
-	 * @return
-	 */
 	public String getErrorDescription() {
 		return this.errorType.getDescription();
 	}

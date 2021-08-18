@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.evopayments.turnkey.apiclient.code.ActionType;
-import com.evopayments.turnkey.apiclient.exception.RequiredParamException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 
 /**
@@ -29,8 +28,7 @@ public class StatusCheckCall extends AbstractApiCall {
 	}
 
 	@Override
-	protected void preValidateParams(final Map<String, String> inputParams)
-			throws RequiredParamException {
+	protected void preValidateParams(final Map<String, String> inputParams) {
 
 		// either txId or merchantTxId has to be supplied, but we don't pre-validate it here
 		
