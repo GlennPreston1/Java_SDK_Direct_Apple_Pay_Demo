@@ -72,6 +72,7 @@ public class GetMobileCashierURLCall extends AbstractApiCall {
 		actionParams.put("merchantId", inputParams.get("merchantId"));
 		actionParams.put("token", token);
 		actionParams.put("action", String.valueOf(ActionType.GET_MOBILE_CASHIER_URL.getCode()));
+		
 		return actionParams;
 	}
 

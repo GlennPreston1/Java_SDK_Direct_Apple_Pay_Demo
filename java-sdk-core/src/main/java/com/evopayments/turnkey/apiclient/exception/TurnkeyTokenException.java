@@ -6,7 +6,4 @@ public class TurnkeyTokenException extends TurnkeyGenericException {
 		super(ErrorType.TOKEN_ERROR, message);
 	}
 
-	public TurnkeyTokenException(final String message, final Throwable cause) {
-		super(ErrorType.TOKEN_ERROR, message, cause);
-	}
 }
