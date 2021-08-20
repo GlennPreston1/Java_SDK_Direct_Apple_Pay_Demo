@@ -72,7 +72,7 @@ public abstract class AbstractApiCall {
 
 	/**
 	 * This method extracts "merchantId" and "password" from inputParams and adds it to tokenParams. 
-	 * If there is no parameter named "merchantId" in inputParams then it's get it from the {@link ApplicationConfig} object
+	 * If there is no parameter named "merchantId" in inputParams then gets it from the {@link ApplicationConfig} object
 	 * 
 	 * @param inputParams
 	 * @param tokenParams
@@ -111,7 +111,7 @@ public abstract class AbstractApiCall {
 	 *
 	 * @param params
 	 *
-	 * @return form for HTTPClient
+	 * @return form object for {@link HttpClient}
 	 */
 	private static Form getForm(final Map<String, String> params) {
 
@@ -127,12 +127,12 @@ public abstract class AbstractApiCall {
 	}
 
 	/**
-	 * Initiates HTTP POST toward the API (via {@link HttpClient}) (outgoing request).
+	 * Initiates HTTP POST toward the API (via {@link HttpClient}) (outgoing request) and parses the response body into a {@link JSONObject}
 	 *
 	 * @param url
 	 * @param paramMap
 	 * 
-	 * @return the response as a parsed JSONObject
+	 * @return the response body as a parsed {@link JSONObject}
 	 */
 	private static JSONObject postToApi(final String url, final Map<String, String> paramMap) {
 
