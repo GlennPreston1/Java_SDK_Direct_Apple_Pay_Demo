@@ -1,18 +1,20 @@
 package com.evopayments.turnkey.apiclient;
 
-import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
-import org.json.JSONObject;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GetAvailablePaymentSolutionsCallTest extends BaseTest{
+import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.evopayments.turnkey.apiclient.exception.ErrorType;
+import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
+
+public class GetAvailablePaymentSolutionsCallTest extends BaseTest {
 
 	/**
-	 * successful case.
+	 * Successful case
 	 */
 	@Test
 	public void noExTestCall() {
@@ -23,22 +25,19 @@ public class GetAvailablePaymentSolutionsCallTest extends BaseTest{
 		inputParams.put("currency", "PLN");
 
 		final GetAvailablePaymentSolutionsCall call = new GetAvailablePaymentSolutionsCall(config, inputParams, null);
-		JSONObject result = call.execute();
-
-
-		// note that any error will cause the throwing of some kind of SDKException (which extends RuntimeException)
-		// still we make an assertNotNull
+		final JSONObject result = call.execute();
 
 		Assert.assertNotNull(result);
-		Assert.assertEquals(result.get("result"), "success");
+		Assert.assertEquals("success", result.get("result"));
+		Assert.assertTrue(result.toString().contains("\"CreditDebitCards\""));
 
 	}
 
 	/**
-	 * RequiredParamException test (intentionally left out param).
+	 * {@link TurnkeyValidationException} test (intentionally left out param)
 	 */
 	@Test(expected = TurnkeyValidationException.class)
-	public void reqParExExpTestCall() {
+	public void missingParameterTest() {
 
 		try {
 
@@ -49,11 +48,11 @@ public class GetAvailablePaymentSolutionsCallTest extends BaseTest{
 			final GetAvailablePaymentSolutionsCall call = new GetAvailablePaymentSolutionsCall(config, inputParams, null);
 			call.execute();
 
-		} catch (TurnkeyValidationException e) {
-			Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("currency").toString(),e.getMessage());
+		} catch (final TurnkeyValidationException e) {
+			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("currency").toString(), e.getMessage());
 			throw e;
-
 		}
+
 	}
 
 }

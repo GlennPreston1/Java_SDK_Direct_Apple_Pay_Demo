@@ -1,39 +1,38 @@
 package com.evopayments.turnkey.apiclient;
 
-import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
-import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
-import org.json.JSONObject;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TokenizeCallTest extends BaseTest{
+import org.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.evopayments.turnkey.apiclient.exception.ErrorType;
+import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
+import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
+
+public class TokenizeCallTest extends BaseTest {
 
 	/**
-	 * successful case
+	 * Successful case
 	 */
 	@Test
 	public void noExTestCall() {
 
-		final Map<String, String> inputParams = super.buildTokenizeParam();
+		final Map<String, String> inputParams = super.buildTokenizeParamMap();
 
 		final TokenizeCall call = new TokenizeCall(config, inputParams, null);
-		JSONObject result = call.execute();
-
-		// note that any error will cause the throwing of some kind of SDKException (which extends RuntimeException)
-		// still we make an assertNotNull
+		final JSONObject result = call.execute();
 
 		Assert.assertNotNull(result);
 	}
 
 	/**
-	 * RequiredParamException test (intentionally left out param).
+	 * {@link TurnkeyValidationException} test (intentionally left out param)
 	 */
 	@Test(expected = TurnkeyValidationException.class)
-	public void reqParExExpTestCall() {
+	public void missingParameterTest() {
 
 		try {
 
@@ -46,22 +45,20 @@ public class TokenizeCallTest extends BaseTest{
 			final TokenizeCall call = new TokenizeCall(config, inputParams, null);
 			call.execute();
 
-		} catch (TurnkeyValidationException e) {
-			Assert.assertEquals(new TurnkeyValidationException().getTurnkeyValidationErrorDescription() + ":" + Arrays.asList("expiryYear").toString(),e.getMessage());
+		} catch (final TurnkeyValidationException e) {
+			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("expiryYear").toString(), e.getMessage());
 			throw e;
 
 		}
 	}
 
 	/**
-	 * ActionCallException test (via intentionally wrong expiryYear).
+	 * Intentionally wrong expiryYear test
 	 */
 	@Test(expected = TurnkeyInternalException.class)
-	public void actCallExExpTestCall() {
+	public void wrongExpYearTest() {
 
 		final Map<String, String> inputParams = new HashMap<>();
-		inputParams.put("merchantId", config.getProperty("application.merchantId"));
-		inputParams.put("password", config.getProperty("application.password"));
 		inputParams.put("number", "5454545454545454");
 		inputParams.put("nameOnCard", "John Doe");
 		inputParams.put("expiryMonth", "12");
@@ -69,5 +66,7 @@ public class TokenizeCallTest extends BaseTest{
 
 		final TokenizeCall call = new TokenizeCall(config, inputParams, null);
 		call.execute();
+		
 	}
+	
 }

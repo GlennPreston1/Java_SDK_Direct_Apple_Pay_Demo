@@ -64,7 +64,8 @@ public class TokenizeCall extends AbstractApiCall {
 
 		final Map<String, String> actionParams = new HashMap<>(inputParams);
 
-		actionParams.put("merchantId", inputParams.get("merchantId"));
+		putMerchantId(inputParams, actionParams, this.config);
+		
 		actionParams.put("token", token);
 		actionParams.put("number", inputParams.get("number"));
 		actionParams.put("nameOnCard", inputParams.get("nameOnCard"));

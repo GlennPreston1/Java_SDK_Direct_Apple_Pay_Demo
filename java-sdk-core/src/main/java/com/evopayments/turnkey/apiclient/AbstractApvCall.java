@@ -122,7 +122,8 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 
 		final Map<String, String> actionParams = new HashMap<>();
 
-		actionParams.put("merchantId", inputParams.get("merchantId"));
+		putMerchantId(inputParams, actionParams, this.config);
+		
 		actionParams.put("token", token);
 		actionParams.put("customerId", inputParams.get("customerId"));
 		actionParams.put("specinCreditCardToken", inputParams.get("specinCreditCardToken"));

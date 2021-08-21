@@ -65,7 +65,7 @@ public abstract class AbstractApiCall {
 		}
 
 		if (!requiredParams2.isEmpty()) {
-			throw new TurnkeyValidationException(Encode.forJava("missing mandatory parameters: " + requiredParams2.toString()));
+			throw new TurnkeyValidationException(Encode.forJava(requiredParams2.toString()));
 		}
 
 	}
@@ -102,6 +102,40 @@ public abstract class AbstractApiCall {
 
 			tokenParams.put("merchantId", merchantId);
 			tokenParams.put("password", inputParams.get("password"));
+
+		}
+	}
+	
+	/**
+	 * This method extracts "merchantId" from inputParams and adds it to actionParams. 
+	 * If there is no parameter named "merchantId" in inputParams then gets it from the {@link ApplicationConfig} object
+	 * 
+	 * @param inputParams
+	 * @param actionParams
+	 * @param config
+	 */
+	protected static void putMerchantId(
+			final Map<String, String> inputParams,
+			final Map<String, String> actionParams,
+			final ApplicationConfig config) {
+
+		final String merchantId = inputParams.get("merchantId");
+
+		if (merchantId == null || merchantId.isEmpty()) {
+
+			/*
+			 * Option - 1: ApplicationConfig instance for storing "merchantId" and "password"
+			 */
+
+			actionParams.put("merchantId", config.getProperty("application.merchantId"));
+
+		} else {
+
+			/*
+			 * Option - 2: supplying "merchantId" and "password" in inputParams Map
+			 */
+
+			actionParams.put("merchantId", merchantId);
 
 		}
 	}
@@ -269,7 +303,7 @@ public abstract class AbstractApiCall {
 			}
 
 			if (((String) actionResponse.get("result")).equals("failure")) {
-				throw new TurnkeyCommunicationException("Error during the action call!");
+				throw new TurnkeyInternalException("Error during the action call!");
 			}
 
 			return actionResponse;

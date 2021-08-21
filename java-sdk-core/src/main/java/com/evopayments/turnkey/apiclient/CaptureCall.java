@@ -68,7 +68,8 @@ public class CaptureCall extends AbstractApiCall {
 
 		final Map<String, String> actionParams = new HashMap<>();
 
-		actionParams.put("merchantId", inputParams.get("merchantId"));
+		putMerchantId(inputParams, actionParams, this.config);
+		
 		actionParams.put("token", token);
 
 		return actionParams;

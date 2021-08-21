@@ -1,23 +1,22 @@
 package com.evopayments.turnkey.apiclient;
 
-import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class StatusCheckCallTest extends BaseTest {
 
 	/**
-	 * successful case
+	 * Successful case
 	 */
 	@Test
 	public void noExTestCall() {
 
 		// TOKENIZE
-		final Map<String, String> tokenizeParams = super.buildTokenizeParam();
+		final Map<String, String> tokenizeParams = super.buildTokenizeParamMap();
 
 		final TokenizeCall tokenize = new TokenizeCall(config, tokenizeParams, null);
 		final JSONObject tokenizeCall = tokenize.execute();
@@ -39,29 +38,10 @@ public class StatusCheckCallTest extends BaseTest {
 		inputParams.put("merchantTxId", authCall.getString("merchantTxId"));
 
 		final StatusCheckCall call = new StatusCheckCall(config, inputParams, null);
-		JSONObject result = call.execute();
-
-		// note that any error will cause the throwing of some kind of SDKException (which extends RuntimeException)
-		// still we make an assertNotNull
+		final JSONObject result = call.execute();
 
 		Assert.assertNotNull(result);
 
 	}
 
-	/**
-	 * ActionCallException test
-	 */
-	@Test(expected = TurnkeyInternalException.class)
-	public void reqParExExpTestCall() {
-
-		final Map<String, String> inputParams = new HashMap<>();
-		inputParams.put("merchantId", config.getProperty("application.merchantId"));
-		inputParams.put("password", config.getProperty("application.password"));
-		// inputParams.put("txId", "11387591"); // intentionally left out
-		// inputParams.put("merchantTxId", "11282092"); // intentionally left out
-
-		final StatusCheckCall call = new StatusCheckCall(config, inputParams, null);
-		call.execute();
-
-	}
 }
