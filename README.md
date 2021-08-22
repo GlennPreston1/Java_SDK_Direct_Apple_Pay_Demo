@@ -44,14 +44,14 @@ evopayments-turnkey-sdk-config system property influences the choice: -Devopayme
 
 (NEW) With PropertiesObjectConfig.java an ApplicationConfig instance can be put together without relying on the fixed location property files.
 
-### II. Create the a Call object:
+### II. Create the AbstractApiCall subclass object:
 
 ```java
 final Map<String, String> params = new HashMap<>();
 inputParams.put("country", "FR");
 inputParams.put("currency", "EUR");
 
-ApiCall callObject = new GetAvailablePaymentSolutionsCall(config, params);
+AbstractApiCall callObject = new GetAvailablePaymentSolutionsCall(config, params);
 ```
 
 The call parameters have to supplied via a Map (any map implementation is good, ie. HashMap) (the "params" parameter). 
@@ -60,13 +60,13 @@ For more information on the possible/needed parameters please check the the most
 The constructor will do a basic "pre" validation on the supplied parameters (without actual API requests, without HTTP traffic).
 With ApplicationConfig.isPrevalidationEnabled() (if it is false) this can be turned off.
 
-### III. Execute the call:
+### III. Execute it:
 ```java
 JSONObject result = callObject.execute();
 ```
 For more information about the possible results (fields in the response body JSON object) please examine the most recent (up-to-date) API specification PDF document.
 
-### IV. Watch for Exceptions
+### IV. Watch for exceptions
 
 Occasionally the SDK (java-sdk-core) will not be able to perform your request and it will throw an Exception. 
 This could be due to misconfiguration or unexpected conditions like connectivity issues (to the API server). 
@@ -75,7 +75,7 @@ Exceptions are described in more detail in a later section of this document.
 
 ```java
 try {
-	ApiCall call = new GetAvailablePaymentSolutionsCall(config, params);
+	AbstractApiCall call = new GetAvailablePaymentSolutionsCall(config, params);
 } catch (TurnkeyValidationException e) {
 	// issues with the supplied parameters (ie. missing amount, missing currency)... notify the user, exit the program, redirect to the error page etc.
 } catch (TurnkeyGenericException e) {
@@ -105,3 +105,8 @@ For details please see: com.evopayments.turnkey.apiclient.exception package (Jav
 java-sdk-core uses SLF4J (http://www.slf4j.org/), thus it can utilize the logger library (for example: log4j, logback) used in the project (where java-sdk-core was included as a dependency).
 
 Please adjust logging for com.evopayments.turnkey package to enable/disable logging (to set granularity etc.). 
+
+## java-sdk-command-line-client usage
+
+java -Devopayments-turnkey-sdk-config=test -jar turnkey-java-sdk-cmd.jar -action TOKENIZE -merchantId 5000 -password 5678 -number 5454545454545454 -nameOnCard "John Doe" -expiryMonth 12 -expiryYear 2022  -merchantId=167885 -password=56789 > reponse.json
+

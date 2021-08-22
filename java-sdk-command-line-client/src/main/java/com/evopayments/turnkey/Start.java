@@ -1,6 +1,5 @@
 package com.evopayments.turnkey;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.owasp.encoder.Encode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.evopayments.turnkey.apiclient.AbstractApiCall;
 import com.evopayments.turnkey.apiclient.AuthCall;
 import com.evopayments.turnkey.apiclient.CaptureCall;
 import com.evopayments.turnkey.apiclient.GetAvailablePaymentSolutionsCall;
@@ -28,47 +26,95 @@ import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import com.evopayments.turnkey.config.ApplicationConfig;
 
 /**
- * Command line API client.
- *
+ * Command line API client. Sample program arguments: <br><br>
+ * 
+ * -action TOKENIZE -number 5454545454545454 -nameOnCard "John Doe" -expiryMonth 12 -expiryYear 2022 -merchantId=1234 -password=1234 <br><br>
+ * 
+ * Plus you need this as a VM argument (test mode is the default): <br><br>
+ * -Devopayments-turnkey-sdk-config=production <br>
+ * or <br>
+ * -Devopayments-turnkey-sdk-config=test
+ * 
  * @author erbalazs
  */
 public class Start {
 
 	private static Logger logger;
 
-	public static void main(final String[] args) {
-		
+	private static void initLogger() {
+
 		System.setProperty("org.slf4j.simpleLogger.logFile", "System.err");
 		System.setProperty("org.slf4j.simpleLogger.showDateTime", "true");
 		System.setProperty("org.slf4j.simpleLogger.dateTimeFormat", "yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 		System.setProperty("org.slf4j.simpleLogger.showThreadName", "true");
 		System.setProperty("org.slf4j.simpleLogger.levelInBrackets", "true");
-		
-		logger = LoggerFactory.getLogger(Start.class);
-		
-		// ---
 
-		// sample cmd params:
-		// -action TOKENIZE -number 5454545454545454 -nameOnCard "John Doe" -expiryMonth 12 -expiryYear 2022
+		logger = LoggerFactory.getLogger(Start.class);
+
+	}
+
+	private static void parseArgs(final String[] args, final Map<String, String> params) {
+
+		String key = null;
+
+		for (final String a : args) {
+
+			if (a == null || a.trim().isEmpty()) {
+				logger.error("error at an argument");
+				System.exit(1);
+			}
+
+			if (a.charAt(0) == '-') {
+				if (a.length() < 2) {
+					logger.error("error at argument: " + Encode.forJava(a));
+					System.exit(1);
+				}
+
+				key = a.substring(1);
+
+			} else {
+
+				if (key == null) {
+					logger.error("error at argument: " + Encode.forJava(a));
+					System.exit(1);
+				}
+
+				params.put(key, a);
+				key = null;
+
+			}
+
+		}
+	}
+
+	public static void main(final String[] args) {
+
+		initLogger();
+
+		// ---
 
 		final Map<String, String> paramMap = new HashMap<>();
 
 		parseArgs(args, paramMap);
 
+		// ---
+
 		ActionType action = null;
 		try {
 			action = ActionType.valueOfCode(paramMap.get("action"));
 		} catch (final IllegalArgumentException ex) {
-			logger.error("Illegal action parameter usage");
+			logger.error("illegal action parameter usage");
 			System.exit(1);
 		}
+
+		// ---
 
 		try {
 
 			final ApplicationConfig config = ApplicationConfig.getInstanceBasedOnSysProp();
 
 			JSONObject result = null;
-			
+
 			switch (action) {
 			case AUTH:
 				result = new AuthCall(config, paramMap).execute();
@@ -98,11 +144,11 @@ public class Start {
 				result = new GetMobileCashierURLCall(config, paramMap).execute();
 				break;
 			default:
-				logger.error("Illegal action parameter usage");
+				logger.error("illegal action parameter usage");
 				System.exit(1);
 				break;
 			}
-			
+
 			System.out.println(result.toString(2));
 
 		} catch (final TurnkeyValidationException e) {
@@ -121,43 +167,10 @@ public class Start {
 			logger.error("general SDK error", e);
 			System.exit(6);
 		} catch (Exception e) {
-			logger.error("other error", e);
+			logger.error("other error", Encode.forJava(e.getMessage()));
 			System.exit(7);
 		}
 
-	}
-
-	private static void parseArgs(final String[] args, final Map<String, String> params) {
-		String key = null;
-
-		for (final String a : args) {
-
-			if (a == null || a.trim().isEmpty()) {
-				logger.error("Error at an argument");
-				System.exit(1);
-			}
-
-			if (a.charAt(0) == '-') {
-				if (a.length() < 2) {
-					logger.error("Error at argument: " + Encode.forJava(a));
-					System.exit(1);
-				}
-
-				key = a.substring(1);
-
-			} else {
-
-				if (key == null) {
-					logger.error("Error at argument: " + Encode.forJava(a));
-					System.exit(1);
-				}
-
-				params.put(key, a);
-				key = null;
-
-			}
-
-		}
 	}
 
 }

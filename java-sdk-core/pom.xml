@@ -66,7 +66,6 @@
 							<doclint>accessibility,html,reference,syntax</doclint>
 						</configuration>
 					</execution>
-
 				</executions>
 			</plugin>
 		</plugins>
