@@ -20,11 +20,26 @@ public class GetMobileCashierURLCall extends AbstractApiCall {
 
 	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("action", "amount", "channel", "country", "currency")));
 
+	/**
+	 * @deprecated
+	 * 
+	 * @param config
+	 * @param inputParams
+	 * @param outputWriter
+	 * 		deprecated parameter, outputWriter is not utilized anymore, 
+	 * 		instead use and adjust logging
+	 */
 	public GetMobileCashierURLCall(
 			final ApplicationConfig config,
 			final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
+	}
+	
+	public GetMobileCashierURLCall(
+			final ApplicationConfig config,
+			final Map<String, String> inputParams) {
+		super(config, inputParams);
 	}
 
 	@Override

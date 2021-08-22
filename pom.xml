@@ -29,9 +29,13 @@
 	<modules>
 
 		<module>java-sdk-core</module>
+		
 		<module>java-sdk-core-tester</module>
-		<module>java-sdk-command-line-client</module>
+		
 		<module>java-sdk-sample-webshop</module>
+		<module>java-sdk-sample-webshop-advanced</module>
+		
+		<module>java-sdk-command-line-client</module>
 		
 	</modules>
 

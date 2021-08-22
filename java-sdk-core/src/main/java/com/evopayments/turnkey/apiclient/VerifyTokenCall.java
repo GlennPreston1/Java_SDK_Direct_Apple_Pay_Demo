@@ -1,6 +1,5 @@
 package com.evopayments.turnkey.apiclient;
 
-import java.io.PrintWriter;
 import java.util.Map;
 
 import com.evopayments.turnkey.apiclient.code.ActionType;
@@ -18,9 +17,8 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class VerifyTokenCall extends AbstractApvTokenCall {
 
-	public VerifyTokenCall(final ApplicationConfig config, final Map<String, String> inputParams,
-			final PrintWriter outputWriter) {
-		super(config, inputParams, outputWriter);
+	public VerifyTokenCall(final ApplicationConfig config, final Map<String, String> inputParams) {
+		super(config, inputParams);
 	}
 
 	@Override

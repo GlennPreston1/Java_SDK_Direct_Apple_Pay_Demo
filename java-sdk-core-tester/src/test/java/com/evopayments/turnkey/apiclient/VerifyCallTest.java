@@ -23,7 +23,7 @@ public class VerifyCallTest extends BaseTest {
 		final Map<String, String> verifyParams = super.prepareApiCall();
 		verifyParams.put("amount", "0");
 
-		final VerifyCall call = new VerifyCall(config, verifyParams, null);
+		final VerifyCall call = new VerifyCall(config, verifyParams);
 		final JSONObject result = call.execute();
 
 		Assert.assertNotNull(result);
@@ -43,7 +43,7 @@ public class VerifyCallTest extends BaseTest {
 			inputParams.remove("currency");
 			inputParams.remove("country");
 
-			final VerifyCall call = new VerifyCall(config, inputParams, null);
+			final VerifyCall call = new VerifyCall(config, inputParams);
 			call.execute();
 
 		} catch (final TurnkeyValidationException e) {
@@ -63,7 +63,7 @@ public class VerifyCallTest extends BaseTest {
 		final Map<String, String> verifyParams = super.prepareApiCall();
 		verifyParams.put("amount", "0");
 
-		final VerifyCall call = new VerifyCall(config, this.add3DSV2Parameters(verifyParams), null);
+		final VerifyCall call = new VerifyCall(config, this.add3DSV2Parameters(verifyParams));
 		final JSONObject result = call.execute();
 
 		Assert.assertNotNull(result);
@@ -83,7 +83,7 @@ public class VerifyCallTest extends BaseTest {
 		final Map<String, String> verifyParams = super.prepareApiCall();
 		verifyParams.put("amount", "0");
 
-		final VerifyCall call = new VerifyCall(config, this.add3DSV2ParametersNoExt(verifyParams), null);
+		final VerifyCall call = new VerifyCall(config, this.add3DSV2ParametersNoExt(verifyParams));
 		final JSONObject result = call.execute();
 
 		Assert.assertNotNull(result);

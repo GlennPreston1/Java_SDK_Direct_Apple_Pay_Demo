@@ -26,9 +26,22 @@ public class AbstractApvTokenCall extends AbstractApiCall {
 	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("amount", "channel",
 			"country", "currency", "paymentSolutionId")));
 
+	/**
+	 * @deprecated
+	 * 
+	 * @param config
+	 * @param inputParams
+	 * @param outputWriter
+	 * 		deprecated parameter, outputWriter is not utilized anymore, 
+	 * 		instead use and adjust logging
+	 */
 	public AbstractApvTokenCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
+	}
+	
+	public AbstractApvTokenCall(final ApplicationConfig config, final Map<String, String> inputParams) {
+		super(config, inputParams);
 	}
 
 	@Override

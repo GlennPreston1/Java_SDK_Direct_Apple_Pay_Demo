@@ -1,6 +1,5 @@
 package com.evopayments.turnkey.apiclient;
 
-import java.io.PrintWriter;
 import java.util.Map;
 
 import com.evopayments.turnkey.apiclient.code.ActionType;
@@ -18,9 +17,8 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class AuthTokenCall extends AbstractApvTokenCall {
 
-	public AuthTokenCall(final ApplicationConfig config, final Map<String, String> inputParams,
-			final PrintWriter outputWriter) {
-		super(config, inputParams, outputWriter);
+	public AuthTokenCall(final ApplicationConfig config, final Map<String, String> inputParams) {
+		super(config, inputParams);
 	}
 
 	@Override

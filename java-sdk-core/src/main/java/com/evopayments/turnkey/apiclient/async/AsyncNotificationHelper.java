@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.owasp.encoder.Encode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,11 +29,9 @@ public class AsyncNotificationHelper {
 		return requestMap;
 	}
 	
-	protected void handleIncomingNotification(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+	protected Map<String, String> handleIncomingNotification(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
 
-		final Map<String, String> notificationParams = extractParams(httpServletRequest);
-
-		logger.info("AsyncNotificationHelper notification: " + Encode.forJava(notificationParams.toString()));
+		return extractParams(httpServletRequest);
 
 	}
 

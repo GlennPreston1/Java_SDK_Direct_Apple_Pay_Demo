@@ -20,9 +20,22 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class AuthCall extends AbstractApvCall {
 
+	/**
+	 * @deprecated
+	 * 
+	 * @param config
+	 * @param inputParams
+	 * @param outputWriter
+	 * 		deprecated parameter, outputWriter is not utilized anymore, 
+	 * 		instead use and adjust logging
+	 */
 	public AuthCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
+	}
+	
+	public AuthCall(final ApplicationConfig config, final Map<String, String> inputParams) {
+		super(config, inputParams);
 	}
 
 	@Override

@@ -24,14 +24,41 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class PurchaseCall extends AbstractApvCall {
 
+	/**
+	 * @deprecated
+	 * 
+	 * @param config
+	 * @param inputParams
+	 * @param outputWriter
+	 * 		deprecated parameter, outputWriter is not utilized anymore, 
+	 * 		instead use and adjust logging
+	 */
 	public PurchaseCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
+	/**
+	 * @deprecated
+	 * 
+	 * @param config
+	 * @param inputParams
+	 * @param outputWriter
+	 * 		deprecated parameter, outputWriter is not utilized anymore, 
+	 * 		instead use and adjust logging
+	 * @param subActionType
+	 */
 	public PurchaseCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter, final String subActionType) {
 		super(config, inputParams, outputWriter, subActionType);
+	}
+	
+	public PurchaseCall(final ApplicationConfig config, final Map<String, String> inputParams) {
+		super(config, inputParams);
+	}
+
+	public PurchaseCall(final ApplicationConfig config, final Map<String, String> inputParams, final String subActionType) {
+		super(config, inputParams, subActionType);
 	}
 
 	@Override

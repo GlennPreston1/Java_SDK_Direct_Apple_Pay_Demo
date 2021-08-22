@@ -221,7 +221,6 @@ public abstract class AbstractApiCall {
 	 *
 	 * @param config
 	 * @param inputParams
-	 * @param outputWriter
 	 */
 	public AbstractApiCall(final ApplicationConfig config,
 			final Map<String, String> inputParams) {

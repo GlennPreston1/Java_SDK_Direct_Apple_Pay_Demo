@@ -17,9 +17,22 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class StatusCheckCall extends AbstractApiCall {
 	
+	/**
+	 * @deprecated
+	 * 
+	 * @param config
+	 * @param inputParams
+	 * @param outputWriter
+	 * 		deprecated parameter, outputWriter is not utilized anymore, 
+	 * 		instead use and adjust logging
+	 */
 	public StatusCheckCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
+	}
+	
+	public StatusCheckCall(final ApplicationConfig config, final Map<String, String> inputParams) {
+		super(config, inputParams);
 	}
 
 	@Override

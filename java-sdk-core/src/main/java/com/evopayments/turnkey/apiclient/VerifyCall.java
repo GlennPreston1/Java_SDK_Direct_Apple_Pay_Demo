@@ -19,14 +19,41 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class VerifyCall extends AbstractApvCall {
 
+	/**
+	 * @deprecated
+	 * 
+	 * @param config
+	 * @param inputParams
+	 * @param outputWriter
+	 * 		deprecated parameter, outputWriter is not utilized anymore, 
+	 * 		instead use and adjust logging
+	 */
 	public VerifyCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
 		super(config, inputParams, outputWriter);
 	}
 
+	/**
+	 * @deprecated
+	 * 
+	 * @param config
+	 * @param inputParams
+	 * @param outputWriter
+	 * 		deprecated parameter, outputWriter is not utilized anymore, 
+	 * 		instead use and adjust logging
+	 * @param subActionType
+	 */
 	public VerifyCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter, final String subActionType) {
 		super(config, inputParams, outputWriter, subActionType);
+	}
+	
+	public VerifyCall(final ApplicationConfig config, final Map<String, String> inputParams) {
+		super(config, inputParams);
+	}
+
+	public VerifyCall(final ApplicationConfig config, final Map<String, String> inputParams, final String subActionType) {
+		super(config, inputParams, subActionType);
 	}
 
 	@Override

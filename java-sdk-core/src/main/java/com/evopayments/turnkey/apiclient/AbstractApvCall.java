@@ -30,9 +30,15 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 
 	public AbstractApvCall(final ApplicationConfig config, final Map<String, String> inputParams,
 			final PrintWriter outputWriter) {
-		
 		this(config, inputParams, outputWriter, null);
+	}
 		
+	public AbstractApvCall(final ApplicationConfig config, final Map<String, String> inputParams, final String subActionType) {	
+		this(config, inputParams, null, subActionType);
+	}
+	
+	public AbstractApvCall(final ApplicationConfig config, final Map<String, String> inputParams) {	
+		this(config, inputParams, null, null);
 	}
 
 	/**

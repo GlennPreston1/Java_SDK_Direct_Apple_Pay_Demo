@@ -33,7 +33,7 @@ public class PurchaseCallTest1 extends BaseTest {
 		purchaseParams.put("specinCreditCardToken", tokenizeCall.getString("cardToken"));
 		purchaseParams.put("specinCreditCardCVV", "111");
 
-		final PurchaseCall call = new PurchaseCall(config, purchaseParams, null);
+		final PurchaseCall call = new PurchaseCall(config, purchaseParams);
 		JSONObject result = call.execute();
 
 		Assert.assertNotNull(result);
@@ -51,7 +51,7 @@ public class PurchaseCallTest1 extends BaseTest {
 			inputParams.remove("currency");
 			inputParams.remove("country");
 
-			final PurchaseCall call = new PurchaseCall(config, inputParams, null);
+			final PurchaseCall call = new PurchaseCall(config, inputParams);
 			call.execute();
 
 		} catch (final TurnkeyValidationException e) {
