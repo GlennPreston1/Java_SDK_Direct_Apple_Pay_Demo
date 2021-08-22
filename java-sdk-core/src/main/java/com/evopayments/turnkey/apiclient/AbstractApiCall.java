@@ -175,7 +175,7 @@ public abstract class AbstractApiCall {
 		try {
 			paramList = getForm(paramMap).build();
 		} catch (final Exception e) {
-			throw new TurnkeyCommunicationException("Failed to build bodyForm for the HTTP request.");
+			throw new TurnkeyInternalException("Failed to build bodyForm for the HTTP request.");
 		}
 
 		String apiResponseStr;
@@ -190,7 +190,7 @@ public abstract class AbstractApiCall {
 		try {
 			return new JSONObject(apiResponseStr);
 		} catch (final Exception e) {
-			throw new TurnkeyCommunicationException("Failed to parse API call response (not JSON?).");
+			throw new TurnkeyInternalException("Failed to parse API call response (not JSON?).");
 		}
 
 	}

@@ -7,13 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class AsyncNotificationHelper {
-	
-	private static final Logger logger = LoggerFactory.getLogger(AsyncNotificationHelper.class);
-	
+		
 	private static Map<String, String> extractParams(final HttpServletRequest request) {
 
 		final HashMap<String, String> requestMap = new HashMap<>();
