@@ -13,7 +13,8 @@ import com.evopayments.example.webshop.data.OrderEntity;
 import com.evopayments.example.webshop.data.OrderSubmitRequestDto;
 import com.evopayments.example.webshop.data.OrderSubmitResponseDto;
 import com.evopayments.example.webshop.repository.OrderEntityRepository;
-import com.evopayments.example.webshop.util.TurnkeyJavaSdkHelper;
+import com.evopayments.example.webshop.util.TurnkeyJavaSdkHelper1;
+import com.evopayments.example.webshop.util.TurnkeyJavaSdkHelper2;
 
 @RestController
 public class OrderSubmitController {
@@ -76,16 +77,16 @@ public class OrderSubmitController {
 		
 		switch (orderSubmitRequestDto.getMode()) {
 		case "iframe":
-			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper.startIframeModeCashierPayment(orderEntity));
+			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper1.startIframeModeCashierPayment(orderEntity));
 			break;
 		case "standalone":
-			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper.startStandaloneModeCashierPayment(orderEntity));
+			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper1.startStandaloneModeCashierPayment(orderEntity));
 			break;
 		case "hpp":
-			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper.startHppModeCashierPayment(orderEntity));
+			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper1.startHppModeCashierPayment(orderEntity));
 			break;
 		case "advanced":
-			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper.executeAdvancedPayment(orderSubmitRequestDto, orderEntity));
+			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper2.executeAdvancedPayment(orderSubmitRequestDto, orderEntity));
 			break;
 		default:
 			throw new IllegalArgumentException("Incorrect mode!");

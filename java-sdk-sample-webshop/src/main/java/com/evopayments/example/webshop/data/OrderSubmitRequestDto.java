@@ -25,6 +25,11 @@ public class OrderSubmitRequestDto {
 	 */
 	private String expiryYear;
 
+	/**
+	 * only in advanced (PCI compliant merchant) mode
+	 */
+	private String cardCvv;
+
 	public String getProduct() {
 		return product;
 	}
@@ -71,6 +76,14 @@ public class OrderSubmitRequestDto {
 
 	public void setExpiryYear(String expiryYear) {
 		this.expiryYear = expiryYear;
+	}
+
+	public String getCardCvv() {
+		return cardCvv;
+	}
+
+	public void setCardCvv(String cardCvv) {
+		this.cardCvv = cardCvv;
 	}
 
 }

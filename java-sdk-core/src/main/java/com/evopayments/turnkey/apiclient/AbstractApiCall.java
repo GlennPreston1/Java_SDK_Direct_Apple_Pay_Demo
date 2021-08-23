@@ -43,11 +43,13 @@ public abstract class AbstractApiCall {
 
 	private static final String TOKEN_URL_PROP_KEY = "application.sessionTokenRequestUrl";
 	private static final String OPERATION_ACTION_URL_PROP_KEY = "application.paymentOperationActionUrl";
+	protected static final String CASHIER_ROOT_URL_PROP_KEY = "application.cashierRootUrl";
+	protected static final String CASHIER_URL_PROP_KEY = "application.cashierUrl";
 	private static final String MOBILE_CASHIER_URL_PROP_KEY = "application.mobile.cashierUrl";
 	protected static final String ALLOW_ORIGIN_URL_PROP_KEY = "application.allowOriginUrl";
 	protected static final String MERCHANT_NOTIFICATION_URL_PROP_KEY = "application.merchantNotificationUrl";
 	protected static final String MERCHANT_LANDING_PAGE_URL_PROP_KEY = "application.merchantLandingPageUrl";
-
+	
 	/**
 	 * @param inputParams
 	 * @param requiredParams
@@ -148,7 +150,7 @@ public abstract class AbstractApiCall {
 	 *
 	 * @return form object for {@link HttpClient}
 	 */
-	private static Form getForm(final Map<String, String> params) {
+	protected static Form getForm(final Map<String, String> params) {
 
 		final Form form = Form.form();
 
@@ -198,7 +200,7 @@ public abstract class AbstractApiCall {
 
 	protected final ApplicationConfig config;
 
-	private final Map<String, String> inputParams;
+	protected final Map<String, String> inputParams;
 
 	/**
 	 * @deprecated
