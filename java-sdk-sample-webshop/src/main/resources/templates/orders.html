@@ -23,9 +23,15 @@
 	<div style="width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
 
 		<h3 style="margin-bottom: 1rem">Orders (last 50)</h3>
-
-		<ul class="list-group" th:each="order: ${orders}">
-			<li class="list-group-item" data-th-attr="data-id=${order.id}" th:text="${order.toString}"></li>
+		
+		<p style="margin-bottom: 1rem">Various actions that the merchants can execute after payment. Turnkey Backoffice UI offers these, but some merchants might have special needs, need a custom UI etc.</p>
+		
+		<ul class="list-group" th:each="order: ${orders}" style="margin-bottom: 3rem">
+			<li class="list-group-item" data-th-attr="data-id=${order.id}" th:text="${order.toString}" style="margin-bottom: 1rem; font-weight: bold"/>
+			<button type="button" class="btn btn-info btn-sm" style="margin-bottom: 1rem">Status check</button>
+			<button type="button" class="btn btn-success btn-sm" style="margin-bottom: 1rem">Capture</button>
+			<button type="button" class="btn btn-warning btn-sm" style="margin-bottom: 1rem">Void</button>
+			<button type="button" class="btn btn-warning btn-sm">Refund</button>
 		</ul>
 		
 	</div>

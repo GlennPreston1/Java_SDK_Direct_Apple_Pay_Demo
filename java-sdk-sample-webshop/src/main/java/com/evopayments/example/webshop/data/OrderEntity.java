@@ -1,18 +1,17 @@
 package com.evopayments.example.webshop.data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.owasp.encoder.Encode;
 
 @Entity
 public class OrderEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private String id;
 
-	private String orderDescription;
+	private String product;
 
 	private Integer amount;
 	private String currency;
@@ -21,20 +20,20 @@ public class OrderEntity {
 
 	private java.sql.Timestamp modifiedOn;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public String getOrderDescription() {
-		return orderDescription;
+	public String getProduct() {
+		return product;
 	}
 
-	public void setOrderDescription(String orderDescription) {
-		this.orderDescription = orderDescription;
+	public void setProduct(String product) {
+		this.product = product;
 	}
 
 	public Integer getAmount() {
@@ -71,8 +70,8 @@ public class OrderEntity {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", orderDescription=" + orderDescription + ", amount=" + amount + ", currency="
-				+ currency + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + "]";
+		return Encode.forJava("OrderEntity [id=" + id + ", product=" + product + ", amount=" + amount + ", currency=" + currency
+				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + "]");
 	}
-	
+
 }
