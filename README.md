@@ -38,7 +38,7 @@ Plus please study the most recent (up-to-date) API specification PDF (if you don
 ApplicationConfig config = ApplicationConfig.getInstanceBasedOnSysProp();
 ```
 
-ApplicationConfig.getInstanceBasedOnSysProp() chooses from ProductionConfig.java (loaded from resources/application-production.properties) or TestConfig.java (resources/application-test.properties).
+ApplicationConfig.getInstanceBasedOnSysProp() chooses from ProductionConfig.java (loaded from resources/turnkey-sdk-production.properties) or TestConfig.java (resources/turnkey-sdk-test.properties).
 
 evopayments-turnkey-sdk-config system property influences the choice: -Devopayments-turnkey-sdk-config=test or -Devopayments-turnkey-sdk-config=production (the default is the test variant).
 

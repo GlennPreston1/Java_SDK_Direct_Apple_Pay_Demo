@@ -27,6 +27,7 @@ import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyTokenException;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import com.evopayments.turnkey.config.ApplicationConfig;
+import com.evopayments.turnkey.util.crypto.TextEncryptionUtil;
 
 /**
  * Intelligent Payments Turnkey API calls 
@@ -254,6 +255,18 @@ public abstract class AbstractApiCall {
 
 	}
 	
+	private static void decryptPasswordBasedOnSystemPropPass(final Map<String, String> tokenParams) {
+		
+		String p = tokenParams.get("password");
+		
+		if (p.startsWith("ENC-")) {
+			p = p.substring(4);
+			p = TextEncryptionUtil.decryptBasedOnSystemPropPass(p);
+			tokenParams.put("password", p);
+		}
+		
+	}
+	
 	/**
 	 * Executes the call 
 	 * (builds and executes the token request, handles its response, 
@@ -266,6 +279,9 @@ public abstract class AbstractApiCall {
 		try {
 			
 			final Map<String, String> tokenParams = this.getTokenParams(new HashMap<>(this.inputParams));
+			
+			decryptPasswordBasedOnSystemPropPass(tokenParams);
+			
 			final JSONObject tokenResponse = postToApi(this.config.getProperty(TOKEN_URL_PROP_KEY), tokenParams);
 
 			if (((String) tokenResponse.get("result")).equals("failure")) {

@@ -2,7 +2,7 @@ package com.evopayments.turnkey.config;
 
 
 /**
- * Config loaded from resources/application-test.properties file.
+ * Config loaded from resources/turnkey-sdk-test.properties file.
  * 
  * @author erbalazs
  */
@@ -19,7 +19,7 @@ public class TestConfig extends ApplicationConfig {
 
 	private TestConfig() {
 		// private constructor, use getInstance...
-		super("application-test.properties");
+		super("turnkey-sdk-test.properties");
 	}
 	
 }

@@ -2,7 +2,7 @@ package com.evopayments.turnkey.config;
 
 
 /**
- * Config loaded from resources/application-production.properties file.
+ * Config loaded from resources/turnkey-sdk-production.properties file.
  * 
  * @author erbalazs
  */
@@ -19,7 +19,7 @@ public class ProductionConfig extends ApplicationConfig {
 
 	private ProductionConfig(){
 		// private constructor, use getInstance...
-		super("application-production.properties");
+		super("turnkey-sdk-production.properties");
 	}
 
 	

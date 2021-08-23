@@ -14,7 +14,7 @@ public class OrderListController {
 	private OrderEntityRepository orderEntityRepository;
 
 	@GetMapping("/orders")
-	public String greeting(Model model) {
+	public String orderList(Model model) {
 		model.addAttribute("orders", orderEntityRepository.findTop50ByOrderByCreatedOnDesc());
 		return "orders";
 	}
