@@ -1,4 +1,4 @@
-package com.evopayments.example.webshop.data;
+package com.evopayments.example.webshop.data.admin;
 
 import com.fasterxml.jackson.annotation.JsonRawValue;
 

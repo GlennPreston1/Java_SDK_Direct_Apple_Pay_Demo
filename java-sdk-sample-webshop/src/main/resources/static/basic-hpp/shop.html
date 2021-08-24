@@ -35,7 +35,11 @@
 		
 		const postResponseBodyData = await postResponse.json();
 		
-		window.location.href = postResponseBodyData.url;
+		if (postResponseBodyData.url) {
+			window.location.href = postResponseBodyData.url;
+		} else {
+			alert("error");
+		}
 	
 	}
 
@@ -44,7 +48,7 @@
 </head>
 <body>
 
-	<div style="width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
+	<div style="width: 100%; max-width: 600px; min-width: 250px; margin-left: auto; margin-right: auto; margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
 
 		<div class="card" style="width: 100%;">
 			<img src="/assets/table-tennis-1141703_1280.jpg" style="width: 100%" class="card-img-top" alt="example product picture">

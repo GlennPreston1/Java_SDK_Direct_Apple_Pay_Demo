@@ -1,4 +1,4 @@
-package com.evopayments.example.webshop.controller;
+package com.evopayments.example.webshop.controller.admin;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.evopayments.example.webshop.data.OrderActionResponseDto;
 import com.evopayments.example.webshop.data.OrderEntity;
+import com.evopayments.example.webshop.data.admin.OrderActionResponseDto;
 import com.evopayments.example.webshop.repository.OrderEntityRepository;
 import com.evopayments.example.webshop.util.TurnkeyJavaSdkHelper3;
 

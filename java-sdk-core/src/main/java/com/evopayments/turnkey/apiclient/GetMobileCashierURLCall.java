@@ -18,7 +18,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class GetMobileCashierURLCall extends AbstractApiCall {
 
-	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("action", "amount", "channel", "country", "currency")));
+	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("action", "amount")));
 
 	/**
 	 * @deprecated
@@ -63,11 +63,21 @@ public class GetMobileCashierURLCall extends AbstractApiCall {
 		tokenParams.put(
 				"merchantNotificationUrl", this.config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
 		tokenParams.put("action", inputParams.get("action"));
-		tokenParams.put("channel", inputParams.get("channel"));
+		
+		String channel = inputParams.get("channel");
+
+		if (channel != null) {
+			tokenParams.put("channel", channel);
+		} else {
+			tokenParams.put("channel", "ECOM");
+		}
+		
 		tokenParams.put("amount", inputParams.get("amount"));
-		tokenParams.put("currency", inputParams.get("currency"));
-		tokenParams.put("country", inputParams.get("country"));
-		tokenParams.put("paymentSolutionId", inputParams.get("paymentSolutionId"));
+		
+		putCurrency(inputParams, tokenParams, this.config);
+		putCountry(inputParams, tokenParams, this.config);
+		
+		tokenParams.put("paymentSolutionId", inputParams.get("paymentSolutionId")); // TODO: is it really needed here?
 		tokenParams.put("customerId", inputParams.get("customerId"));
 
 		for (int counter = 1; counter < 20; counter++) {

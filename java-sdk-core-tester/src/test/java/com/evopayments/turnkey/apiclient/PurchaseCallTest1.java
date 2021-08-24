@@ -48,14 +48,13 @@ public class PurchaseCallTest1 extends BaseTest {
 		try {
 
 			final Map<String, String> inputParams = super.prepareApiCall();
-			inputParams.remove("currency");
-			inputParams.remove("country");
+			inputParams.remove("amount");
 
 			final PurchaseCall call = new PurchaseCall(config, inputParams);
 			call.execute();
 
 		} catch (final TurnkeyValidationException e) {
-			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("country", "currency").toString(), e.getMessage());
+			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("amount").toString(), e.getMessage());
 			throw e;
 		}
 

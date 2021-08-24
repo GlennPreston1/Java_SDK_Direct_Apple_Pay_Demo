@@ -31,9 +31,8 @@ public class AuthCallTest extends BaseTest {
 	/**
 	 * Test for payment with 3DSV2 (External Auth)
 	 */
-	@Ignore
 	@Test
-	public void testThreeDSecureV2Parameters() { // FIXME: fails...
+	public void testThreeDSecureV2Parameters() {
 
 		final Map<String, String> authParams = super.prepareApiCall();
 
@@ -86,14 +85,14 @@ public class AuthCallTest extends BaseTest {
 		try {
 
 			final Map<String, String> inputParams = super.prepareApiCall();
-			inputParams.remove("currency");
+			inputParams.remove("amount");
 
 			final AuthCall call = new AuthCall(config, inputParams, null);
 			call.execute();
 
 		} catch (final TurnkeyValidationException e) {
 
-			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("currency").toString(), e.getMessage());
+			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("amount").toString(), e.getMessage());
 			throw e;
 
 		}

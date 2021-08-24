@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.evopayments.turnkey.apiclient.exception.ErrorType;
@@ -40,14 +39,13 @@ public class VerifyCallTest extends BaseTest {
 		try {
 
 			final Map<String, String> inputParams = super.prepareApiCall();
-			inputParams.remove("currency");
-			inputParams.remove("country");
+			inputParams.remove("amount");
 
 			final VerifyCall call = new VerifyCall(config, inputParams);
 			call.execute();
 
 		} catch (final TurnkeyValidationException e) {
-			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("country", "currency").toString(), e.getMessage());
+			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("amount").toString(), e.getMessage());
 			throw e;
 		}
 	}
@@ -55,9 +53,8 @@ public class VerifyCallTest extends BaseTest {
 	/**
 	 * Test for payment with 3DSV2 (External Auth)
 	 */
-	@Ignore
 	@Test
-	public void testThreeDSecureV2Parameters() { // FIXME: fails...
+	public void testThreeDSecureV2Parameters() {
 
 		// VERIFY
 		final Map<String, String> verifyParams = super.prepareApiCall();
@@ -75,9 +72,8 @@ public class VerifyCallTest extends BaseTest {
 	/**
 	 * Test for payment with 3DSV2 (Challenge Flow)
 	 */
-	@Ignore
 	@Test
-	public void testThreeDSecureV2ParametersWithCR() { // FIXME: fails
+	public void testThreeDSecureV2ParametersWithCR() {
 
 		// VERIFY
 		final Map<String, String> verifyParams = super.prepareApiCall();

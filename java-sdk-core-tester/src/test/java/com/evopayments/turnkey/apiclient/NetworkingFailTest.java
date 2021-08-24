@@ -17,7 +17,7 @@ public class NetworkingFailTest extends BaseTest {
 		inputParams.put("country", "FR");
 		inputParams.put("currency", "EUR");
 
-		final GetAvailablePaymentSolutionsCall call = new GetAvailablePaymentSolutionsCall(NetworkFailConfig.getInstance(), inputParams, null);
+		final GetAvailablePaymentSolutionsCall call = new GetAvailablePaymentSolutionsCall(NetworkFailConfig.getInstance(), inputParams);
 		call.execute();
 
 	}

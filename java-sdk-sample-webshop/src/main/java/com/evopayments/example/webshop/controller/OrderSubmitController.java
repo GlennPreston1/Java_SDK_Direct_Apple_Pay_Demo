@@ -2,7 +2,6 @@ package com.evopayments.example.webshop.controller;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,6 @@ public class OrderSubmitController {
 
 		orderEntity.setId("sdkt" + Long.toString(System.currentTimeMillis()/1000L));
 		orderEntity.setProduct(orderSubmitRequestDto.getProduct());
-		orderEntity.setCurrency("EUR");
 		orderEntity.setCreatedOn(new Timestamp(System.currentTimeMillis()));
 		orderEntity.setStatus("started");
 		

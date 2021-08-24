@@ -3,13 +3,13 @@ package com.evopayments.turnkey.apiclient;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.http.client.utils.URLEncodedUtils;
+
 import com.evopayments.turnkey.apiclient.code.ActionType;
 import com.evopayments.turnkey.config.ApplicationConfig;
 
@@ -25,7 +25,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
 public class AbstractApvTokenCall extends AbstractApvCall {
 
 	private static final Set<String> requiredParams = Collections
-			.unmodifiableSet(new HashSet<>(Arrays.asList("amount", "channel", "country", "currency")));
+			.unmodifiableSet(new HashSet<>(Arrays.asList("amount")));
 
 	/**
 	 * @deprecated
@@ -62,49 +62,6 @@ public class AbstractApvTokenCall extends AbstractApvCall {
 		// there is no action call
 		// (only the token is needed in this case, there is no second call)
 		return null;
-	}
-
-	/**
-	 * For iframe mode Cashier UI
-	 * 
-	 * @return URL string, use as iframe src property
-	 */
-	public final String executeAndBuildCashierIframeUrl() {
-
-		String tokenStr = execute().getString("token");
-		String cashierRootUrl = config.getProperty(CASHIER_ROOT_URL_PROP_KEY);
-
-		// ---
-
-		final Map<String, String> redirectParams = new LinkedHashMap<>();
-
-		// TODO: maybe some of these are not mandatory (plus they are redundant, ie. we
-		// send language in token request too) (for now I have followed the internally
-		// used checkout-demo as an example)
-
-		redirectParams.put("operation", "");
-
-		redirectParams.put("token", tokenStr);
-		redirectParams.put("language", "en");
-
-		putMerchantId(inputParams, redirectParams, config);
-
-		redirectParams.put("integrationMode", "iframe");
-
-		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css");
-		redirectParams.put("styleSuffix", "-evopl");
-
-		redirectParams.put("redirectionTime", "");
-		redirectParams.put("allowCardHolderSpecialChars", "");
-		redirectParams.put("templateName", "");
-		redirectParams.put("paymentSolutionId", "");
-		redirectParams.put("numberOfInstallments", "");
-		redirectParams.put("installmentsPlanId", "");
-
-		redirectParams.put("baseUrl", cashierRootUrl);
-
-		return cashierRootUrl + "?" + URLEncodedUtils.format(getForm(redirectParams).build(), "UTF-8");
-
 	}
 
 	/**

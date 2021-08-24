@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import com.evopayments.example.webshop.data.OrderEntity;
 import com.evopayments.example.webshop.data.OrderSubmitRequestDto;
+import com.evopayments.turnkey.apiclient.AbstractApiCall;
 import com.evopayments.turnkey.apiclient.PurchaseCall;
 import com.evopayments.turnkey.apiclient.TokenizeCall;
 import com.evopayments.turnkey.config.TestConfig;
@@ -28,14 +29,10 @@ public class TurnkeyJavaSdkHelper2 {
 		
 		Map<String, String> purchaseInputParams = new HashMap<>();
 		purchaseInputParams.put("amount", orderEntity.getAmount().toString());
-		purchaseInputParams.put("channel", "ECOM");
-		purchaseInputParams.put("country", "DE");
-		purchaseInputParams.put("currency", orderEntity.getCurrency().toUpperCase());
-		
-		purchaseInputParams.put("paymentSolutionId", "500");
+		// purchaseInputParams.put("currency", orderEntity.getCurrency().toUpperCase()); // in this example it is fixed, see turnkey-sdk-test.properties
+		purchaseInputParams.put("paymentSolutionId", "500"); // 500 = credit/debit cards
 		
 		purchaseInputParams.put("merchantTxId", orderEntity.getId());
-		
 		purchaseInputParams.put("customerId", orderEntity.getId()); // TODO: unfinished, temporarily we use the orderId here too
 		
 		purchaseInputParams.put("specinCreditCardToken", cardToken);
@@ -45,10 +42,14 @@ public class TurnkeyJavaSdkHelper2 {
 		// VerifyCall
 		// AuthCall
 		
-		JSONObject joPurchaseCallResponse = new PurchaseCall(TestConfig.getInstance(), purchaseInputParams).execute();
-		// joPurchaseCallResponse.get("");
+		TestConfig testConfig = TestConfig.getInstance();
 		
-		return "http://example.com";
+		JSONObject joPurchaseCallResponse = new PurchaseCall(testConfig, purchaseInputParams).execute();
+		
+		// joPurchaseCallResponse.get("");
+		// TODO: extraxt 3ds redirect... (if there is one)
+		
+		return testConfig.getProperty(AbstractApiCall.MERCHANT_LANDING_PAGE_URL_PROP_KEY);
 	}
 	
 	private TurnkeyJavaSdkHelper2() {

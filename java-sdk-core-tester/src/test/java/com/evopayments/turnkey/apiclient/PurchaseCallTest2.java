@@ -156,9 +156,8 @@ public class PurchaseCallTest2 extends BaseTest {
 	/**
 	 * Test for payment with 3DSV2 (External Auth)
 	 */
-	@Ignore
 	@Test
-	public void testThreeDSecureV2Parameters() { // FIXME: fails
+	public void testThreeDSecureV2Parameters() {
 
 		// PURCHASE
 		final Map<String, String> purchaseParams = super.prepareApiCall();

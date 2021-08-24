@@ -14,7 +14,7 @@ public class OrderEntity {
 	private String product;
 
 	private BigDecimal amount;
-	private String currency;
+	// private String currency; // in this example it is fixed
 
 	private String status;
 
@@ -46,14 +46,6 @@ public class OrderEntity {
 		this.amount = amount;
 	}
 
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
 	public java.sql.Timestamp getCreatedOn() {
 		return createdOn;
 	}
@@ -80,8 +72,8 @@ public class OrderEntity {
 
 	@Override
 	public String toString() {
-		return "OrderEntity [id=" + id + ", product=" + product + ", amount=" + amount + ", currency=" + currency
-				+ ", status=" + status + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + "]";
+		return "OrderEntity [id=" + id + ", product=" + product + ", amount=" + amount + ", status=" + status
+				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + "]";
 	}
 
 }

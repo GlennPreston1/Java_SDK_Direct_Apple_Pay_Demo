@@ -13,10 +13,8 @@ public class TurnkeyJavaSdkHelper1 {
 	private static PurchaseTokenCall buildCall(OrderEntity orderEntity) {
 		
 		Map<String, String> inputParams = new HashMap<>();
-		inputParams.put("country", "DE");
-		inputParams.put("currency", orderEntity.getCurrency().toUpperCase());
+		// inputParams.put("currency", orderEntity.getCurrency().toUpperCase()); // in this example it is fixed, see turnkey-sdk-test.properties
 		inputParams.put("amount", orderEntity.getAmount().setScale(2, RoundingMode.HALF_UP).toPlainString());
-		inputParams.put("channel", "ECOM");
 		inputParams.put("merchantTxId", orderEntity.getId());
 		// inputParams.put("paymentSolutionId", "500");
 		
@@ -27,16 +25,31 @@ public class TurnkeyJavaSdkHelper1 {
 		return new PurchaseTokenCall(TestConfig.getInstance(), inputParams);
 	}
 
+	/**
+	 * @param orderEntity
+	 * @return
+	 * 		token to init the Javascript lib. 
+	 */
 	public static String startIframeModeCashierPayment(OrderEntity orderEntity) {
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);
-		return purchaseTokenCall.executeAndBuildCashierIframeUrl();
+		return purchaseTokenCall.execute().getString("token");
 	}
 
+	/**
+	 * @param orderEntity
+	 * @return
+	 * 		URL string (for customer redirection)
+	 */
 	public static String startStandaloneModeCashierPayment(OrderEntity orderEntity) {
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);
 		return purchaseTokenCall.executeAndBuildCashierStandaloneUrl();
 	}
 
+	/**
+	 * @param orderEntity
+	 * @return
+	 * 		URL string (for customer redirection)
+	 */
 	public static String startHppModeCashierPayment(OrderEntity orderEntity) {
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);
 		return purchaseTokenCall.executeAndBuildCashierHppUrl();

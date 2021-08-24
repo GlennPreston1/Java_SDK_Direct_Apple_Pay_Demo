@@ -1,4 +1,4 @@
-package com.evopayments.example.webshop.controller;
+package com.evopayments.example.webshop.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -41,14 +41,18 @@ public abstract class AbstractApiCall {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbstractApiCall.class);
 
-	private static final String TOKEN_URL_PROP_KEY = "application.sessionTokenRequestUrl";
-	private static final String OPERATION_ACTION_URL_PROP_KEY = "application.paymentOperationActionUrl";
-	protected static final String CASHIER_ROOT_URL_PROP_KEY = "application.cashierRootUrl";
-	protected static final String CASHIER_URL_PROP_KEY = "application.cashierUrl";
-	private static final String MOBILE_CASHIER_URL_PROP_KEY = "application.mobile.cashierUrl";
-	protected static final String ALLOW_ORIGIN_URL_PROP_KEY = "application.allowOriginUrl";
-	protected static final String MERCHANT_NOTIFICATION_URL_PROP_KEY = "application.merchantNotificationUrl";
-	protected static final String MERCHANT_LANDING_PAGE_URL_PROP_KEY = "application.merchantLandingPageUrl";
+	public static final String TOKEN_URL_PROP_KEY = "application.sessionTokenRequestUrl";
+	public static final String OPERATION_ACTION_URL_PROP_KEY = "application.paymentOperationActionUrl";
+	public static final String CASHIER_ROOT_URL_PROP_KEY = "application.cashierRootUrl";
+	public static final String CASHIER_URL_PROP_KEY = "application.cashierUrl";
+	public static final String MOBILE_CASHIER_URL_PROP_KEY = "application.mobile.cashierUrl";
+	public static final String ALLOW_ORIGIN_URL_PROP_KEY = "application.allowOriginUrl";
+	public static final String MERCHANT_NOTIFICATION_URL_PROP_KEY = "application.merchantNotificationUrl";
+	public static final String MERCHANT_LANDING_PAGE_URL_PROP_KEY = "application.merchantLandingPageUrl";
+	public static final String MERCHANT_ID_PROP_KEY = "application.merchantId";
+	public static final String PASSWORD_PROP_KEY = "application.password";
+	public static final String COUNTRY_PROP_KEY = "application.country";
+	public static final String CURRENCY_PROP_KEY = "application.currency";
 	
 	/**
 	 * @param inputParams
@@ -75,7 +79,7 @@ public abstract class AbstractApiCall {
 
 	/**
 	 * This method extracts "merchantId" and "password" from inputParams and adds it to tokenParams. 
-	 * If there is no parameter named "merchantId" in inputParams then gets it from the {@link ApplicationConfig} object
+	 * If there is no parameter named "merchantId" in inputParams then gets both from the {@link ApplicationConfig} object.
 	 * 
 	 * @param inputParams
 	 * @param tokenParams
@@ -94,8 +98,8 @@ public abstract class AbstractApiCall {
 			 * Option - 1: ApplicationConfig instance for storing "merchantId" and "password"
 			 */
 
-			tokenParams.put("merchantId", config.getProperty("application.merchantId"));
-			tokenParams.put("password", config.getProperty("application.password"));
+			tokenParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
+			tokenParams.put("password", config.getProperty(PASSWORD_PROP_KEY));
 
 		} else {
 
@@ -111,7 +115,7 @@ public abstract class AbstractApiCall {
 	
 	/**
 	 * This method extracts "merchantId" from inputParams and adds it to actionParams. 
-	 * If there is no parameter named "merchantId" in inputParams then gets it from the {@link ApplicationConfig} object
+	 * If there is no parameter named "merchantId" in inputParams then gets it from the {@link ApplicationConfig} object.
 	 * 
 	 * @param inputParams
 	 * @param actionParams
@@ -130,7 +134,7 @@ public abstract class AbstractApiCall {
 			 * Option - 1: ApplicationConfig instance for storing "merchantId" and "password"
 			 */
 
-			actionParams.put("merchantId", config.getProperty("application.merchantId"));
+			actionParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
 
 		} else {
 
@@ -139,6 +143,74 @@ public abstract class AbstractApiCall {
 			 */
 
 			actionParams.put("merchantId", merchantId);
+
+		}
+	}
+	
+	/**
+	 * This method extracts "country" from inputParams and adds it to tokenParams or actionParams . 
+	 * If there is no parameter named "country" in inputParams then gets it from the {@link ApplicationConfig} object.
+	 * 
+	 * @param inputParams
+	 * @param tokenOrActionParams
+	 * @param config
+	 */
+	protected static void putCountry(
+			final Map<String, String> inputParams,
+			final Map<String, String> tokenOrActionParams,
+			final ApplicationConfig config) {
+
+		final String country = inputParams.get("country");
+
+		if (country == null || country.isEmpty()) {
+
+			/*
+			 * Option - 1: ApplicationConfig instance for storing "merchantId" and "password"
+			 */
+
+			tokenOrActionParams.put("country", config.getProperty(COUNTRY_PROP_KEY));
+
+		} else {
+
+			/*
+			 * Option - 2: supplying "merchantId" and "password" in inputParams Map
+			 */
+
+			tokenOrActionParams.put("country", country);
+
+		}
+	}
+
+	/**
+	 * This method extracts "currency" from inputParams and adds it to tokenParams or actionParams . 
+	 * If there is no parameter named "country" in inputParams then gets it from the {@link ApplicationConfig} object.
+	 * 
+	 * @param inputParams
+	 * @param tokenOrActionParams
+	 * @param config
+	 */
+	protected static void putCurrency(
+			final Map<String, String> inputParams,
+			final Map<String, String> tokenOrActionParams,
+			final ApplicationConfig config) {
+
+		final String country = inputParams.get("currency");
+
+		if (country == null || country.isEmpty()) {
+
+			/*
+			 * Option - 1: ApplicationConfig instance for storing "merchantId" and "password"
+			 */
+
+			tokenOrActionParams.put("currency", config.getProperty(CURRENCY_PROP_KEY));
+
+		} else {
+
+			/*
+			 * Option - 2: supplying "merchantId" and "password" in inputParams Map
+			 */
+
+			tokenOrActionParams.put("currency", country);
 
 		}
 	}
@@ -287,6 +359,7 @@ public abstract class AbstractApiCall {
 			final JSONObject tokenResponse = postToApi(this.config.getProperty(TOKEN_URL_PROP_KEY), tokenParams);
 
 			if (((String) tokenResponse.get("result")).equals("failure")) {
+				logger.debug("Error during the token request, tokenResponse: " + Encode.forJava(tokenResponse.toString()));
 				throw new TurnkeyTokenException("Could not acquire authentication token (which is needed for the subsequent action call)!");
 			}
 
@@ -308,8 +381,6 @@ public abstract class AbstractApiCall {
 
 				// GET_MOBILE_CASHIER_URL is a special case
 
-				// FIXME: What is this?
-
 				tokenResponse.put("mobileCashierUrl", this.config.getProperty(MOBILE_CASHIER_URL_PROP_KEY));
 				tokenResponse.put("merchantId", tokenParams.get("merchantId"));
 
@@ -320,7 +391,8 @@ public abstract class AbstractApiCall {
 			}
 
 			if (((String) actionResponse.get("result")).equals("failure")) {
-				throw new TurnkeyInternalException("Error during the action call!");
+				logger.debug("Error during the action request, actionResponse: " + Encode.forJava(actionResponse.toString()));
+				throw new TurnkeyInternalException("Error during the action request!");
 			}
 
 			return actionResponse;

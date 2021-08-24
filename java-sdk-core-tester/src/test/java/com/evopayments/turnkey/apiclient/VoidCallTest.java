@@ -23,15 +23,13 @@ public class VoidCallTest extends BaseTest {
 		try {
 
 			final Map<String, String> inputParams = new HashMap<>();
-			inputParams.put("originalMerchantTxId", "8Gii57iYNVSd27xnFZzR");
-			// inputParams.put("country", "FR"); // left out
-			// inputParams.put("currency", "EUR"); // left out
+			// inputParams.put("originalMerchantTxId", "xy001"); // left out
 
-			final VoidCall call = new VoidCall(config, inputParams, null);
+			final VoidCall call = new VoidCall(config, inputParams);
 			call.execute();
 
 		} catch (final TurnkeyValidationException e) {
-			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("country", "currency").toString(), e.getMessage());
+			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("originalMerchantTxId").toString(), e.getMessage());
 			throw e;
 		}
 		

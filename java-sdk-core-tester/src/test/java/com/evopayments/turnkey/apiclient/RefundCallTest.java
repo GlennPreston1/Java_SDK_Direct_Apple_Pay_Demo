@@ -23,16 +23,16 @@ public class RefundCallTest extends BaseTest {
 		try {
 
 			final Map<String, String> inputParams = new HashMap<>();
-			// inputParams.put("originalMerchantTxId", capture.getString("originalMerchantTxId")); // left out
-			inputParams.put("amount", "20.0");
+			// inputParams.put("originalMerchantTxId", "xy01")); // left out
+			// inputParams.put("amount", "20.0"); // left out
 			inputParams.put("country", "FR");
-			// inputParams.put("currency", "EUR"); // left out
+			inputParams.put("currency", "EUR"); 
 
-			final RefundCall call = new RefundCall(config, inputParams, null);
+			final RefundCall call = new RefundCall(config, inputParams);
 			call.execute();
 
 		} catch (final TurnkeyValidationException e) {
-			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("originalMerchantTxId", "currency").toString(), e.getMessage());
+			Assert.assertEquals(ErrorType.VALIDATION_ERROR.getDescription() + ": " + Arrays.asList("amount", "originalMerchantTxId").toString(), e.getMessage());
 			throw e;
 		}
 

@@ -148,10 +148,8 @@ public class GetMobileCashierURLCallTest extends BaseTest {
 
 			final Map<String, String> inputParams = new HashMap<>();
 			inputParams.put("action", "AUTH");
-			inputParams.put("amount", "20.0");
+			// inputParams.put("amount", "20.0"); // left out
 			inputParams.put("channel", Channel.ECOM.getCode());
-			// inputParams.put("country", CountryCode.PL.getCode()); // left out
-			// inputParams.put("currency", CurrencyCode.PLN.getCode()); // left out
 			inputParams.put("paymentSolutionId", "500");
 
 			final GetMobileCashierURLCall call = new GetMobileCashierURLCall(config, inputParams, null);
@@ -162,7 +160,7 @@ public class GetMobileCashierURLCallTest extends BaseTest {
 			assertEquals(
 					ErrorType.VALIDATION_ERROR.getDescription()
 							+ ": "
-							+ Arrays.asList("country", "currency").toString(),
+							+ Arrays.asList("amount").toString(),
 					e.getMessage());
 			throw e;
 		}

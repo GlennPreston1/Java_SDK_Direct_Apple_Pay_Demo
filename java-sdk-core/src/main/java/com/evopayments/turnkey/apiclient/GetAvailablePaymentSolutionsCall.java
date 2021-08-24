@@ -1,10 +1,8 @@
 package com.evopayments.turnkey.apiclient;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,7 +20,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class GetAvailablePaymentSolutionsCall extends AbstractApiCall {
 	
-	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("country", "currency")));
+	private static final Set<String> requiredParams = Collections.emptySet();
 
 	/**
 	 * @deprecated
@@ -70,7 +68,14 @@ public class GetAvailablePaymentSolutionsCall extends AbstractApiCall {
 		tokenParams.put("action", this.getActionType().getCode());
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
 		tokenParams.put("allowOriginUrl", this.config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
-
+		
+		putCurrency(inputParams, tokenParams, this.config);
+		if (tokenParams.get("currency") == null) {
+			tokenParams.remove("currency");
+		}
+		
+		putCountry(inputParams, tokenParams, this.config);
+				
 		return tokenParams;
 	}
 

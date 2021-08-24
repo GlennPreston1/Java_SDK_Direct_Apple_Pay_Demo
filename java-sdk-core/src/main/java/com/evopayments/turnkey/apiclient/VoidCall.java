@@ -22,8 +22,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class VoidCall extends AbstractApiCall {
 	
-	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(/*"country",
-			"currency",*/ "originalMerchantTxId")));
+	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("originalMerchantTxId")));
 
 	/**
 	 * @deprecated
