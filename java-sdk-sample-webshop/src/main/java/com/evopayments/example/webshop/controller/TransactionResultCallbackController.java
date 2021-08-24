@@ -23,7 +23,7 @@ public class TransactionResultCallbackController {
 	private OrderEntityRepository orderEntityRepository;
 	
 	@RequestMapping(method = { RequestMethod.GET, RequestMethod.POST }, value = "/transactionresultcallback")
-	public void transactionResultVallback(HttpServletRequest req, HttpServletResponse resp) {
+	public void transactionResultCallback(HttpServletRequest req, HttpServletResponse resp) {
 		
 		Map<String, String> parameterMap = HttpParamUtil.extractParams(req);
 		String orderId = parameterMap.get("merchantTxId");

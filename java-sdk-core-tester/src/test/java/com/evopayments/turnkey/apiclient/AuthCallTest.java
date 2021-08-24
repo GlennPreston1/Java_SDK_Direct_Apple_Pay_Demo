@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.evopayments.turnkey.apiclient.exception.ErrorType;

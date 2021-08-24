@@ -45,6 +45,7 @@ public abstract class AbstractApiCall {
 	public static final String OPERATION_ACTION_URL_PROP_KEY = "application.paymentOperationActionUrl";
 	public static final String CASHIER_ROOT_URL_PROP_KEY = "application.cashierRootUrl";
 	public static final String CASHIER_URL_PROP_KEY = "application.cashierUrl";
+	public static final String CASHIER_JS_LIB_URL_PROP_KEY = "application.cashierJsLibUrl";
 	public static final String MOBILE_CASHIER_URL_PROP_KEY = "application.mobile.cashierUrl";
 	public static final String ALLOW_ORIGIN_URL_PROP_KEY = "application.allowOriginUrl";
 	public static final String MERCHANT_NOTIFICATION_URL_PROP_KEY = "application.merchantNotificationUrl";

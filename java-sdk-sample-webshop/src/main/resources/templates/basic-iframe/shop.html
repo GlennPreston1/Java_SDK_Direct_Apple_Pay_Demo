@@ -17,15 +17,27 @@
 	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
 	crossorigin="anonymous"></script>
 	
-<script src="https://cashierui-apiqa.test.myriadpayments.com/js/api.js"></script>
-
+<script th:src="|${cashierJsLibUrl}|"></script><!-- Thymeleaf, see com.evopayments.example.webshop.controller.BasicIframeShopPageController -->
+ 
 <script>
+
+	var cashier = com.myriadpayments.api.cashier();
+	cashier.init({
+		baseUrl : "[[${cashierBaseUrl}]]" // Thymeleaf, see com.evopayments.example.webshop.controller.BasicIframeShopPageController
+	});
+	
+	function cashierHandleResult(result, data) {
+		console.log(result);
+		console.log(data);
+	}
 
 	async function buy() {
 		
 		console.log("buy");
 		
-		document.getElementById("cardBody") = "";
+		// ---
+		
+		document.getElementById("card").innerHTML = "<br><br>Please wait...<br><br>";
 		
 		const postRequestBodyData = {};
 		postRequestBodyData.product = 'Toy cars';
@@ -39,7 +51,27 @@
 		
 		const postResponseBodyData = await postResponse.json();
 		
-		console.log(postResponseBodyData.url);
+		// ---
+		
+		if (postResponseBodyData.tokenToInitJsLib) {
+			
+			document.getElementById("card").style.height="600px";
+			
+			cashier.show({
+				containerId : "card",
+				merchantId : "[[${merchantId}]]", // Thymeleaf, see com.evopayments.example.webshop.controller.BasicIframeShopPageController
+				token : postResponseBodyData.tokenToInitJsLib
+				/*,
+				successCallback : cashierHandleResult,
+				failureCallback : cashierHandleResult,
+				cancelCallback : cashierHandleResult
+				*/
+			});
+			
+		} else {
+			document.getElementById("card").innerHTML = "<br><br>Error<br><br>";
+			alert("error");
+		}
 		
 	}
 
@@ -50,9 +82,9 @@
 
 	<div style="width: 100%; max-width: 600px; min-width: 250px; margin-left: auto; margin-right: auto; margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
 
-		<div class="card" style="width: 100%;">
+		<div class="card" style="width: 100%;" id="card">
 			<img src="/assets/cars-2060420_1280.jpg" style="width: 100%" class="card-img-top" alt="example product picture">
-			<div class="card-body" id="cardBody">
+			<div class="card-body">
 				<h5 class="card-title">Toy cars, 15 EUR</h5>
 				<p class="card-text">Good for children aged 5-10, metal+plastic</p>
 				<a onclick="buy()" class="btn btn-primary">Buy</a>

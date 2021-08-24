@@ -77,7 +77,7 @@ public class OrderSubmitController {
 		
 		switch (orderSubmitRequestDto.getMode()) {
 		case "iframe":
-			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper1.startIframeModeCashierPayment(orderEntity));
+			orderSubmitResponseDto.setTokenToInitJsLib(TurnkeyJavaSdkHelper1.startIframeModeCashierPayment(orderEntity));
 			break;
 		case "standalone":
 			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper1.startStandaloneModeCashierPayment(orderEntity));

@@ -1,9 +1,25 @@
 package com.evopayments.example.webshop.data;
 
 public class OrderSubmitResponseDto {
-	
+
+	/**
+	 * Customer redirect URL (needed for HPP, standalone and advanced modes)
+	 */
 	private String url;
+
+	/**
+	 * Received authentication token (needed for iframe mode init)
+	 */
+	private String tokenToInitJsLib;
+
+	/**
+	 * This is just echoed back to the frontend (for debug etc.)
+	 */
 	private String orderId;
+
+	/**
+	 * This is just echoed back to the frontend (for debug etc.)
+	 */
 	private String mode;
 
 	public String getUrl() {
@@ -13,7 +29,15 @@ public class OrderSubmitResponseDto {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
+	public String getTokenToInitJsLib() {
+		return tokenToInitJsLib;
+	}
+
+	public void setTokenToInitJsLib(String tokenToInitJsLib) {
+		this.tokenToInitJsLib = tokenToInitJsLib;
+	}
+
 	public String getOrderId() {
 		return orderId;
 	}
