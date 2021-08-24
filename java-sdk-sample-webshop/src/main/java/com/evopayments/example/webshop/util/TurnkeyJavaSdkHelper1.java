@@ -13,7 +13,7 @@ public class TurnkeyJavaSdkHelper1 {
 	private static PurchaseTokenCall buildCall(OrderEntity orderEntity) {
 		
 		Map<String, String> inputParams = new HashMap<>();
-		inputParams.put("country", "PL");
+		inputParams.put("country", "DE");
 		inputParams.put("currency", orderEntity.getCurrency().toUpperCase());
 		inputParams.put("amount", orderEntity.getAmount().setScale(2, RoundingMode.HALF_UP).toPlainString());
 		inputParams.put("channel", "ECOM");

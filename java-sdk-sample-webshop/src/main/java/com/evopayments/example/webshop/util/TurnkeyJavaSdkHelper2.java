@@ -24,13 +24,20 @@ public class TurnkeyJavaSdkHelper2 {
 		JSONObject joTokenizeCallResponse = new TokenizeCall(TestConfig.getInstance(), tokenizeInputParams).execute();
 		String cardToken = joTokenizeCallResponse.getString("cardToken");
 		
+		// ---
+		
 		Map<String, String> purchaseInputParams = new HashMap<>();
 		purchaseInputParams.put("amount", orderEntity.getAmount().toString());
 		purchaseInputParams.put("channel", "ECOM");
-		purchaseInputParams.put("country", "PL");
+		purchaseInputParams.put("country", "DE");
 		purchaseInputParams.put("currency", orderEntity.getCurrency().toUpperCase());
-		// purchaseInputParams.put("paymentSolutionId", "500");
-		// purchaseInputParams.put("customerId", "");
+		
+		purchaseInputParams.put("paymentSolutionId", "500");
+		
+		purchaseInputParams.put("merchantTxId", orderEntity.getId());
+		
+		purchaseInputParams.put("customerId", orderEntity.getId()); // TODO: unfinished, temporarily we use the orderId here too
+		
 		purchaseInputParams.put("specinCreditCardToken", cardToken);
 		purchaseInputParams.put("specinCreditCardCVV", orderSubmitRequestDto.getCardCvv());
 		
@@ -38,7 +45,7 @@ public class TurnkeyJavaSdkHelper2 {
 		// VerifyCall
 		// AuthCall
 		
-		JSONObject joPurchaseCallResponse = new PurchaseCall(TestConfig.getInstance(), tokenizeInputParams).execute();
+		JSONObject joPurchaseCallResponse = new PurchaseCall(TestConfig.getInstance(), purchaseInputParams).execute();
 		// joPurchaseCallResponse.get("");
 		
 		return "http://example.com";

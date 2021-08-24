@@ -23,9 +23,20 @@
 		
 		console.log("buy");
 		
+		const cardNumber = prompt("Card number", "4111111111111111");
+		const nameOnCard = prompt("Name on card", "John Doe");
+		const expiryMonth = prompt("Expiry month", "11");
+		const expiryYear = prompt("Expiry year", "2024");
+		const cardCvv = prompt("CVV", "123");
+		
 		const postRequestBodyData = {};
 		postRequestBodyData.product = 'Teddy bear';
 		postRequestBodyData.mode = 'advanced';
+		postRequestBodyData.cardNumber = cardNumber;
+		postRequestBodyData.nameOnCard = nameOnCard;
+		postRequestBodyData.expiryMonth = expiryMonth;
+		postRequestBodyData.expiryYear = expiryYear; // has to be 4 number (ie. 2024 instead of 24)
+		postRequestBodyData.cardCvv = cardCvv;
 		
 		const postResponse = await fetch('/orders', {
 			method: 'POST', 
