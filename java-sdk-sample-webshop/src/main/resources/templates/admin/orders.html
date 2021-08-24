@@ -17,6 +17,74 @@
 	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
 	crossorigin="anonymous"></script>
 
+<script>
+
+	async function statusCheck(orderId) {
+		
+		console.log("statusCheck");
+				
+		const response = await fetch('/admin/orders/' + orderId, {
+			method: 'GET', 
+			headers: { 'Content-Type': 'application/json'},
+		});
+		
+		const responseBodyData = await response.json();
+		
+		console.log(responseBodyData);
+		alert(JSON.stringify(responseBodyData));
+	
+	}
+	
+	async function executeCapture(orderId) {
+		
+		console.log("executeCapture");
+				
+		const response = await fetch('/admin/orders/' + orderId + '/captures', {
+			method: 'POST', 
+			headers: { 'Content-Type': 'application/json'},
+		});
+		
+		const responseBodyData = await response.json();
+		
+		console.log(responseBodyData);
+		alert(JSON.stringify(responseBodyData));
+	
+	}
+	
+	async function executeVoid(orderId) {
+		
+		console.log("executeVoid");
+				
+		const response = await fetch('/admin/orders/' + orderId + '/voids', {
+			method: 'POST', 
+			headers: { 'Content-Type': 'application/json'},
+		});
+		
+		const responseBodyData = await response.json();
+		
+		console.log(responseBodyData);
+		alert(JSON.stringify(responseBodyData));
+	
+	}
+	
+	async function executeRefund(orderId) {
+		
+		console.log("executeRefund");
+				
+		const response = await fetch('/admin/orders/' + orderId + '/refunds', {
+			method: 'POST', 
+			headers: { 'Content-Type': 'application/json'},
+		});
+		
+		const responseBodyData = await response.json();
+		
+		console.log(responseBodyData);
+		alert(JSON.stringify(responseBodyData));
+	
+	}
+
+</script>
+
 </head>
 <body>
 
@@ -28,10 +96,10 @@
 		
 		<ul class="list-group" th:each="order: ${orders}" style="margin-bottom: 3rem">
 			<li class="list-group-item" data-th-attr="data-id=${order.id}" th:text="${order.toString}" style="margin-bottom: 1rem; font-weight: bold"/>
-			<button type="button" class="btn btn-info btn-sm" style="margin-bottom: 1rem">Status check</button>
-			<button type="button" class="btn btn-success btn-sm" style="margin-bottom: 1rem">Capture</button>
-			<button type="button" class="btn btn-warning btn-sm" style="margin-bottom: 1rem">Void</button>
-			<button type="button" class="btn btn-warning btn-sm">Refund</button>
+			<button type="button" class="btn btn-info btn-sm" style="margin-bottom: 1rem" th:onclick="statusCheck([[${order.id}]])">Status check</button>
+			<button type="button" class="btn btn-success btn-sm" style="margin-bottom: 1rem" th:onclick="executeCapture([[${order.id}]])">Capture</button>
+			<button type="button" class="btn btn-warning btn-sm" style="margin-bottom: 1rem" th:onclick="executeVoid([[${order.id}]])">Void</button>
+			<button type="button" class="btn btn-warning btn-sm" th:onclick="executeRefund([[${order.id}]])">Refund</button>
 		</ul>
 		
 	</div>

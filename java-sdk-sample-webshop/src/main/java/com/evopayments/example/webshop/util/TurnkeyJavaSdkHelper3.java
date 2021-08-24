@@ -1,10 +1,12 @@
 package com.evopayments.example.webshop.util;
 
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.evopayments.example.webshop.data.OrderEntity;
 import com.evopayments.turnkey.apiclient.CaptureCall;
 import com.evopayments.turnkey.apiclient.RefundCall;
 import com.evopayments.turnkey.apiclient.StatusCheckCall;
@@ -27,12 +29,13 @@ public class TurnkeyJavaSdkHelper3 {
 		
 	}
 	
-	public static JSONObject executeCapture(String orderId) {
+	public static JSONObject executeCapture(OrderEntity orderEntity) {
 		
 		Map<String, String> inputParams = new HashMap<>();
-		inputParams.put("originalMerchantTxId", orderId); // merchantTxId means the merchant's own id for the order/transaction
+		inputParams.put("originalMerchantTxId", orderEntity.getId()); // merchantTxId means the merchant's own id for the order/transaction
 		
-		// inputParams.put("amount", ""); // in some cases it is possible to do a partial capture
+		// in some cases it is possible to do a partial capture, but here we execute a full capture
+		inputParams.put("amount", orderEntity.getAmount().setScale(2, RoundingMode.HALF_UP).toPlainString()); 
 		
 		return new CaptureCall(TestConfig.getInstance(), inputParams).execute();
 		
@@ -47,12 +50,12 @@ public class TurnkeyJavaSdkHelper3 {
 		
 	}
 	
-	public static JSONObject executeRefund(String orderId) {
+	public static JSONObject executeRefund(OrderEntity orderEntity) {
 		
 		Map<String, String> inputParams = new HashMap<>();
-		inputParams.put("originalMerchantTxId", orderId); // merchantTxId means the merchant's own id for the order/transaction
+		inputParams.put("originalMerchantTxId", orderEntity.getId()); // merchantTxId means the merchant's own id for the order/transaction
 		
-		// inputParams.put("amount", ""); // in some cases it is possible to do a partial refund
+		inputParams.put("amount", orderEntity.getAmount().setScale(2, RoundingMode.HALF_UP).toPlainString()); // in some cases it is possible to do a partial refund, but here we execute a full refund
 		
 		return new RefundCall(TestConfig.getInstance(), inputParams).execute();
 		

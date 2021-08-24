@@ -25,7 +25,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class CaptureCall extends AbstractApiCall {
 	
-	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(/*"amount",*/
+	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("amount",
 			"originalMerchantTxId")));
 
 	/**

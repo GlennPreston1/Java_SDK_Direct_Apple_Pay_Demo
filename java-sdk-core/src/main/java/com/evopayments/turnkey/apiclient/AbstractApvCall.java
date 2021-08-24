@@ -81,7 +81,14 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 		tokenParams.put("amount", inputParams.get("amount"));
 		tokenParams.put("currency", inputParams.get("currency"));
 		tokenParams.put("country", inputParams.get("country"));
-		tokenParams.put("paymentSolutionId", inputParams.get("paymentSolutionId"));
+
+		tokenParams.put("merchantTxId", inputParams.get("merchantTxId"));
+
+		String paymentSolutionId = inputParams.get("paymentSolutionId");
+		if (paymentSolutionId != null) {
+			tokenParams.put("paymentSolutionId", paymentSolutionId);
+		}
+		
 		tokenParams.put("merchantNotificationUrl",
 				this.config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
 		tokenParams.put("merchantLandingPageUrl",

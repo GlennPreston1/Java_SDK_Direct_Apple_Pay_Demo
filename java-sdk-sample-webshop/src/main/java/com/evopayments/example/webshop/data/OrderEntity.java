@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import org.owasp.encoder.Encode;
-
 @Entity
 public class OrderEntity {
 
@@ -17,6 +15,8 @@ public class OrderEntity {
 
 	private BigDecimal amount;
 	private String currency;
+
+	private String status;
 
 	private java.sql.Timestamp createdOn;
 
@@ -70,10 +70,18 @@ public class OrderEntity {
 		this.modifiedOn = modifiedOn;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return Encode.forJava("OrderEntity [id=" + id + ", product=" + product + ", amount=" + amount + ", currency=" + currency
-				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + "]");
+		return "OrderEntity [id=" + id + ", product=" + product + ", amount=" + amount + ", currency=" + currency
+				+ ", status=" + status + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + "]";
 	}
 
 }

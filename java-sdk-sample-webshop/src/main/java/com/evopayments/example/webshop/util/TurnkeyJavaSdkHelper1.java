@@ -17,6 +17,7 @@ public class TurnkeyJavaSdkHelper1 {
 		inputParams.put("currency", orderEntity.getCurrency().toUpperCase());
 		inputParams.put("amount", orderEntity.getAmount().setScale(2, RoundingMode.HALF_UP).toPlainString());
 		inputParams.put("channel", "ECOM");
+		inputParams.put("merchantTxId", orderEntity.getId());
 		// inputParams.put("paymentSolutionId", "500");
 		
 		// note: instead of PurchaseTokenCall it is also possible to use:

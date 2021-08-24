@@ -32,8 +32,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class RefundCall extends AbstractApiCall {
 
-	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(/*"amount", "country",
-			"currency",*/ "originalMerchantTxId")));
+	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("amount", "originalMerchantTxId")));
 	
 	/**
 	 * @deprecated
@@ -72,7 +71,7 @@ public class RefundCall extends AbstractApiCall {
 
 		putMerchantCredentials(inputParams, tokenParams, this.config);
 		
-		tokenParams.put("originalMerchantTxId", inputParams.get("originalMerchantTxId"));
+		tokenParams.put("originalMerchantTxId", inputParams.get("originalMerchantTxId")); // the merchant's own id for the original transaction (the one we are refunding now)
 		tokenParams.put("action", this.getActionType().getCode());
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
 		tokenParams.put("allowOriginUrl", this.config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));

@@ -71,9 +71,16 @@ public class StatusCheckCall extends AbstractApiCall {
 		
 		actionParams.put("token", token);
 		actionParams.put("action", this.getActionType().getCode());
-		actionParams.put("txId", inputParams.get("txId"));
-		actionParams.put("merchantTxId", inputParams.get("merchantTxId"));
-
+		
+		String txId = inputParams.get("txId");
+		String merchantTxId = inputParams.get("merchantTxId");
+		
+		if (txId != null) {
+			actionParams.put("txId", txId);
+		} else {
+			actionParams.put("merchantTxId", merchantTxId);
+		}
+		
 		return actionParams;
 	}
 }

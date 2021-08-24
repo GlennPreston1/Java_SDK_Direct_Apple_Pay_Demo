@@ -22,10 +22,10 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * 
  * @author erbalazs
  */
-public class AbstractApvTokenCall extends AbstractApiCall {
+public class AbstractApvTokenCall extends AbstractApvCall {
 
-	private static final Set<String> requiredParams = Collections.unmodifiableSet(
-			new HashSet<>(Arrays.asList("amount", "channel", "country", "currency")));
+	private static final Set<String> requiredParams = Collections
+			.unmodifiableSet(new HashSet<>(Arrays.asList("amount", "channel", "country", "currency")));
 
 	/**
 	 * @deprecated
@@ -58,38 +58,16 @@ public class AbstractApvTokenCall extends AbstractApiCall {
 	}
 
 	@Override
-	protected Map<String, String> getTokenParams(final Map<String, String> inputParams) {
-
-		final Map<String, String> tokenParams = new HashMap<>(inputParams);
-
-		putMerchantCredentials(inputParams, tokenParams, this.config);
-
-		tokenParams.put("action", this.getActionType().getCode());
-		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
-		tokenParams.put("allowOriginUrl", this.config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
-		tokenParams.put("channel", inputParams.get("channel"));
-		tokenParams.put("amount", inputParams.get("amount"));
-		tokenParams.put("currency", inputParams.get("currency"));
-		tokenParams.put("country", inputParams.get("country"));
-		tokenParams.put("paymentSolutionId", inputParams.get("paymentSolutionId"));
-		tokenParams.put("merchantNotificationUrl", this.config.getProperty(MERCHANT_NOTIFICATION_URL_PROP_KEY));
-		tokenParams.put("merchantLandingPageUrl", this.config.getProperty(MERCHANT_LANDING_PAGE_URL_PROP_KEY));
-
-		return tokenParams;
-	}
-
-	@Override
 	protected Map<String, String> getActionParams(final Map<String, String> inputParams, final String token) {
 		// there is no action call
 		// (only the token is needed in this case, there is no second call)
 		return null;
 	}
-	
+
 	/**
 	 * For iframe mode Cashier UI
 	 * 
-	 * @return
-	 * 		URL string, use as iframe src property
+	 * @return URL string, use as iframe src property
 	 */
 	public final String executeAndBuildCashierIframeUrl() {
 
@@ -104,36 +82,36 @@ public class AbstractApvTokenCall extends AbstractApiCall {
 		// send language in token request too) (for now I have followed the internally
 		// used checkout-demo as an example)
 
-		redirectParams.put("operation", ""); 
+		redirectParams.put("operation", "");
 
 		redirectParams.put("token", tokenStr);
 		redirectParams.put("language", "en");
 
 		putMerchantId(inputParams, redirectParams, config);
 
-		redirectParams.put("integrationMode", "iframe"); 
+		redirectParams.put("integrationMode", "iframe");
 
-		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css"); 
-		redirectParams.put("styleSuffix", "-evopl"); 
+		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css");
+		redirectParams.put("styleSuffix", "-evopl");
 
-		redirectParams.put("redirectionTime", ""); 
-		redirectParams.put("allowCardHolderSpecialChars", ""); 
-		redirectParams.put("templateName", ""); 
-		redirectParams.put("paymentSolutionId", ""); 
-		redirectParams.put("numberOfInstallments", ""); 
-		redirectParams.put("installmentsPlanId", ""); 
+		redirectParams.put("redirectionTime", "");
+		redirectParams.put("allowCardHolderSpecialChars", "");
+		redirectParams.put("templateName", "");
+		redirectParams.put("paymentSolutionId", "");
+		redirectParams.put("numberOfInstallments", "");
+		redirectParams.put("installmentsPlanId", "");
 
-		redirectParams.put("baseUrl", cashierRootUrl); 
+		redirectParams.put("baseUrl", cashierRootUrl);
 
 		return cashierRootUrl + "?" + URLEncodedUtils.format(getForm(redirectParams).build(), "UTF-8");
 
 	}
 
 	/**
-	 * For HPP (hosted payment pages) mode Cashier UI (note: it has a similar role to standalone mode, however the UI is somewhat different)
+	 * For HPP (hosted payment pages) mode Cashier UI (note: it has a similar role
+	 * to standalone mode, however the UI is somewhat different)
 	 * 
-	 * @return
-	 * 		URL as a string, redirect the customer here
+	 * @return URL as a string, redirect the customer here
 	 */
 	public final String executeAndBuildCashierHppUrl() {
 
@@ -148,36 +126,36 @@ public class AbstractApvTokenCall extends AbstractApiCall {
 		// send language in token request too) (for now I have followed the internally
 		// used checkout-demo as an example)
 
-		redirectParams.put("operation", ""); 
+		redirectParams.put("operation", "");
 
 		redirectParams.put("token", tokenStr);
 		redirectParams.put("language", "en");
 
 		putMerchantId(inputParams, redirectParams, config);
 
-		redirectParams.put("integrationMode", "hostedPayPage"); 
+		redirectParams.put("integrationMode", "hostedPayPage");
 
-		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css"); 
-		redirectParams.put("styleSuffix", "-evopl"); 
+		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css");
+		redirectParams.put("styleSuffix", "-evopl");
 
-		redirectParams.put("redirectionTime", ""); 
-		redirectParams.put("allowCardHolderSpecialChars", ""); 
-		redirectParams.put("templateName", ""); 
-		redirectParams.put("paymentSolutionId", ""); 
-		redirectParams.put("numberOfInstallments", ""); 
-		redirectParams.put("installmentsPlanId", ""); 
+		redirectParams.put("redirectionTime", "");
+		redirectParams.put("allowCardHolderSpecialChars", "");
+		redirectParams.put("templateName", "");
+		redirectParams.put("paymentSolutionId", "");
+		redirectParams.put("numberOfInstallments", "");
+		redirectParams.put("installmentsPlanId", "");
 
-		redirectParams.put("baseUrl", cashierRootUrl); 
+		redirectParams.put("baseUrl", cashierRootUrl);
 
 		return cashierRootUrl + "?" + URLEncodedUtils.format(getForm(redirectParams).build(), "UTF-8");
 
 	}
 
 	/**
-	 * For standalone mode Cashier UI (note: it has a similar role to HPP mode, however the UI is somewhat different)
+	 * For standalone mode Cashier UI (note: it has a similar role to HPP mode,
+	 * however the UI is somewhat different)
 	 * 
-	 * @return
-	 * 		URL as a string, redirect the customer here
+	 * @return URL as a string, redirect the customer here
 	 */
 	public final String executeAndBuildCashierStandaloneUrl() {
 
@@ -192,30 +170,30 @@ public class AbstractApvTokenCall extends AbstractApiCall {
 		// send language in token request too) (for now I have followed the internally
 		// used checkout-demo as an example)
 
-		redirectParams.put("operation", ""); 
+		redirectParams.put("operation", "");
 
 		redirectParams.put("token", tokenStr);
 		redirectParams.put("language", "en");
 
 		putMerchantId(inputParams, redirectParams, config);
 
-		redirectParams.put("integrationMode", "standalone"); 
+		redirectParams.put("integrationMode", "standalone");
 		// redirectParams.put("originalIntegrationMode", ""); // ?
 
-		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css"); 
-		redirectParams.put("styleSuffix", "-evopl"); 
+		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css");
+		redirectParams.put("styleSuffix", "-evopl");
 
-		redirectParams.put("redirectionTime", ""); 
-		redirectParams.put("allowCardHolderSpecialChars", ""); 
-		redirectParams.put("templateName", ""); 
-		redirectParams.put("paymentSolutionId", ""); 
-		redirectParams.put("numberOfInstallments", ""); 
-		redirectParams.put("installmentsPlanId", ""); 
-		redirectParams.put("baseUrl", cashierRootUrl); 
-		redirectParams.put("showBanner", ""); 
-		redirectParams.put("action", ""); 
-		redirectParams.put("maxColNum", ""); 
-		redirectParams.put("targetSelector", ""); 
+		redirectParams.put("redirectionTime", "");
+		redirectParams.put("allowCardHolderSpecialChars", "");
+		redirectParams.put("templateName", "");
+		redirectParams.put("paymentSolutionId", "");
+		redirectParams.put("numberOfInstallments", "");
+		redirectParams.put("installmentsPlanId", "");
+		redirectParams.put("baseUrl", cashierRootUrl);
+		redirectParams.put("showBanner", "");
+		redirectParams.put("action", "");
+		redirectParams.put("maxColNum", "");
+		redirectParams.put("targetSelector", "");
 
 		return cashierRootUrl + "?" + URLEncodedUtils.format(getForm(redirectParams).build(), "UTF-8");
 
