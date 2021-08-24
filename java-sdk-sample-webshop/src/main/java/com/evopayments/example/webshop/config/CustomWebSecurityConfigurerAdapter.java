@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +30,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 		.antMatchers("/admin/**").hasRole("USER")
 		.anyRequest().permitAll()
 		.and().httpBasic().realmName("java-sdk-sample-webshop")
-		.and().csrf().disable(); // TODO: consider improving this even if this is just an example
+		.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 
 	@Bean

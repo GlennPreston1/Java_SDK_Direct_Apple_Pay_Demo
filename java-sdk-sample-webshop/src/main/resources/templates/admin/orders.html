@@ -17,6 +17,8 @@
 	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
 	crossorigin="anonymous"></script>
 
+<script	src="/assets/helper.js"></script>
+
 <script>
 
 	async function statusCheck(orderId) {
@@ -41,7 +43,7 @@
 				
 		const response = await fetch('/admin/orders/' + orderId + '/captures', {
 			method: 'POST', 
-			headers: { 'Content-Type': 'application/json'},
+			headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
 		});
 		
 		const responseBodyData = await response.json();
@@ -57,7 +59,7 @@
 				
 		const response = await fetch('/admin/orders/' + orderId + '/voids', {
 			method: 'POST', 
-			headers: { 'Content-Type': 'application/json'},
+			headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
 		});
 		
 		const responseBodyData = await response.json();
@@ -73,7 +75,7 @@
 				
 		const response = await fetch('/admin/orders/' + orderId + '/refunds', {
 			method: 'POST', 
-			headers: { 'Content-Type': 'application/json'},
+			headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
 		});
 		
 		const responseBodyData = await response.json();
