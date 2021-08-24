@@ -1,5 +1,7 @@
 package com.evopayments.example.webshop.data;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,7 +15,7 @@ public class OrderEntity {
 
 	private String product;
 
-	private Integer amount;
+	private BigDecimal amount;
 	private String currency;
 
 	private java.sql.Timestamp createdOn;
@@ -36,11 +38,11 @@ public class OrderEntity {
 		this.product = product;
 	}
 
-	public Integer getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Integer amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 

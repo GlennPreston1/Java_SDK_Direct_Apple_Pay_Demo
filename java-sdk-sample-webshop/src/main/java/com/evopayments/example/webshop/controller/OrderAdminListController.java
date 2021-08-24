@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.evopayments.example.webshop.repository.OrderEntityRepository;
 
 @Controller
-public class OrderListController {
+public class OrderAdminListController {
 
 	@Autowired
 	private OrderEntityRepository orderEntityRepository;
 
-	@GetMapping("/orders")
+	@GetMapping("/admin/orders")
 	public String orderList(Model model) {
 		model.addAttribute("orders", orderEntityRepository.findTop50ByOrderByCreatedOnDesc());
-		return "orders";
+		return "/admin/orders";
 	}
 
 }

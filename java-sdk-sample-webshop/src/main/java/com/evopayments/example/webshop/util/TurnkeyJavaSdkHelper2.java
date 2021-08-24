@@ -34,10 +34,18 @@ public class TurnkeyJavaSdkHelper2 {
 		purchaseInputParams.put("specinCreditCardToken", cardToken);
 		purchaseInputParams.put("specinCreditCardCVV", orderSubmitRequestDto.getCardCvv());
 		
+		// note: instead of PurchaseCall it is also possible to use:
+		// VerifyCall
+		// AuthCall
+		
 		JSONObject joPurchaseCallResponse = new PurchaseCall(TestConfig.getInstance(), tokenizeInputParams).execute();
 		// joPurchaseCallResponse.get("");
 		
 		return "http://example.com";
+	}
+	
+	private TurnkeyJavaSdkHelper2() {
+		// util class, with static methods
 	}
 
 }

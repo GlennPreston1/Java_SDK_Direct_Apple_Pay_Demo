@@ -1,5 +1,6 @@
 package com.evopayments.example.webshop.controller;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -46,16 +47,16 @@ public class OrderSubmitController {
 
 		switch (orderSubmitRequestDto.getProduct()) {
 		case "Toy cars":
-			orderEntity.setAmount(18);
+			orderEntity.setAmount(new BigDecimal(18));
 			break;
 		case "Table tennis set":
-			orderEntity.setAmount(20);
+			orderEntity.setAmount(new BigDecimal(20));
 			break;
 		case "Teddy bear":
-			orderEntity.setAmount(30);
+			orderEntity.setAmount(new BigDecimal(30));
 			break;
 		case "Football":
-			orderEntity.setAmount(24);
+			orderEntity.setAmount(new BigDecimal(24));
 			break;
 		default:
 			throw new IllegalArgumentException("Missing product!");

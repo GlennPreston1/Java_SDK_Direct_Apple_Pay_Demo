@@ -1,15 +1,14 @@
-package com.evopayments.turnkey.apiclient.async;
+package com.evopayments.turnkey.util;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class AsyncNotificationHelper {
-		
-	private static Map<String, String> extractParams(final HttpServletRequest request) {
+public class HttpParamUtil {
+
+	public static Map<String, String> extractParams(final HttpServletRequest request) {
 
 		final HashMap<String, String> requestMap = new HashMap<>();
 
@@ -24,10 +23,8 @@ public class AsyncNotificationHelper {
 		return requestMap;
 	}
 	
-	protected Map<String, String> handleIncomingNotification(final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
-
-		return extractParams(httpServletRequest);
-
+	private HttpParamUtil() {
+		// static util methods only
 	}
-
+	
 }

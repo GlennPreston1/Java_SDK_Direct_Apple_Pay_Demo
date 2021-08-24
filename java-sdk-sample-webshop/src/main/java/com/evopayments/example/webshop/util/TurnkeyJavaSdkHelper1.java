@@ -1,5 +1,6 @@
 package com.evopayments.example.webshop.util;
 
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,15 +15,15 @@ public class TurnkeyJavaSdkHelper1 {
 		Map<String, String> inputParams = new HashMap<>();
 		inputParams.put("country", "PL");
 		inputParams.put("currency", orderEntity.getCurrency().toUpperCase());
-		inputParams.put("amount", orderEntity.getAmount().toString()); // FIXME: How to represent fractions?
+		inputParams.put("amount", orderEntity.getAmount().setScale(2, RoundingMode.HALF_UP).toPlainString());
 		inputParams.put("channel", "ECOM");
 		// inputParams.put("paymentSolutionId", "500");
+		
+		// note: instead of PurchaseTokenCall it is also possible to use:
+		// VerifyTokenCall
+		// AuthTokenCall
 
 		return new PurchaseTokenCall(TestConfig.getInstance(), inputParams);
-	}
-
-	private TurnkeyJavaSdkHelper1() {
-		// util class, with static methods, no need for constructor (hence private)
 	}
 
 	public static String startIframeModeCashierPayment(OrderEntity orderEntity) {
@@ -38,6 +39,10 @@ public class TurnkeyJavaSdkHelper1 {
 	public static String startHppModeCashierPayment(OrderEntity orderEntity) {
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);
 		return purchaseTokenCall.executeAndBuildCashierHppUrl();
+	}
+	
+	private TurnkeyJavaSdkHelper1() {
+		// util class, with static methods
 	}
 
 }

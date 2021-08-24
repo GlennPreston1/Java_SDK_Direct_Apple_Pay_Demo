@@ -21,13 +21,11 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  * iframe).
  * 
  * @author erbalazs
- *
- * @see PurchaseCall
  */
 public class AbstractApvTokenCall extends AbstractApiCall {
 
 	private static final Set<String> requiredParams = Collections.unmodifiableSet(
-			new HashSet<>(Arrays.asList("amount", "channel", "country", "currency", "paymentSolutionId")));
+			new HashSet<>(Arrays.asList("amount", "channel", "country", "currency")));
 
 	/**
 	 * @deprecated
@@ -87,6 +85,12 @@ public class AbstractApvTokenCall extends AbstractApiCall {
 		return null;
 	}
 	
+	/**
+	 * For iframe mode Cashier UI
+	 * 
+	 * @return
+	 * 		URL string, use as iframe src property
+	 */
 	public final String executeAndBuildCashierIframeUrl() {
 
 		String tokenStr = execute().getString("token");
@@ -125,6 +129,12 @@ public class AbstractApvTokenCall extends AbstractApiCall {
 
 	}
 
+	/**
+	 * For HPP (hosted payment pages) mode Cashier UI (note: it has a similar role to standalone mode, however the UI is somewhat different)
+	 * 
+	 * @return
+	 * 		URL as a string, redirect the customer here
+	 */
 	public final String executeAndBuildCashierHppUrl() {
 
 		String tokenStr = execute().getString("token");
@@ -163,6 +173,12 @@ public class AbstractApvTokenCall extends AbstractApiCall {
 
 	}
 
+	/**
+	 * For standalone mode Cashier UI (note: it has a similar role to HPP mode, however the UI is somewhat different)
+	 * 
+	 * @return
+	 * 		URL as a string, redirect the customer here
+	 */
 	public final String executeAndBuildCashierStandaloneUrl() {
 
 		String tokenStr = execute().getString("token");

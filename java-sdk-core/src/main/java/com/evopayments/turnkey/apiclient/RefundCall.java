@@ -32,8 +32,8 @@ import com.evopayments.turnkey.config.ApplicationConfig;
  */
 public class RefundCall extends AbstractApiCall {
 
-	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList("amount", "country",
-			"currency", "originalMerchantTxId")));
+	private static final Set<String> requiredParams = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(/*"amount", "country",
+			"currency",*/ "originalMerchantTxId")));
 	
 	/**
 	 * @deprecated

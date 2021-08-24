@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.evopayments.example.webshop.data.OrderEntity;
 
-public interface OrderEntityRepository extends JpaRepository<OrderEntity, Integer> {
+public interface OrderEntityRepository extends JpaRepository<OrderEntity, String> {
 
 	List<OrderEntity> findTop50ByOrderByCreatedOnDesc();
 

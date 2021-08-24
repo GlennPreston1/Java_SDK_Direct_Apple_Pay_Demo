@@ -9,7 +9,7 @@ public class TextEncryptionUtilTest {
 	@Test
 	public void test() {
 
-		String str = "56789";
+		String str = "xy123";
 		String encPass = "test";
 		String encryptedStr = TextEncryptionUtil.encrypt(str, encPass);
 		String decryptedStr = TextEncryptionUtil.decrypt(encryptedStr, encPass);
