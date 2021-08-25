@@ -3,8 +3,8 @@ package com.evopayments.turnkey.example.webshop.controller;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,11 +25,11 @@ public class OrderSubmitController {
 	@PostMapping("/orders")
 	public OrderSubmitResponseDto submitOrder(@RequestBody OrderSubmitRequestDto orderSubmitRequestDto) {
 
-		if (!StringUtils.isNotBlank(orderSubmitRequestDto.getProduct())) {
+		if (!StringUtils.hasLength(orderSubmitRequestDto.getProduct())) {
 			throw new IllegalArgumentException("Missing product!");
 		}
 		
-		if (!StringUtils.isNotBlank(orderSubmitRequestDto.getMode())) {
+		if (!StringUtils.hasLength(orderSubmitRequestDto.getMode())) {
 			throw new IllegalArgumentException("Missing mode!");
 		}
 		

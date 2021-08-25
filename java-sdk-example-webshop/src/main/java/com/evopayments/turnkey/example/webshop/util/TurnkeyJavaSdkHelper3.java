@@ -13,6 +13,13 @@ import com.evopayments.turnkey.apiclient.VoidCall;
 import com.evopayments.turnkey.config.TestConfig;
 import com.evopayments.turnkey.example.webshop.data.OrderEntity;
 
+/**
+ * Helper methods, mainly (but not only) 
+ * for the small backoffice like example UI (capture, refund etc.)
+ * 
+ * @author erbalazs
+ *
+ */
 public class TurnkeyJavaSdkHelper3 {
 
 	private TurnkeyJavaSdkHelper3() {

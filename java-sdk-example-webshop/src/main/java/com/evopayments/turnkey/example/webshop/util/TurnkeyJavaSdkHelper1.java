@@ -8,6 +8,12 @@ import com.evopayments.turnkey.apiclient.PurchaseTokenCall;
 import com.evopayments.turnkey.config.TestConfig;
 import com.evopayments.turnkey.example.webshop.data.OrderEntity;
 
+/**
+ * Basic payment helper methods
+ * 
+ * @author erbalazs
+ *
+ */
 public class TurnkeyJavaSdkHelper1 {
 
 	private static PurchaseTokenCall buildCall(OrderEntity orderEntity) {

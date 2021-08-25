@@ -30,7 +30,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 		.antMatchers("/admin/**").hasRole("USER")
 		.anyRequest().permitAll()
 		.and().httpBasic().realmName("java-sdk-example-webshop")
-		.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+		.and().csrf().ignoringAntMatchers("/transactionresultcallback**", "/transactionresult**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 
 	@Bean

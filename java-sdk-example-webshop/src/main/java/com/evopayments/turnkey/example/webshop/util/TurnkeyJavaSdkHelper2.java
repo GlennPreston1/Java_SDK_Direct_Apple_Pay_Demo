@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.util.StringUtils;
 
 import com.evopayments.turnkey.apiclient.AbstractApiCall;
 import com.evopayments.turnkey.apiclient.PurchaseCall;
@@ -12,9 +13,19 @@ import com.evopayments.turnkey.config.TestConfig;
 import com.evopayments.turnkey.example.webshop.data.OrderEntity;
 import com.evopayments.turnkey.example.webshop.data.OrderSubmitRequestDto;
 
+/**
+ * Helper methods for advanced payments (for PCI compliant merchants)
+ * 
+ * @author erbalazs
+ *
+ */
 public class TurnkeyJavaSdkHelper2 {
 
 	public static String executeAdvancedPayment(OrderSubmitRequestDto orderSubmitRequestDto, OrderEntity orderEntity) {
+		
+		TestConfig testConfig = TestConfig.getInstance();
+		
+		// ---
 		
 		Map<String, String> tokenizeInputParams = new HashMap<>();
 		tokenizeInputParams.put("number", orderSubmitRequestDto.getCardNumber());
@@ -29,7 +40,7 @@ public class TurnkeyJavaSdkHelper2 {
 		String customerId = orderEntity.getId();
 		tokenizeInputParams.put("customerId", customerId);  
 
-		JSONObject joTokenizeCallResponse = new TokenizeCall(TestConfig.getInstance(), tokenizeInputParams).execute();
+		JSONObject joTokenizeCallResponse = new TokenizeCall(testConfig, tokenizeInputParams).execute();
 		String cardToken = joTokenizeCallResponse.getString("cardToken");
 		
 		// ---
@@ -49,12 +60,12 @@ public class TurnkeyJavaSdkHelper2 {
 		// VerifyCall
 		// AuthCall
 		
-		TestConfig testConfig = TestConfig.getInstance();
-		
 		JSONObject joPurchaseCallResponse = new PurchaseCall(testConfig, purchaseInputParams).execute();
 		
-		// joPurchaseCallResponse.get("");
-		// TODO: extract 3ds redirect... (if there is one)
+		String redirectionUrl = joPurchaseCallResponse.getString("redirectionUrl");
+		if (StringUtils.hasLength(redirectionUrl)) {
+			return redirectionUrl;
+		}
 		
 		return testConfig.getProperty(AbstractApiCall.MERCHANT_LANDING_PAGE_URL_PROP_KEY);
 	}
