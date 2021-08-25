@@ -3,6 +3,7 @@ package com.evopayments.turnkey.util.crypto;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
@@ -43,20 +44,13 @@ public class TextEncryptionUtil {
 		try {
 
 			// 16 bytes salt
-			byte[] salt = CryptoUtils.getRandomNonce(SALT_LENGTH_BYTE);
+			byte[] salt = new byte[SALT_LENGTH_BYTE];
+			new SecureRandom().nextBytes(salt);
 
 			// GCM recommended 12 bytes iv
-			byte[] iv = CryptoUtils.getRandomNonce(IV_LENGTH_BYTE);
+			byte[] iv = new byte[IV_LENGTH_BYTE];
+			new SecureRandom().nextBytes(iv);
 			
-			// Veracode Greenlight complains here about the IV
-			// http://cwe.mitre.org/data/definitions/1204.html#REF-1178
-			// CWE-327: Use of a Broken or Risky Cryptographic Algorithm
-			// "Initialization vector being used here is not cryptographically strong for the underlying primitive's encryption output. "
-			// also see: https://cwe.mitre.org/data/definitions/1204.html#REF-1178
-			// also see: https://cwe.mitre.org/data/definitions/1204.html#REF-1178
-			// https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf
-			// accoring to these 12 byte (96 bit) IV length is enough
-
 			// secret key from password
 			SecretKey aesKeyFromPassword = CryptoUtils.getAESKeyFromPassword(password.toCharArray(), salt);
 
@@ -104,8 +98,27 @@ public class TextEncryptionUtil {
 			// get back the iv and salt from the cipher text
 			ByteBuffer bb = ByteBuffer.wrap(decode);
 
+			// and Veracode Greenlight is incorrect.
+			
 			byte[] iv = new byte[IV_LENGTH_BYTE];
 			bb.get(iv);
+			
+			// Note: Veracode Greenlight mentions this issue in relation to this IV value:
+			
+			// CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+			// Summary
+			// Initialization vector being used here is not cryptographically strong for the underlying primitive's encryption output. 
+			
+			// It only complains about the decryption side.
+			// The IV value used here is what was used during encryption (we add it to the encrypted text, and here we read it back from that) .
+			// By the nature the encryption algorithm used here the IV value has to be the same
+			// (meaning we have to use the same IV for decryption).
+
+			// Veracode Greenlight does not show any issue in the encrypt() method
+			// (we use SecureRandom to obtain the IV value during encryption, which is an accepted practice).
+			
+			// Based on these circumstances and facts the conclusion is that this flaw is not really a flaw and 
+			// Veracode Greenlight is wrong in this case.
 
 			byte[] salt = new byte[SALT_LENGTH_BYTE];
 			bb.get(salt);

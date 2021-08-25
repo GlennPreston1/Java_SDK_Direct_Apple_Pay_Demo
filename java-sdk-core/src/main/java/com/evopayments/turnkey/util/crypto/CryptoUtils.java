@@ -17,12 +17,6 @@ import java.util.List;
  */
 class CryptoUtils {
 
-	static byte[] getRandomNonce(int numBytes) {
-		byte[] nonce = new byte[numBytes];
-		new SecureRandom().nextBytes(nonce);
-		return nonce;
-	}
-
 	/**
 	 * AES secret key
 	 * 
