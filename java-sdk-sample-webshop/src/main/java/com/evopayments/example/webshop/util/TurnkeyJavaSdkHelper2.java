@@ -21,6 +21,10 @@ public class TurnkeyJavaSdkHelper2 {
 		tokenizeInputParams.put("nameOnCard", orderSubmitRequestDto.getNameOnCard());
 		tokenizeInputParams.put("expiryMonth", orderSubmitRequestDto.getExpiryMonth());
 		tokenizeInputParams.put("expiryYear", orderSubmitRequestDto.getExpiryYear());
+		
+		// tokenizeInputParams: customerId is not mandatory here, however value has to be the same as purchaseInputParams below
+		// TODO: unfinished, temporarily we use the orderId here too
+		tokenizeInputParams.put("customerId", orderEntity.getId());  
 
 		JSONObject joTokenizeCallResponse = new TokenizeCall(TestConfig.getInstance(), tokenizeInputParams).execute();
 		String cardToken = joTokenizeCallResponse.getString("cardToken");
