@@ -30,7 +30,8 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 		.antMatchers("/admin/**").hasRole("USER")
 		.anyRequest().permitAll()
 		.and().httpBasic().realmName("java-sdk-example-webshop")
-		.and().csrf().ignoringAntMatchers("/transactionresultcallback**", "/transactionresult**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+		.and().csrf().ignoringAntMatchers("/transactionresultcallback**", "/transactionresult**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()); 
+		// these two endpoints have to be added as CSRF exceptions, because the HTTP POST request legitimately arrives from another site 
 	}
 
 	@Bean
