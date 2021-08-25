@@ -1,5 +1,5 @@
 # EVO Payments - Turnkey API - JAVA SDK
-Java integration (library, samples etc.) to the Turnkey API.
+Java integration (library, examples etc.) to the Turnkey API.
 
 ## Maven modules
 
@@ -7,8 +7,8 @@ Maven projects, during development Maven 3.6.3 was used.
 
 * __java-sdk-core__ the core code, can be used as a library (as a JAR dependency)
 
-* __java-sdk-core-tester__ java-sdk-core unit tests, some of them are special cases (for simple, easy to understand examples please see java-sdk-sample-webshop)
-* __java-sdk-sample-webshop__ a simple Spring Boot based example webshop, demonstrates basic java-sdk-core usage
+* __java-sdk-core-tester__ java-sdk-core unit tests, some of them are special cases (for simple, easy to understand examples please see java-sdk-example-webshop)
+* __java-sdk-example-webshop__ a simple Spring Boot based example webshop, demonstrates basic java-sdk-core usage
 * __java-sdk-command-line-client__ (old) a Java based command line client (can be used via command line from non-Java applications too), potential use cases are limited, consider it depricated (especially since SCA/3DS2)
 
 java-sdk-core only has a few basic dependencies, it was made (intentionally) to be relatively bare-bones and simple, it can be incorporated into any project easily.
@@ -18,10 +18,10 @@ java-sdk-core only has a few basic dependencies, it was made (intentionally) to 
 java-sdk-core requires minimum Java 7, however this was not extensively tested, because Java 7 is old and not well supported.
 In practice Java 8 is the minimum and Java 11 or newer is recommended.
 
-For java-sdk-sample-webshop prerequisites examine Spring Boot prerequisites/dependencies (currently it is Java 8).
-java-sdk-sample-webshop is configured to use embedded Tomcat (Spring Boot's default), but possible to configure it to a traditional .war file deployment 
+For java-sdk-example-webshop prerequisites examine Spring Boot prerequisites/dependencies (currently it is Java 8).
+java-sdk-example-webshop is configured to use embedded Tomcat (Spring Boot's default), but possible to configure it to a traditional .war file deployment 
 (same as any Spring Boot webapp).
-java-sdk-sample-webshop uses Apache Derby for storage (for the example orders. prodcuts etc.).
+java-sdk-example-webshop uses Apache Derby for storage (for the example orders. prodcuts etc.).
 
 ## Possible requests 
 
@@ -82,7 +82,7 @@ These do everything needed for a Cashier UI URL.
 The returned URL string can be used as a redirection target (for the customer).
 Iframe mode is slightly different, in iframe cases there is a Javascript libarary, the received token has to be used to initialize that.
 
-For examples please see java-sdk-sample-webshop.
+For examples please see java-sdk-example-webshop.
 
 ### IV. Watch for exceptions:
 
@@ -146,7 +146,7 @@ Steps to use the encryption:
 
 For our examples/tests the TURNKEY-JAVA-SDK-ENCPROP has to be set to this value: test
 
-## java-sdk-sample-webshop
+## java-sdk-example-webshop
 
 The "Follow up actions (capture, refund etc.)" view requires username/password. 
 This view demonstrates a small and simple custom backoffice view.

@@ -22,6 +22,7 @@ class CryptoUtils {
 	 * 
 	 * @param keysize
 	 * @return
+	 * 
 	 * @throws NoSuchAlgorithmException
 	 */
 	static SecretKey getAESKey(int keysize) throws NoSuchAlgorithmException {
@@ -36,6 +37,7 @@ class CryptoUtils {
 	 * @param password
 	 * @param salt
 	 * @return
+	 * 
 	 * @throws NoSuchAlgorithmException
 	 * @throws InvalidKeySpecException
 	 */

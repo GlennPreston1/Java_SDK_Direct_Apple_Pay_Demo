@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<title>Turnkey API/SDK example webshop</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+	crossorigin="anonymous">
+
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+	crossorigin="anonymous"></script>
+	
+<script	src="/assets/helper.js"></script>
+
+<script>
+
+	async function buy() {
+		
+		console.log("buy");
+		
+		const cardNumber = prompt("Card number", "4123640000000197"); // example card pre-filled
+		const nameOnCard = prompt("Name on card", "John Doe");
+		const expiryMonth = prompt("Expiry month", "11");
+		const expiryYear = prompt("Expiry year", "2022");
+		const cardCvv = prompt("CVV", "992");
+		
+		const postRequestBodyData = {};
+		postRequestBodyData.product = 'Teddy bear';
+		postRequestBodyData.mode = 'advanced';
+		postRequestBodyData.cardNumber = cardNumber;
+		postRequestBodyData.nameOnCard = nameOnCard;
+		postRequestBodyData.expiryMonth = expiryMonth;
+		postRequestBodyData.expiryYear = expiryYear; // has to be 4 number (ie. 2024 instead of 24)
+		postRequestBodyData.cardCvv = cardCvv;
+		
+		const postResponse = await fetch('/orders', {
+			method: 'POST', 
+			headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
+			body: JSON.stringify(postRequestBodyData)
+		});
+		
+		const postResponseBodyData = await postResponse.json();
+		
+		if (postResponseBodyData.url) {
+			window.location.href = postResponseBodyData.url;
+		} else {
+			alert("error");
+		}
+		
+	}
+
+</script>
+
+</head>
+<body>
+
+	<div style="width: 100%; max-width: 600px; min-width: 250px; margin-left: auto; margin-right: auto; margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
+
+		<div class="card" style="width: 100%;">
+			<img src="/assets/teddy-bear-3599680_1280.jpg" style="width: 100%" class="card-img-top" alt="example product picture">
+			<div class="card-body">
+				<h5 class="card-title">Teddy bear, 30 EUR</h5>
+				<p class="card-text">Suitable for children aged 2-10, plush material</p>
+				<a onclick="buy()" class="btn btn-primary">Buy</a>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

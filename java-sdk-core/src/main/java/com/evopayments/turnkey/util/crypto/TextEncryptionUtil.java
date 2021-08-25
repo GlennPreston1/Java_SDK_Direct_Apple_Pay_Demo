@@ -36,8 +36,6 @@ public class TextEncryptionUtil {
 	 * @param password
 	 * @return 
 	 * 		base64 encoded AES encrypted text
-	 * 
-	 * @throws Exception
 	 */
 	public static String encrypt(String pText, String password) {
 
@@ -87,7 +85,6 @@ public class TextEncryptionUtil {
 	 * @param password
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
 	public static String decrypt(String cText, String password) {
 

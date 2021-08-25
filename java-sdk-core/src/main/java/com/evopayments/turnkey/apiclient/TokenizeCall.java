@@ -67,6 +67,7 @@ public class TokenizeCall extends AbstractApiCall {
 		tokenParams.put("action", this.getActionType().getCode());
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
 		tokenParams.put("allowOriginUrl", this.config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
+		tokenParams.put("customerId", inputParams.get("customerId"));
 
 		return tokenParams;
 	}
@@ -84,7 +85,7 @@ public class TokenizeCall extends AbstractApiCall {
 		actionParams.put("nameOnCard", inputParams.get("nameOnCard"));
 		actionParams.put("expiryMonth", inputParams.get("expiryMonth"));
 		actionParams.put("expiryYear", inputParams.get("expiryYear"));
-
+		
 		return actionParams;
 	}
 }

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>Turnkey API/SDK example webshop - Orders</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+	crossorigin="anonymous">
+
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+	crossorigin="anonymous"></script>
+
+<script	src="/assets/helper.js"></script>
+
+<script>
+
+	async function statusCheck(orderId) {
+		
+		console.log("statusCheck");
+				
+		const response = await fetch('/admin/orders/' + orderId, {
+			method: 'GET', 
+			headers: { 'Content-Type': 'application/json'},
+		});
+		
+		const responseBodyData = await response.json();
+		
+		console.log(responseBodyData);
+		alert(JSON.stringify(responseBodyData));
+	
+	}
+	
+	async function executeCapture(orderId) {
+		
+		console.log("executeCapture");
+				
+		const response = await fetch('/admin/orders/' + orderId + '/captures', {
+			method: 'POST', 
+			headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
+		});
+		
+		const responseBodyData = await response.json();
+		
+		console.log(responseBodyData);
+		alert(JSON.stringify(responseBodyData));
+	
+	}
+	
+	async function executeVoid(orderId) {
+		
+		console.log("executeVoid");
+				
+		const response = await fetch('/admin/orders/' + orderId + '/voids', {
+			method: 'POST', 
+			headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
+		});
+		
+		const responseBodyData = await response.json();
+		
+		console.log(responseBodyData);
+		alert(JSON.stringify(responseBodyData));
+	
+	}
+	
+	async function executeRefund(orderId) {
+		
+		console.log("executeRefund");
+				
+		const response = await fetch('/admin/orders/' + orderId + '/refunds', {
+			method: 'POST', 
+			headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
+		});
+		
+		const responseBodyData = await response.json();
+		
+		console.log(responseBodyData);
+		alert(JSON.stringify(responseBodyData));
+	
+	}
+
+</script>
+
+</head>
+<body>
+
+	<div style="width: 100%; max-width: 600px; min-width: 250px; margin-left: auto; margin-right: auto; margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
+
+		<h3 style="margin-bottom: 1rem">Orders (last 50)</h3>
+		
+		<p style="margin-bottom: 1rem">Various actions that the merchants can execute after payment. Turnkey Backoffice UI offers these, but some merchants might have special needs, need a custom UI etc.</p>
+		
+		<ul class="list-group" th:each="order: ${orders}" style="margin-bottom: 3rem">
+			<li class="list-group-item" data-th-attr="data-id=${order.id}" th:text="${order.toString}" style="margin-bottom: 1rem; font-weight: bold"/>
+			<button type="button" class="btn btn-info btn-sm" style="margin-bottom: 1rem" th:onclick="statusCheck([[${order.id}]])">Status check</button>
+			<button type="button" class="btn btn-success btn-sm" style="margin-bottom: 1rem" th:onclick="executeCapture([[${order.id}]])">Capture</button>
+			<button type="button" class="btn btn-warning btn-sm" style="margin-bottom: 1rem" th:onclick="executeVoid([[${order.id}]])">Void</button>
+			<button type="button" class="btn btn-warning btn-sm" th:onclick="executeRefund([[${order.id}]])">Refund</button>
+		</ul>
+		
+	</div>
+
+</body>
+</html>
