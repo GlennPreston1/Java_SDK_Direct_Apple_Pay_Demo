@@ -49,9 +49,9 @@ class CryptoUtils {
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 
 		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-		// iterationCount = 65536
+		// iterationCount = 262144
 		// keyLength = 256
-		KeySpec spec = new PBEKeySpec(password, salt, 65536, 256);
+		KeySpec spec = new PBEKeySpec(password, salt, 262144, 256);
 		SecretKey secret = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
 		return secret;
 

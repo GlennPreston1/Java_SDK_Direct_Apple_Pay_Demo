@@ -16,7 +16,7 @@ import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
  */
 public class TextEncryptionUtil {
 	
-	private static final String PROP_PASS_ENV_VAR = "TURNKEY-JAVA-SDK-PROPPASS";
+	private static final String ENCPROP_ENV_VAR = "TURNKEY-JAVA-SDK-ENCPROP";
 
 	private static final String ENCRYPT_ALGO = "AES/GCM/NoPadding";
 
@@ -47,6 +47,15 @@ public class TextEncryptionUtil {
 
 			// GCM recommended 12 bytes iv
 			byte[] iv = CryptoUtils.getRandomNonce(IV_LENGTH_BYTE);
+			
+			// Veracode Greenlight complains here about the IV
+			// http://cwe.mitre.org/data/definitions/1204.html#REF-1178
+			// CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+			// "Initialization vector being used here is not cryptographically strong for the underlying primitive's encryption output. "
+			// also see: https://cwe.mitre.org/data/definitions/1204.html#REF-1178
+			// also see: https://cwe.mitre.org/data/definitions/1204.html#REF-1178
+			// https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf
+			// accoring to these 12 byte (96 bit) IV length is enough
 
 			// secret key from password
 			SecretKey aesKeyFromPassword = CryptoUtils.getAESKeyFromPassword(password.toCharArray(), salt);
@@ -73,7 +82,7 @@ public class TextEncryptionUtil {
 	
 	public static String encryptBasedOnSystemPropPass(String cText) {
 		
-		final String propPass = System.getenv(PROP_PASS_ENV_VAR);
+		final String propPass = System.getenv(ENCPROP_ENV_VAR);
 		return encrypt(cText, propPass);
 		
 	}
@@ -123,7 +132,7 @@ public class TextEncryptionUtil {
 	
 	public static String decryptBasedOnSystemPropPass(String cText) {
 		
-		final String propPass = System.getenv(PROP_PASS_ENV_VAR);
+		final String propPass = System.getenv(ENCPROP_ENV_VAR);
 		return decrypt(cText, propPass);
 		
 	}

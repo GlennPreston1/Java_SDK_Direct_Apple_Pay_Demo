@@ -9,10 +9,10 @@ public class TextEncryptionUtilTest {
 	@Test
 	public void test() {
 
-		String str = "xy123";
-		String encPass = "test";
-		String encryptedStr = TextEncryptionUtil.encrypt(str, encPass);
-		String decryptedStr = TextEncryptionUtil.decrypt(encryptedStr, encPass);
+		String str = "x";
+		String ep = "y";
+		String encryptedStr = TextEncryptionUtil.encrypt(str, ep);
+		String decryptedStr = TextEncryptionUtil.decrypt(encryptedStr, ep);
 
 		Assert.assertNotEquals(str, encryptedStr);
 		Assert.assertEquals(str, decryptedStr);

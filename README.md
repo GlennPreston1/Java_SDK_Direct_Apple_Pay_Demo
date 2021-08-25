@@ -139,12 +139,12 @@ However the following optional technique makes it somewhat harder for an attacke
 Steps to use the encryption:
 
 1. Create (generate etc.) an encryption password (this is not the API password!).
-2. Set it as an environment variable on the dev/test and/or prod system where the SDK code will be used. The name has to be TURNKEY-JAVA-SDK-PROPPASS
+2. Set it as an environment variable on the dev/test and/or prod system where the SDK code will be used. The name has to be TURNKEY-JAVA-SDK-ENCPROP
 3. Use com.evopayments.turnkey.util.crypto.TextEncryptionUtil.encryptBasedOnSystemPropPass(String) to encrypt your API password (just once, delete the method call after you have the encrypted  password)
 4. Add the ENC- prefix to the encrypted password
 5. You can use this encrypted form (looks like this: ENC-e0Kwzt2m4fxdA37ovsROpgdkaQ1BRsX/r0/RP9BSRCnByx8cwMq9NOFo5I7I6U+xzg==) in place of the API password (in the properties files and/or in the inputParam map). Note the SDK code will only function properly on systems, where the TURNKEY-JAVA-SDK-PROPPASS is set correctly!
 
-For our examples/tests the TURNKEY-JAVA-SDK-PROPPASS has to be set to this value: test
+For our examples/tests the TURNKEY-JAVA-SDK-ENCPROP has to be set to this value: test
 
 ## java-sdk-sample-webshop
 
