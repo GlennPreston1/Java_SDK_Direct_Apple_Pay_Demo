@@ -1,5 +1,7 @@
 package com.evopayments.turnkey.example.webshop.data;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
+
 public class OrderSubmitRequestDto {
 
 	private String product;
@@ -29,6 +31,12 @@ public class OrderSubmitRequestDto {
 	 * only in advanced (PCI compliant merchant) mode
 	 */
 	private String cardCvv;
+
+	/**
+	 * only in advanced (PCI compliant merchant) mode, Apple Pay
+	 */
+	@JsonRawValue
+	private String applePayPayload;
 
 	public String getProduct() {
 		return product;
@@ -84,6 +92,14 @@ public class OrderSubmitRequestDto {
 
 	public void setCardCvv(String cardCvv) {
 		this.cardCvv = cardCvv;
+	}
+
+	public String getApplePayPayload() {
+		return applePayPayload;
+	}
+
+	public void setApplePayPayload(String applePayPayload) {
+		this.applePayPayload = applePayPayload;
 	}
 
 }

@@ -88,6 +88,9 @@ public class OrderSubmitController {
 		case "advanced":
 			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper2.executeAdvancedPayment(orderSubmitRequestDto, orderEntity));
 			break;
+		case "advanced-applepay":
+			orderSubmitResponseDto.setUrl(TurnkeyJavaSdkHelper2.executeAdvancedPayment(orderSubmitRequestDto, orderEntity));
+			break;
 		default:
 			throw new IllegalArgumentException("Incorrect mode!");
 		}
