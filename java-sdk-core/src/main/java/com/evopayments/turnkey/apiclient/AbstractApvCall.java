@@ -82,7 +82,7 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 		tokenParams.put("timestamp", String.valueOf(System.currentTimeMillis()));
 		tokenParams.put("allowOriginUrl", this.config.getProperty(ALLOW_ORIGIN_URL_PROP_KEY));
 
-		String channel = inputParams.get("channel");
+		final String channel = inputParams.get("channel");
 
 		if (channel != null) {
 			tokenParams.put("channel", channel);
@@ -139,7 +139,7 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 			tokenParams.put("mmrpCustomerPresent", "BillPayment");
 
 		}
-		
+				
 		// ---
 
 		return tokenParams;
@@ -157,6 +157,21 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 		
 		actionParams.put("specinCreditCardToken", inputParams.get("specinCreditCardToken"));
 		actionParams.put("specinCreditCardCVV", inputParams.get("specinCreditCardCVV"));
+		
+		// ---
+		
+		final String specinCCWalletId = inputParams.get("specinCCWalletId");
+		final String specinCCWalletToken = inputParams.get("specinCCWalletToken");
+		
+		if (specinCCWalletId != null) { // this null check is impotant because of AbstractApvTokenCall subclass
+			actionParams.put("specinCCWalletId", specinCCWalletId);
+		}
+		
+		if (specinCCWalletToken != null) { // this null check is impotant because of AbstractApvTokenCall subclass
+			actionParams.put("specinCCWalletToken", specinCCWalletToken);
+		}
+		
+		// ---
 
 		return actionParams;
 	}

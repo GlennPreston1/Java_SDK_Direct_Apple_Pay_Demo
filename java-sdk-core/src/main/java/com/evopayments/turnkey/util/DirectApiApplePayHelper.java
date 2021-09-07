@@ -71,8 +71,7 @@ public class DirectApiApplePayHelper {
 
 			final KeyStore clientStore = KeyStore.getInstance("JKS");
 			
-			
-			try (InputStream is = DirectApiApplePayHelper.class.getResource("apple_pay_merchant_identity.jks").openStream()) {
+			try (InputStream is = DirectApiApplePayHelper.class.getResource("/apple_pay_merchant_identity.jks").openStream()) {
 				clientStore.load(is, keyStorePassword.toCharArray());
 			}
 

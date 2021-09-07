@@ -86,12 +86,14 @@ public class TurnkeyJavaSdkHelper2 {
 		Map<String, String> purchaseInputParams = new HashMap<>();
 		purchaseInputParams.put("amount", orderEntity.getAmount().toString());
 		// purchaseInputParams.put("currency", orderEntity.getCurrency().toUpperCase()); // in this example it is fixed, see currency setting in turnkey-sdk-test.properties
-		purchaseInputParams.put("paymentSolutionId", "500"); // 500 = credit/debit cards, Apple Pay counts as a subtype (see below)
+		purchaseInputParams.put("paymentSolutionId", "504"); // 500 = credit/debit cards, Apple Pay counts as a subtype (see below)
 		purchaseInputParams.put("merchantTxId", orderEntity.getId());
 		purchaseInputParams.put("customerId", customerId);
 
 		purchaseInputParams.put("specinCCWalletId", "504"); // 504 = Apple Pay
 		purchaseInputParams.put("specinCCWalletToken", orderSubmitRequestDto.getApplePayPayload()); 
+		
+		// params.specinTransactionFromHppJavaScript = true;
 		
 		// ---
 		

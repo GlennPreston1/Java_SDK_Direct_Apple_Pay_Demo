@@ -6,6 +6,8 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -19,11 +21,37 @@
 	
 <script	src="/assets/helper.js"></script>
 
+<style>
+
+.apple-pay-button {
+    -webkit-appearance: -apple-pay-button;
+    -apple-pay-button-type: buy;
+    display: inline-block;
+    width: 200px;
+    min-height: 30px;
+    border: 1px solid black;
+    background-image: -webkit-named-image(apple-pay-logo-black);
+    background-size: 100% calc(60% + 2px);
+    background-repeat: no-repeat;
+    background-color: white;
+    background-position: 50% 50%;
+    border-radius: 5px;
+    padding: 0px;
+    margin: 5px auto;
+    transition: background-color .15s;
+}
+
+.apple-pay-button:active {
+    background-color: rgb(152, 152, 152);
+}
+
+</style>
+
 <script>
 
 	function showApplePay() {
 		
-		const t = '<div class="apple-pay-button apple-pay-button-black" onclick="applePayButtonClicked()"></div>';
+		const t = '<div class="apple-pay-button" onclick="applePayButtonClicked()"></div>';
 	
 		var workInThisBrowser = false;
 		
@@ -33,77 +61,84 @@
 	        }
 	    }
 	        
-	    var divBox = document.getElementsByClassName('apple-pay-div')[0];
+	    var divBox = document.getElementById('apple-pay-div');
 	    
 	    if (workInThisBrowser) {
 	    	
-	    	divBox.firstChild.innerHTML = t;
-	    	
+	    	divBox.innerHTML = t;
+	    		    	
 	    } else {
-	    	
-	    	divBox.style.display = 'none';
+	    	divBox.innerHTML = t;
+	    	//divBox.style.display = 'none';
 	    		    	
 	    }
 	        
 	}
 	
 	function applePayButtonClicked() {
+		
+		const apPaymentRequest = {
+			"countryCode": "GB", 
+			"currencyCode": "EUR",
+			"supportedNetworks": [ "masterCard", "visa" ], // TODO: ...
+			"merchantCapabilities": [ "supports3DS" ],
+			"total": {
+				"amount": "30",
+				"label": "Teddy bear"
+			}
+		};
 			        
-	    apSession = new ApplePaySession(4, apPaymentRequest);
-	    
-	    apSession.onvalidatemerchant = (event) => {  
-	    				
-			const postResponse = await fetch('/applePaySessionInit', {
+		window.apSession = new ApplePaySession(4, apPaymentRequest);
+		
+		window.apSession.onvalidatemerchant = (event) => {
+	    		    				
+			fetch('/applePaySessionInit', {
 				method: 'POST', 
-				headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
-				body: { 'appleValidationUrlFromJs' : event.validationURL }
+				headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie() },
+				body: JSON.stringify({ 'appleValidationUrlFromJs' : event.validationURL })
+			}).then(function(postResponse) {
+				return postResponse.json();
+			}).then(function(postResponseBodyData) {
+				window.apSession.completeMerchantValidation(postResponseBodyData.responseFromApple);
 			});
 			
-			const postResponseBodyData = await postResponse.json();
-			
-			window.apSession.completeMerchantValidation(postResponseBodyData.responseFromApple)
-	    	
 	    };
 	    
-	    apSession.onpaymentauthorized  = (event) => {
+	    window.apSession.onpaymentauthorized  = (event) => {
 	    	
 			const postRequestBodyData = {};
 			postRequestBodyData.product = 'Teddy bear';
 			postRequestBodyData.mode = 'advanced-applepay';
-			postRequestBodyData.mode = JSON.stringify(event.payment);
+			postRequestBodyData.applePayPayload = JSON.stringify(event.payment);
 			
-			const postResponse = await fetch('/orders', {
+			fetch('/orders', {
 				method: 'POST', 
-				headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie()},
+				headers: { 'Content-Type': 'application/json', 'X-XSRF-TOKEN': getXSRFCookie() },
 				body: JSON.stringify(postRequestBodyData)
+			}).then(function(postResponse) {
+				return postResponse.json();
+			}).then(function(postResponseBodyData) {
+				
+				if (postResponseBodyData.url) {
+					setTimeout(function(){ window.location.href = postResponseBodyData.url; }, 3000);
+				} else {
+					alert("error");
+				}
+				
 			});
-			
-			const postResponseBodyData = await postResponse.json();
-			
-			if (postResponseBodyData.url) {
-				setTimeout(function(){ window.location.href = postResponseBodyData.url; }, 3000);
-			} else {
-				alert("error");
-			}
 	    	
 	    }
 	    
 	    // TODO: apSession listeners: onpayment... not authorized... timeout... add these other listeners (show some error message to the customer)
 	    
-	    apSession.begin();
+	    window.apSession.begin();
 	   
-	}
-
-	async function buy() {
-		
-		console.log("buy");
-						
 	}
 
 </script>
 
 </head>
-<body>
+<body onload="showApplePay()">
 
 	<div style="width: 100%; max-width: 600px; min-width: 250px; margin-left: auto; margin-right: auto; margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
 
@@ -112,8 +147,8 @@
 			<div class="card-body">
 				<h5 class="card-title">Teddy bear, 30 EUR</h5>
 				<p class="card-text">Suitable for children aged 2-10, plush material</p>
-				<a onclick="buy()" class="btn btn-primary">Buy</a>
 			</div>
+			<div id="apple-pay-div"></div>
 		</div>
 
 	</div>

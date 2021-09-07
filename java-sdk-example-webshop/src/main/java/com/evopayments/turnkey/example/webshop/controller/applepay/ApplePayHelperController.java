@@ -1,8 +1,10 @@
 package com.evopayments.turnkey.example.webshop.controller.applepay;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.evopayments.turnkey.example.webshop.data.applepay.ApplePayCreateJsSessionRequestDto;
 import com.evopayments.turnkey.example.webshop.data.applepay.ApplePayCreateJsSessionResponseDto;
 import com.evopayments.turnkey.util.DirectApiApplePayHelper;
 
@@ -13,14 +15,14 @@ import com.evopayments.turnkey.util.DirectApiApplePayHelper;
 public class ApplePayHelperController {
 
 	@PostMapping("/applePaySessionInit")
-	public ApplePayCreateJsSessionResponseDto createApplePayJsSession(String appleValidationUrlFromJs) {
+	public ApplePayCreateJsSessionResponseDto createApplePayJsSession(@RequestBody ApplePayCreateJsSessionRequestDto requestDto) {
 
-		String responseFromApple = DirectApiApplePayHelper.createApplePayJsSession(appleValidationUrlFromJs);
+		String responseFromApple = DirectApiApplePayHelper.createApplePayJsSession(requestDto.getAppleValidationUrlFromJs());
 
-		ApplePayCreateJsSessionResponseDto dto = new ApplePayCreateJsSessionResponseDto();
-		dto.setResponseFromApple(responseFromApple);
+		ApplePayCreateJsSessionResponseDto responseDto = new ApplePayCreateJsSessionResponseDto();
+		responseDto.setResponseFromApple(responseFromApple);
 
-		return dto;
+		return responseDto;
 
 	}
 
