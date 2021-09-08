@@ -34,7 +34,7 @@ public class TurnkeyJavaSdkHelper1 {
 	/**
 	 * @param orderEntity
 	 * @return
-	 * 		token to init the Javascript lib. 
+	 * 		token to init the JavaScript lib. 
 	 */
 	public static String startIframeModeCashierPayment(OrderEntity orderEntity) {
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);

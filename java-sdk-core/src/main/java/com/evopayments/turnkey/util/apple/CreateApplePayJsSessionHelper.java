@@ -131,7 +131,7 @@ public class CreateApplePayJsSessionHelper {
 
 	/**
 	 * By Apple referred as "Merchant Validation" step. 
-	 * Needed only in case of Javascript based Apple Pay.
+	 * Needed only in case of JavaScript based Apple Pay.
 	 * 
 	 * @return
 	 */

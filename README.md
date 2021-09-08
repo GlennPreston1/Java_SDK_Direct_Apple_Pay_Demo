@@ -80,7 +80,7 @@ Please see the subclasses of AbstractApvTokenCall (for example: PurchaseTokenCal
 These have special execute methods: executeAndBuildCashierHppUrl(), executeAndBuildCashierStandaloneUrl().
 These do everything needed for a Cashier UI URL.
 The returned URL string can be used as a redirection target (for the customer).
-Iframe mode is slightly different, in iframe cases there is a Javascript libarary, the received token has to be used to initialize that.
+Iframe mode is slightly different, in iframe cases there is a JavaScript library, the received token has to be used to initialize that.
 
 For examples please see java-sdk-example-webshop.
 
@@ -163,3 +163,31 @@ Custom UI for capture, void, refund etc. operations is rarely needed.
 You can make your webapp publicly accessible (reachable) during development with this tool: https://ngrok.com/
 
 It is useful to test our server to server notifications (see com.evopayments.turnkey.example.webshop.controller.TransactionResultCallbackController), Apple Pay etc.
+
+## Apple Pay through Turnkey API-Gateway (Direct API type usage)
+
+This type of integration/API usage is only for special advanced cases. 
+For simpler cases HPP or standalone mode Cashier UI is enough.
+
+Please see:
+
+- java-sdk-core/src/main/java/com/evopayments/turnkey/util/apple/CreateApplePayJsSessionHelper.java
+- java-sdk-core/src/main/java/com/evopayments/turnkey/apiclient/AbstractApvCall.java (getActionParams() method)
+- java-sdk-example-webshop/src/main/resources/static/advanced/shop-applepay.html
+- java-sdk-example-webshop/src/main/java/com/evopayments/turnkey/example/webshop/controller/applepay/ApplePayHelperController.java
+- java-sdk-example-webshop/src/main/java/com/evopayments/turnkey/example/webshop/controller/OrderSubmitController.java
+- java-sdk-example-webshop/src/main/java/com/evopayments/turnkey/example/webshop/util/TurnkeyJavaSdkHelper2.java (executeAdvancedPaymentApplePay() method)
+
+Plus:
+ 
+- turnkey-sdk-test.properties
+- apple_pay_merchant_identity.jks and apple_pay_merchant_identity_readme.txt
+- .well-known/apple-developer-merchantid-domain-association.txt and .well-known/apple-developer-merchantid-domain-association-readme.txt (note on Linux / on MacOS / in some Java IDEs folders starting with . are hidden)
+
+Note:
+
+The demonstration shows JavaScript based Apple Pay.
+If Apple Pay is used in a iOS / iPadOS app the createApplePayJsSession() part is not needed.
+You can get the payload (encrypted/tokenized from Apple) in the app's code.
+You have to transfer it to your server (securely) and feed it into the PURCAHSE/AUTH/VERIFY request.
+See TurnkeyJavaSdkHelper2.java in the demo/example webshop.
