@@ -49,11 +49,8 @@ public class TurnkeyJavaSdkHelper1 {
 	public static String startStandaloneModeCashierPayment(OrderEntity orderEntity) {
 		
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);
-		
-		Map<String, String> redirectParamsOverride = new HashMap<>();
-		redirectParamsOverride.put("styleSuffix", "-evopl");
-		
-		return purchaseTokenCall.executeAndBuildCashierStandaloneUrl(redirectParamsOverride);
+				
+		return purchaseTokenCall.executeAndBuildCashierStandaloneUrl(null);
 		
 	}
 
@@ -67,7 +64,7 @@ public class TurnkeyJavaSdkHelper1 {
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);
 		
 		Map<String, String> redirectParamsOverride = new HashMap<>();
-		redirectParamsOverride.put("styleSuffix", "-evopl");
+		// redirectParamsOverride.put("styleSuffix", "-evouk"); // it is possible to override the HTTP parameters of the HPP page
 		
 		return purchaseTokenCall.executeAndBuildCashierHppUrl(redirectParamsOverride);
 		

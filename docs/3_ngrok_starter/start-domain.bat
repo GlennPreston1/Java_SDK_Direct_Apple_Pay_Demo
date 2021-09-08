@@ -1,0 +1,1 @@
+ngrok http -subdomain=yourdomain -region=eu 8080

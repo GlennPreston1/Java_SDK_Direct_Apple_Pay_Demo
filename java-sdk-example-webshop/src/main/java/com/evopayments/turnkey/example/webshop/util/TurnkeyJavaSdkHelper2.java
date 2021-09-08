@@ -65,6 +65,7 @@ public class TurnkeyJavaSdkHelper2 {
 
 		String redirectionUrl = joPurchaseCallResponse.getString("redirectionUrl");
 		if (StringUtils.hasLength(redirectionUrl)) {
+			// redirection to 3ds page etc.
 			return redirectionUrl;
 		}
 
@@ -92,9 +93,7 @@ public class TurnkeyJavaSdkHelper2 {
 
 		purchaseInputParams.put("specinCCWalletId", "504"); // 504 = Apple Pay
 		purchaseInputParams.put("specinCCWalletToken", orderSubmitRequestDto.getApplePayPayload()); 
-		
-		// params.specinTransactionFromHppJavaScript = true;
-		
+				
 		// ---
 		
 		// note: instead of PurchaseCall it is also possible to use:
@@ -103,8 +102,9 @@ public class TurnkeyJavaSdkHelper2 {
 
 		JSONObject joPurchaseCallResponse = new PurchaseCall(testConfig, purchaseInputParams).execute();
 
-		String redirectionUrl = joPurchaseCallResponse.getString("redirectionUrl");
+		String redirectionUrl = joPurchaseCallResponse.getString("redirectionUrl"); 
 		if (StringUtils.hasLength(redirectionUrl)) {
+			// in case of Apple Pay there is no 3ds page, so this should never happen (there is no redirectionUrl)
 			return redirectionUrl;
 		}
 
