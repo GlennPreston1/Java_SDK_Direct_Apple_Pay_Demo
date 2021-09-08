@@ -30,7 +30,7 @@ import com.evopayments.turnkey.config.ApplicationConfig;
 import com.evopayments.turnkey.util.crypto.TextEncryptionUtil;
 
 /**
- * Intelligent Payments Turnkey API calls 
+ * Intelligent Payments (EVO Payments) Turnkey API calls 
  * (abstract base class).
  *
  * @author erbalazs

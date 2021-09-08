@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.evopayments.turnkey.apiclient.code.SubActionType;
 import com.evopayments.turnkey.config.ApplicationConfig;
+import com.evopayments.turnkey.util.MapUtil;
 
 /**
  * Abstract base class for Auth/Purchase/Verify.
@@ -98,11 +99,8 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 		putCountry(inputParams, tokenParams, this.config);
 
 		tokenParams.put("merchantTxId", inputParams.get("merchantTxId"));
-
-		String paymentSolutionId = inputParams.get("paymentSolutionId");
-		if (paymentSolutionId != null) { // this null check is impotant because of AbstractApvTokenCall subclass
-			tokenParams.put("paymentSolutionId", paymentSolutionId);
-		}
+		
+		MapUtil.putIfNotNull(tokenParams, "paymentSolutionId", inputParams.get("paymentSolutionId"));
 		
 		// ---
 
@@ -155,24 +153,12 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 		actionParams.put("token", token);
 		actionParams.put("customerId", inputParams.get("customerId"));
 		
-		actionParams.put("specinCreditCardToken", inputParams.get("specinCreditCardToken"));
-		actionParams.put("specinCreditCardCVV", inputParams.get("specinCreditCardCVV"));
+		MapUtil.putIfNotNull(actionParams, "specinCreditCardToken", inputParams.get("specinCreditCardToken")); // needed for regular credit/debit card transactions (see TOKENIZE action too)
+		MapUtil.putIfNotNull(actionParams, "specinCreditCardCVV", inputParams.get("specinCreditCardCVV")); // needed for regular credit/debit card transactions
 		
-		// ---
+		MapUtil.putIfNotNull(actionParams, "specinCCWalletId", inputParams.get("specinCCWalletId")); // needed for Apple Pay / Google Pay
+		MapUtil.putIfNotNull(actionParams, "specinCCWalletToken", inputParams.get("specinCCWalletToken")); // needed for Apple Pay / Google Pay
 		
-		final String specinCCWalletId = inputParams.get("specinCCWalletId");
-		final String specinCCWalletToken = inputParams.get("specinCCWalletToken");
-		
-		if (specinCCWalletId != null) { // this null check is impotant because of AbstractApvTokenCall subclass
-			actionParams.put("specinCCWalletId", specinCCWalletId);
-		}
-		
-		if (specinCCWalletToken != null) { // this null check is impotant because of AbstractApvTokenCall subclass
-			actionParams.put("specinCCWalletToken", specinCCWalletToken);
-		}
-		
-		// ---
-
 		return actionParams;
 	}
 
