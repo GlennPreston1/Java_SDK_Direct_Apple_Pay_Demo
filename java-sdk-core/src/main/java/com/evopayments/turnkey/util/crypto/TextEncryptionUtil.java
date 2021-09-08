@@ -75,7 +75,7 @@ public class TextEncryptionUtil {
 	public static String encryptBasedOnSystemPropPass(String cText) {
 		
 		final String propPass = System.getenv(ENCPROP_ENV_VAR);
-		return encrypt(cText, propPass);
+		return "ENC-" + encrypt(cText, propPass);
 		
 	}
 
@@ -144,6 +144,18 @@ public class TextEncryptionUtil {
 		
 		final String propPass = System.getenv(ENCPROP_ENV_VAR);
 		return decrypt(cText, propPass);
+		
+	}
+	
+	public static String decryptBasedOnSystemPropPassIfEncrypted(String text) {
+	
+		if (!text.startsWith("ENC-")) {
+			return text;
+		}
+
+		text = text.substring(4);
+		text = TextEncryptionUtil.decryptBasedOnSystemPropPass(text);
+		return text;
 		
 	}
 

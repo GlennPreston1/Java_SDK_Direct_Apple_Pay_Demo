@@ -41,7 +41,7 @@
 		
 		// ---
 		
-		document.getElementById("card").innerHTML = "<br><br>Please wait...<br><br>";
+		document.getElementById("card-bottom").innerHTML = "<br><br>Please wait...<br><br>";
 		
 		const postRequestBodyData = {};
 		postRequestBodyData.product = 'Toy cars';
@@ -59,21 +59,21 @@
 		
 		if (postResponseBodyData.tokenToInitJsLib) {
 			
-			document.getElementById("card").style.height="600px";
+			document.getElementById("card-bottom").style.height="600px";
 			
 			cashier.show({
-				containerId : "card",
+				containerId : "card-bottom",
 				merchantId : "[[${merchantId}]]", // Thymeleaf, see com.evopayments.example.webshop.controller.BasicIframeShopPageController
 				token : postResponseBodyData.tokenToInitJsLib
 				/*,
-				successCallback : cashierHandleResult,
+				successCallback : cashierHandleResult, // optional, default is redirect to merchantLandingPageUrl
 				failureCallback : cashierHandleResult,
 				cancelCallback : cashierHandleResult
 				*/
 			});
 			
 		} else {
-			document.getElementById("card").innerHTML = "<br><br>Error<br><br>";
+			document.getElementById("card-bottom").innerHTML = "<br><br>Error<br><br>";
 			alert("error");
 		}
 		
@@ -86,12 +86,12 @@
 
 	<div style="width: 100%; max-width: 600px; min-width: 250px; margin-left: auto; margin-right: auto; margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
 
-		<div class="card" style="width: 100%;" id="card">
-			<img src="/assets/cars-2060420_1280.jpg" style="width: 100%" class="card-img-top" alt="example product picture">
+		<div class="card" style="width: 100%;">
+			<img src="/assets/cars-2060420_1280.jpg" style="width: 100%" class="-img-top" alt="example product picture">
 			<div class="card-body">
 				<h5 class="card-title">Toy cars, 15 EUR</h5>
 				<p class="card-text">Good for children aged 5-10, metal+plastic</p>
-				<a onclick="buy()" class="btn btn-primary">Buy</a>
+				<div id="card-bottom"><a onclick="buy()" class="btn btn-primary">Buy</a></div>
 			</div>
 		</div>
 

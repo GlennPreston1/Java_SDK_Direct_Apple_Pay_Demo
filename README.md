@@ -134,13 +134,15 @@ java -Devopayments-turnkey-sdk-config=test -jar turnkey-java-sdk-cmd.jar -action
 ## Password encryption
 
 Optionally it is possible to encrypt the password parameter. See com.evopayments.turnkey.util.crypto.TextEncryptionUtil class.
-Ultimetly to use the API the SDK code needs the plain text password, so it has to be decrypted before API requests are made.
+Ultimately to use the API the SDK code needs the plain text password, so it has to be decrypted before API requests are made.
 However the following optional technique makes it somewhat harder for an attacker to find out the plain text password.
 Steps to use the encryption:
 
 1. Create (generate etc.) an encryption password (this is not the API password!).
 2. Set it as an environment variable on the dev/test and/or prod system where the SDK code will be used. The name has to be TURNKEY-JAVA-SDK-ENCPROP
-3. Use com.evopayments.turnkey.util.crypto.TextEncryptionUtil.encryptBasedOnSystemPropPass(String) to encrypt your API password (just once, delete the method call after you have the encrypted  password)
+3. Use com.evopayments.turnkey.util.crypto.TextEncryptionUtil.encryptBasedOnSystemPropPass(String) to encrypt your API etc. password. 
+The java-sdk-command-line-client can be used for this encryption, with these cmd line parameters (XYZ is the password you want to encrypt, TURNKEY-JAVA-SDK-ENCPROP has to be set before):
+-action encryptBasedOnSystemPropPass -toBeEncrypted XYZ
 4. Add the ENC- prefix to the encrypted password
 5. You can use this encrypted form (looks like this: ENC-e0Kwzt2m4fxdA37ovsROpgdkaQ1BRsX/r0/RP9BSRCnByx8cwMq9NOFo5I7I6U+xzg==) in place of the API password (in the properties files and/or in the inputParam map). Note the SDK code will only function properly on systems, where the TURNKEY-JAVA-SDK-PROPPASS is set correctly!
 
@@ -155,3 +157,9 @@ For details see: com.evopayments.example.webshop.config.CustomWebSecurityConfigu
 
 Note that Turnkey has its own backoffice (Turnkey Backoffice UI), which is suitable for most merchants.
 Custom UI for capture, void, refund etc. operations is rarely needed.
+
+## Testing the callback (server to server notification), Apple Pay etc.
+
+You can make your webapp publicly accessible (reachable) during development with this tool: https://ngrok.com/
+
+It is useful to test our server to server notifications (see com.evopayments.turnkey.example.webshop.controller.TransactionResultCallbackController), Apple Pay etc.

@@ -55,6 +55,9 @@ public abstract class AbstractApiCall {
 	public static final String COUNTRY_PROP_KEY = "application.country";
 	public static final String CURRENCY_PROP_KEY = "application.currency";
 	
+	public static final String CASHIER_LANGUAGE = "application.cashierLanguage";
+	public static final String CASHIER_STYLE_SUFFIX = "application.cashierStyleSuffix";
+		
 	/**
 	 * @param inputParams
 	 * @param requiredParams
@@ -132,7 +135,7 @@ public abstract class AbstractApiCall {
 		if (merchantId == null || merchantId.isEmpty()) {
 
 			/*
-			 * Option - 1: ApplicationConfig instance for storing "merchantId" and "password"
+			 * Option - 1: ApplicationConfig instance for storing "merchantId"
 			 */
 
 			actionParams.put("merchantId", config.getProperty(MERCHANT_ID_PROP_KEY));
@@ -140,7 +143,7 @@ public abstract class AbstractApiCall {
 		} else {
 
 			/*
-			 * Option - 2: supplying "merchantId" and "password" in inputParams Map
+			 * Option - 2: supplying "merchantId" in inputParams Map
 			 */
 
 			actionParams.put("merchantId", merchantId);
@@ -149,7 +152,7 @@ public abstract class AbstractApiCall {
 	}
 	
 	/**
-	 * This method extracts "country" from inputParams and adds it to tokenParams or actionParams . 
+	 * This method extracts "country" from inputParams and adds it to tokenParams or actionParams. 
 	 * If there is no parameter named "country" in inputParams then gets it from the {@link ApplicationConfig} object.
 	 * 
 	 * @param inputParams
@@ -166,7 +169,7 @@ public abstract class AbstractApiCall {
 		if (country == null || country.isEmpty()) {
 
 			/*
-			 * Option - 1: ApplicationConfig instance for storing "merchantId" and "password"
+			 * Option - 1: ApplicationConfig instance for storing "country"
 			 */
 
 			tokenOrActionParams.put("country", config.getProperty(COUNTRY_PROP_KEY));
@@ -174,7 +177,7 @@ public abstract class AbstractApiCall {
 		} else {
 
 			/*
-			 * Option - 2: supplying "merchantId" and "password" in inputParams Map
+			 * Option - 2: supplying "country" in inputParams Map
 			 */
 
 			tokenOrActionParams.put("country", country);
@@ -183,7 +186,7 @@ public abstract class AbstractApiCall {
 	}
 
 	/**
-	 * This method extracts "currency" from inputParams and adds it to tokenParams or actionParams . 
+	 * This method extracts "currency" from inputParams and adds it to tokenParams or actionParams. 
 	 * If there is no parameter named "country" in inputParams then gets it from the {@link ApplicationConfig} object.
 	 * 
 	 * @param inputParams
@@ -200,7 +203,7 @@ public abstract class AbstractApiCall {
 		if (country == null || country.isEmpty()) {
 
 			/*
-			 * Option - 1: ApplicationConfig instance for storing "merchantId" and "password"
+			 * Option - 1: ApplicationConfig instance for storing "currency"
 			 */
 
 			tokenOrActionParams.put("currency", config.getProperty(CURRENCY_PROP_KEY));
@@ -208,7 +211,7 @@ public abstract class AbstractApiCall {
 		} else {
 
 			/*
-			 * Option - 2: supplying "merchantId" and "password" in inputParams Map
+			 * Option - 2: supplying "currency" in inputParams Map
 			 */
 
 			tokenOrActionParams.put("currency", country);
@@ -329,19 +332,7 @@ public abstract class AbstractApiCall {
 		}
 
 	}
-	
-	private static void decryptPasswordBasedOnSystemPropPass(final Map<String, String> tokenParams) {
 		
-		String p = tokenParams.get("password");
-		
-		if (p.startsWith("ENC-")) {
-			p = p.substring(4);
-			p = TextEncryptionUtil.decryptBasedOnSystemPropPass(p);
-			tokenParams.put("password", p);
-		}
-		
-	}
-	
 	/**
 	 * Executes the call 
 	 * (builds and executes the token request, handles its response, 
@@ -354,8 +345,8 @@ public abstract class AbstractApiCall {
 		try {
 			
 			final Map<String, String> tokenParams = this.getTokenParams(new HashMap<>(this.inputParams));
-			
-			decryptPasswordBasedOnSystemPropPass(tokenParams);
+						
+			tokenParams.put("password", TextEncryptionUtil.decryptBasedOnSystemPropPassIfEncrypted(tokenParams.get("password")));
 			
 			final JSONObject tokenResponse = postToApi(this.config.getProperty(TOKEN_URL_PROP_KEY), tokenParams);
 
@@ -418,16 +409,17 @@ public abstract class AbstractApiCall {
 	}
 
 	/**
-	 * Extracts the params needed for making the action request.
+	 * Extracts the params needed for making the action request. 
+	 * In case you have custom needs (need to use rare API parameters, extend the class, override this method).
 	 *
 	 * @param inputParams 
 	 * @param token 
 	 * 		the previously received token for the operation
 	 * 
 	 * @return 
-	 * 		keys/values for the action request, null if no 
+	 * 		keys/values for the action request, return null if no 
 	 * 		action request needed (meaning only the token is needed, 
-	 * 		there is no second call)
+	 * 		there is no second request)
 	 */
 	protected abstract Map<String, String> getActionParams(Map<String, String> inputParams,
 			String token);
@@ -435,7 +427,8 @@ public abstract class AbstractApiCall {
 	protected abstract ActionType getActionType();
 
 	/**
-	 * Extracts the params needed for making the authentication token request.
+	 * Extracts the params needed for making the authentication token request. 
+	 * In case you have custom needs (need to use rare API parameters, extend the class, override this method).
 	 * 
 	 * @param inputParams
 	 * @return keys/values for the token request

@@ -109,9 +109,9 @@ public abstract class AbstractApvCall extends AbstractApiCall {
 
 		// ---
 		
-		tokenParams.put("mmrpContractNumber", inputParams.get("mmrpContractNumber"));
-		tokenParams.put("mmrpOriginalMerchantTransactionId", inputParams.get("mmrpOriginalMerchantTransactionId"));
-
+		MapUtil.putIfNotNull(tokenParams, "mmrpContractNumber", inputParams.get("mmrpContractNumber"));
+		MapUtil.putIfNotNull(tokenParams, "mmrpOriginalMerchantTransactionId", inputParams.get("mmrpOriginalMerchantTransactionId"));
+		
 		if (SubActionType.SUB_ACTION_COF_FIRST.equals(this.subActionType)) {
 
 			tokenParams.put("cardOnFileType", "First");

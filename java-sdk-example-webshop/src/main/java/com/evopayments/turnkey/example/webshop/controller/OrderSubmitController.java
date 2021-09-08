@@ -46,7 +46,7 @@ public class OrderSubmitController {
 
 		switch (orderSubmitRequestDto.getProduct()) {
 		case "Toy cars":
-			orderEntity.setAmount(new BigDecimal(18));
+			orderEntity.setAmount(new BigDecimal(15));
 			break;
 		case "Table tennis set":
 			orderEntity.setAmount(new BigDecimal(20));

@@ -1,5 +1,7 @@
-package com.evopayments.turnkey.util;
+package com.evopayments.turnkey.util.apple;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -7,7 +9,9 @@ import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -20,6 +24,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
+import com.evopayments.turnkey.config.ApplicationConfig;
+import com.evopayments.turnkey.util.crypto.TextEncryptionUtil;
 
 /**
  * [relevant for PCI compliant merchants]
@@ -27,7 +33,16 @@ import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
  * Relevant for advanced/custom Apple Pay (Direct API) 
  * (for simpler cases instantiating a standalone/HPP mode cashier-ui is enough) 
  */
-public class DirectApiApplePayHelper {
+public class CreateApplePayJsSessionHelper {
+	
+	public static final String APPLE_PAY_MERCHANT_IDENTITY_JKS_KEYSTORE_CLASSPATH = "application.applepay.helper.merchantIdentityJksKeystoreClasspath"; // "/apple_pay_merchant_identity.jks"
+	public static final String APPLE_PAY_MERCHANT_IDENTIFIER = "application.applepay.helper.merchantIdentifier"; // "merchant.com.ipg.applepay.test.app"
+	public static final String APPLE_PAY_INITIATIVE_CONTEXT = "application.applepay.helper.initiativeContext"; // "ebtest.eu.ngrok.io"
+	public static final String APPLE_PAY_DOMAIN_NAME = "application.applepay.helper.domainName"; // "ebtest.eu.ngrok.io"
+	public static final String APPLE_PAY_DISPLAY_NAME = "application.applepay.helper.displayName"; // "Example webshop"
+	public static final String APPLE_PAY_KEYSTORE_PASSWORD = "application.applepay.helper.keyStorePassword"; // ab"
+	public static final String APPLE_PAY_KEY_PASSWORD = "application.applepay.helper.keyPassword"; // "ab"
+	public static final String APPLE_PAY_IS_SANDBOX_MODE = "application.applepay.helper.isSandboxMode"; // true
 
 	private static final Set<String> validationUrlWhiteList = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
 			"https://apple-pay-gateway.apple.com",
@@ -55,23 +70,47 @@ public class DirectApiApplePayHelper {
 	private static final Set<String> validationSandboxUrlWhiteList = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
 			"https://apple-pay-gateway-cert.apple.com")));
 
-	private DirectApiApplePayHelper() {
-		// static util methods only
+	private byte[] merchantIdentityJksKeystore;
+	private final Map<String, String> requestBodyMap;
+	
+	private final String keyStorePassword;
+	private final String keyPassword;
+	
+	private final boolean isSandboxMode;
+		
+	public CreateApplePayJsSessionHelper(final ApplicationConfig config) {
+		
+		try (InputStream is = CreateApplePayJsSessionHelper.class.getResource(config.getProperty(APPLE_PAY_MERCHANT_IDENTITY_JKS_KEYSTORE_CLASSPATH))
+				.openStream()) {
+			merchantIdentityJksKeystore = IOUtils.toByteArray(is);
+		} catch (final IOException e) {
+			new RuntimeException("ApplePayHelperController init failed!");
+		}
+		
+		requestBodyMap = new HashMap<>();
+		requestBodyMap.put("merchantIdentifier", config.getProperty(APPLE_PAY_MERCHANT_IDENTIFIER));
+		requestBodyMap.put("initiativeContext", config.getProperty(APPLE_PAY_INITIATIVE_CONTEXT));
+		requestBodyMap.put("domainName", config.getProperty(APPLE_PAY_DOMAIN_NAME));
+		requestBodyMap.put("initiative", "web");
+		requestBodyMap.put("displayName", config.getProperty(APPLE_PAY_DISPLAY_NAME));
+
+		keyStorePassword = TextEncryptionUtil.decryptBasedOnSystemPropPassIfEncrypted(config.getProperty(APPLE_PAY_KEYSTORE_PASSWORD));
+		keyPassword = TextEncryptionUtil.decryptBasedOnSystemPropPassIfEncrypted(config.getProperty(APPLE_PAY_KEY_PASSWORD));
+		isSandboxMode = Boolean.parseBoolean(config.getProperty(APPLE_PAY_IS_SANDBOX_MODE));
+		
 	}
 
 	@SuppressWarnings("resource")
-	private static SSLContext buildSslContextForAppleApiCall() {
+	private SSLContext buildSslContextForAppleApiCall() {
 
 		try {
 
-			// TODO: currently used merchant.com.ipg.applepay.test.app.jks (renamed file)
+			final KeyStore clientStore = KeyStore.getInstance("JKS"); 
 			
-			final String keyStorePassword = "ab"; // TODO: ...
-			final String keyPassword = "ab"; // TODO: ...
-
-			final KeyStore clientStore = KeyStore.getInstance("JKS");
+			// KeyStore object is not thread-safe, see https://community.oracle.com/tech/developers/discussion/2078874/is-keystore-thread-safe
+			// so we just store merchantIdentityJksKeystore as a byte[]
 			
-			try (InputStream is = DirectApiApplePayHelper.class.getResource("/apple_pay_merchant_identity.jks").openStream()) {
+			try (InputStream is = new ByteArrayInputStream(merchantIdentityJksKeystore)) {
 				clientStore.load(is, keyStorePassword.toCharArray());
 			}
 
@@ -80,23 +119,23 @@ public class DirectApiApplePayHelper {
 			final KeyManager[] kms = kmf.getKeyManagers();
 
 			SSLContext sslContext = null;
-			sslContext = SSLContext.getInstance("TLS");
+			sslContext = SSLContext.getInstance("TLSv1.2"); // use TLSv1.3 when we can switch to newer Java version
 			sslContext.init(kms, null, new SecureRandom());
 
 			return sslContext;
 
 		} catch (final Exception e) {
-			throw new TurnkeyInternalException("apple_pay_merchant_identity.jks load failed!");
+			throw new TurnkeyInternalException("buildSslContextForAppleApiCall (merchantIdentityJksKeystore load) failed!");
 		}
 	}
 
 	/**
-	 * by Apple referred as "Merchant Validation" step
+	 * By Apple referred as "Merchant Validation" step. 
+	 * Needed only in case of Javascript based Apple Pay.
+	 * 
 	 * @return
 	 */
-	public static String createApplePayJsSession(final String appleValidationUrlFromJs) {
-
-		final boolean isDevMode = true; // TODO: 
+	public String createApplePayJsSession(final String appleValidationUrlFromJs) {
 
 		{
 
@@ -109,7 +148,7 @@ public class DirectApiApplePayHelper {
 			String s = StringUtils.removeEnd(appleValidationUrlFromJs, "/");
 			s = StringUtils.removeEnd(s, "/paymentservices/startSession");
 
-			if (!(validationUrlWhiteList.contains(s) || (isDevMode && validationSandboxUrlWhiteList.contains(s)))) {
+			if (!(validationUrlWhiteList.contains(s) || (isSandboxMode && validationSandboxUrlWhiteList.contains(s)))) {
 				// do not log the bad URL itself (might be unsafe for logging)
 				throw new TurnkeyInternalException("Invalid Apple Pay validationURL (session init)!");
 			}
@@ -120,7 +159,8 @@ public class DirectApiApplePayHelper {
 
 		final String validationURL;
 
-		if (isDevMode) { // forces sandbox
+		if (isSandboxMode) {
+			// in dev/sandbox cases the sandbox URL has to be used always 
 			validationURL = validationSandboxUrlWhiteList.iterator().next() + "/paymentservices/startSession";
 		} else {
 			validationURL = appleValidationUrlFromJs;
@@ -142,13 +182,7 @@ public class DirectApiApplePayHelper {
 
 			// https://developer.apple.com/documentation/apple_pay_on_the_web/apple_pay_js_api/requesting_an_apple_pay_payment_session
 
-			final JSONObject requestBodyJsonObject = new JSONObject();
-			requestBodyJsonObject.put("merchantIdentifier", "merchant.com.ipg.applepay.test.app");
-			requestBodyJsonObject.put("initiativeContext", "ebtest.eu.ngrok.io"); // TODO ...
-			requestBodyJsonObject.put("domainName", "ebtest.eu.ngrok.io"); // TODO ...
-			requestBodyJsonObject.put("initiative", "web");
-			requestBodyJsonObject.put("displayName", "IPG Test");
-
+			final JSONObject requestBodyJsonObject = new JSONObject(requestBodyMap);
 			final String requestBodyStr = requestBodyJsonObject.toString();
 
 			try (OutputStream os = urlConn.getOutputStream()) {

@@ -68,8 +68,8 @@
 	    	divBox.innerHTML = t;
 	    		    	
 	    } else {
-	    	divBox.innerHTML = t;
-	    	//divBox.style.display = 'none';
+	    	
+	    	divBox.style.display = 'none';
 	    		    	
 	    }
 	        
@@ -120,9 +120,15 @@
 			}).then(function(postResponseBodyData) {
 				
 				if (postResponseBodyData.url) {
-					setTimeout(function(){ window.location.href = postResponseBodyData.url; }, 3000);
+					
+					window.apSession.completePayment({"status": ApplePaySession.STATUS_SUCCESS});
+					document.getElementById('apple-pay-div').innerHTML = "SUCCESS<br><br>";
+										
 				} else {
-					alert("error");
+					
+					window.apSession.completePayment({"status": ApplePaySession.STATUS_FAILURE});
+					document.getElementById('apple-pay-div').innerHTML = "FAILURE<br><br>";
+					
 				}
 				
 			});

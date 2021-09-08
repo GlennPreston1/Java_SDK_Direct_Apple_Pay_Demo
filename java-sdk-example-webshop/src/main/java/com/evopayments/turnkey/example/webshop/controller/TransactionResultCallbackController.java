@@ -16,6 +16,9 @@ import com.evopayments.turnkey.example.webshop.repository.OrderEntityRepository;
 import com.evopayments.turnkey.example.webshop.util.TurnkeyJavaSdkHelper3;
 import com.evopayments.turnkey.util.HttpParamUtil;
 
+/**
+ * Receiver for server to server notifications (example)
+ */
 @RestController
 public class TransactionResultCallbackController {
 	
@@ -30,7 +33,7 @@ public class TransactionResultCallbackController {
 		
 		OrderEntity orderEntity = orderEntityRepository.findById(orderId).get();
 		
-		JSONObject joStatusCheck = TurnkeyJavaSdkHelper3.statusCheck(orderId);
+		JSONObject joStatusCheck = TurnkeyJavaSdkHelper3.statusCheck(orderId); // double check the status
 		String status = joStatusCheck.getString("status");
 		
 		orderEntity.setStatus(status);

@@ -24,13 +24,18 @@ import com.evopayments.turnkey.apiclient.exception.TurnkeyInternalException;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyTokenException;
 import com.evopayments.turnkey.apiclient.exception.TurnkeyValidationException;
 import com.evopayments.turnkey.config.ApplicationConfig;
+import com.evopayments.turnkey.util.crypto.TextEncryptionUtil;
 
 /**
- * Command line API client. Sample program arguments: <br><br>
+ * Command line API client. Sample program arguments: <br>
+ * <br>
  * 
- * -action TOKENIZE -number 5454545454545454 -nameOnCard "John Doe" -expiryMonth 12 -expiryYear 2022 -merchantId=1234 -password=1234 <br><br>
+ * -action TOKENIZE -number 5454545454545454 -nameOnCard "John Doe" -expiryMonth
+ * 12 -expiryYear 2022 -merchantId=1234 -password=1234 <br>
+ * <br>
  * 
- * Plus you need this as a VM argument (test mode is the default): <br><br>
+ * Plus you need this as a VM argument (test mode is the default): <br>
+ * <br>
  * -Devopayments-turnkey-sdk-config=production <br>
  * or <br>
  * -Devopayments-turnkey-sdk-config=test
@@ -100,11 +105,46 @@ public class Start {
 		// ---
 
 		ActionType action = null;
+		boolean encryptBasedOnSystemPropPassAction = false;
+		boolean decryptBasedOnSystemPropPassAction = false;
+
 		try {
-			action = ActionType.valueOfCode(paramMap.get("action"));
+
+			final String actionStr = paramMap.get("action");
+
+			if ("encryptBasedOnSystemPropPass".equalsIgnoreCase(actionStr)) {
+				encryptBasedOnSystemPropPassAction = true;
+			} else if ("decryptBasedOnSystemPropPassAction".equalsIgnoreCase(actionStr)) {
+				decryptBasedOnSystemPropPassAction = true;
+			} else {
+				action = ActionType.valueOfCode(actionStr);
+			}
+
 		} catch (final IllegalArgumentException ex) {
 			logger.error("illegal action parameter usage");
 			System.exit(1);
+		}
+
+		// ---
+
+		if (encryptBasedOnSystemPropPassAction) {
+			
+			// this is a special "action"
+			// only here in the command line tool
+			// note a real Turnkey API action
+
+			final String result = TextEncryptionUtil.encryptBasedOnSystemPropPass(paramMap.get("toBeEncrypted"));
+			System.out.println(result);
+
+			System.exit(0);
+
+		} else if (decryptBasedOnSystemPropPassAction) {
+			
+			final String result = TextEncryptionUtil.decryptBasedOnSystemPropPassIfEncrypted(paramMap.get("toBeDecrypted"));
+			System.out.println(result);
+
+			System.exit(0);
+			
 		}
 
 		// ---
@@ -166,7 +206,7 @@ public class Start {
 		} catch (final TurnkeyGenericException e) {
 			logger.error("general SDK error", e);
 			System.exit(6);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			logger.error("other error", Encode.forJava(e.getMessage()));
 			System.exit(7);
 		}

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -63,14 +64,14 @@ public class AbstractApvTokenCall extends AbstractApvCall {
 		// (only the token is needed in this case, there is no second call)
 		return null;
 	}
-
+	
 	/**
 	 * For HPP (hosted payment pages) mode Cashier UI (note: it has a similar role
 	 * to standalone mode, however the UI is somewhat different)
 	 * 
 	 * @return URL as a string, redirect the customer here
 	 */
-	public final String executeAndBuildCashierHppUrl() {
+	public final String executeAndBuildCashierHppUrl(Map<String, String> redirectParamsOverride) {
 
 		String tokenStr = execute().getString("token");
 		String cashierRootUrl = config.getProperty(CASHIER_ROOT_URL_PROP_KEY);
@@ -86,14 +87,14 @@ public class AbstractApvTokenCall extends AbstractApvCall {
 		redirectParams.put("operation", "");
 
 		redirectParams.put("token", tokenStr);
-		redirectParams.put("language", "en");
+		redirectParams.put("language", config.getProperty(CASHIER_LANGUAGE));
 
 		putMerchantId(inputParams, redirectParams, config);
 
 		redirectParams.put("integrationMode", "hostedPayPage");
 
 		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css");
-		redirectParams.put("styleSuffix", "-evopl");
+		redirectParams.put("styleSuffix", config.getProperty(CASHIER_STYLE_SUFFIX));
 
 		redirectParams.put("redirectionTime", "");
 		redirectParams.put("allowCardHolderSpecialChars", "");
@@ -103,6 +104,12 @@ public class AbstractApvTokenCall extends AbstractApvCall {
 		redirectParams.put("installmentsPlanId", "");
 
 		redirectParams.put("baseUrl", cashierRootUrl);
+
+		if (redirectParamsOverride != null) {
+			for (Entry<String, String> entry : redirectParamsOverride.entrySet()) {
+				redirectParams.put(entry.getKey(), entry.getValue());
+			}
+		}
 
 		return cashierRootUrl + "?" + URLEncodedUtils.format(getForm(redirectParams).build(), "UTF-8");
 
@@ -114,7 +121,7 @@ public class AbstractApvTokenCall extends AbstractApvCall {
 	 * 
 	 * @return URL as a string, redirect the customer here
 	 */
-	public final String executeAndBuildCashierStandaloneUrl() {
+	public final String executeAndBuildCashierStandaloneUrl(Map<String, String> redirectParamsOverride) {
 
 		String tokenStr = execute().getString("token");
 		String cashierRootUrl = config.getProperty(CASHIER_ROOT_URL_PROP_KEY);
@@ -130,7 +137,7 @@ public class AbstractApvTokenCall extends AbstractApvCall {
 		redirectParams.put("operation", "");
 
 		redirectParams.put("token", tokenStr);
-		redirectParams.put("language", "en");
+		redirectParams.put("language", config.getProperty(CASHIER_LANGUAGE));
 
 		putMerchantId(inputParams, redirectParams, config);
 
@@ -138,7 +145,7 @@ public class AbstractApvTokenCall extends AbstractApvCall {
 		// redirectParams.put("originalIntegrationMode", ""); // ?
 
 		redirectParams.put("styleSheetUrl", "/cashier/css/cashier.css");
-		redirectParams.put("styleSuffix", "-evopl");
+		redirectParams.put("styleSuffix", config.getProperty(CASHIER_STYLE_SUFFIX));
 
 		redirectParams.put("redirectionTime", "");
 		redirectParams.put("allowCardHolderSpecialChars", "");
@@ -151,8 +158,15 @@ public class AbstractApvTokenCall extends AbstractApvCall {
 		redirectParams.put("action", "");
 		redirectParams.put("maxColNum", "");
 		redirectParams.put("targetSelector", "");
+		
+		if (redirectParamsOverride != null) {
+			for (Entry<String, String> entry : redirectParamsOverride.entrySet()) {
+				redirectParams.put(entry.getKey(), entry.getValue());
+			}
+		}
 
 		return cashierRootUrl + "?" + URLEncodedUtils.format(getForm(redirectParams).build(), "UTF-8");
 
 	}
+		
 }

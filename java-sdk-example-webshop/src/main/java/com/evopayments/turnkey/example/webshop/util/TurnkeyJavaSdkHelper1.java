@@ -47,8 +47,14 @@ public class TurnkeyJavaSdkHelper1 {
 	 * 		URL string (for customer redirection)
 	 */
 	public static String startStandaloneModeCashierPayment(OrderEntity orderEntity) {
+		
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);
-		return purchaseTokenCall.executeAndBuildCashierStandaloneUrl();
+		
+		Map<String, String> redirectParamsOverride = new HashMap<>();
+		redirectParamsOverride.put("styleSuffix", "-evopl");
+		
+		return purchaseTokenCall.executeAndBuildCashierStandaloneUrl(redirectParamsOverride);
+		
 	}
 
 	/**
@@ -57,8 +63,14 @@ public class TurnkeyJavaSdkHelper1 {
 	 * 		URL string (for customer redirection)
 	 */
 	public static String startHppModeCashierPayment(OrderEntity orderEntity) {
+		
 		PurchaseTokenCall purchaseTokenCall = buildCall(orderEntity);
-		return purchaseTokenCall.executeAndBuildCashierHppUrl();
+		
+		Map<String, String> redirectParamsOverride = new HashMap<>();
+		redirectParamsOverride.put("styleSuffix", "-evopl");
+		
+		return purchaseTokenCall.executeAndBuildCashierHppUrl(redirectParamsOverride);
+		
 	}
 	
 	private TurnkeyJavaSdkHelper1() {
